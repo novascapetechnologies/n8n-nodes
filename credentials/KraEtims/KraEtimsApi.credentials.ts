@@ -1,23 +1,4 @@
-import type {
-	IAuthenticateGeneric,
-	ICredentialDataDecryptedObject,
-	ICredentialTestRequest,
-	ICredentialType,
-	IHttpRequestHelper,
-	Icon,
-	INodeProperties,
-} from 'n8n-workflow';
-
-const BASE_URLS: Record<string, { auth: string; api: string }> = {
-	sandbox: {
-		auth: 'https://sbx.kra.go.ke',
-		api: 'https://sbx.kra.go.ke/etims-oscu/api/v1',
-	},
-	production: {
-		auth: 'https://api.kra.go.ke',
-		api: 'https://api.kra.go.ke/etims-oscu/api/v1',
-	},
-};
+import type { ICredentialTestRequest, ICredentialType, Icon, INodeProperties } from 'n8n-workflow';
 
 export class KraEtimsApi implements ICredentialType {
 	name = 'kraEtimsApi';
@@ -98,51 +79,20 @@ export class KraEtimsApi implements ICredentialType {
 		},
 	];
 
-	async preAuthentication(
-		this: IHttpRequestHelper,
-		credentials: ICredentialDataDecryptedObject,
-	) {
-		const environment = (credentials.environment as string) === 'production' ? 'production' : 'sandbox';
-		const response = (await this.helpers.httpRequest({
-			method: 'GET',
-			url: `${BASE_URLS[environment].auth}/v1/token/generate`,
-			qs: { grant_type: 'client_credentials' },
-			auth: {
-				username: credentials.consumerKey as string,
-				password: credentials.consumerSecret as string,
-			},
-			json: true,
-		})) as { access_token: string; expires_in: string };
-
-		return { accessToken: response.access_token };
-	}
-
-	authenticate: IAuthenticateGeneric = {
-		type: 'generic',
-		properties: {
-			headers: {
-				Authorization: '=Bearer {{$credentials.accessToken}}',
-				tin: '={{$credentials.tin}}',
-				bhfId: '={{$credentials.bhfId}}',
-				cmcKey: '={{$credentials.cmcKey}}',
-				apigee_app_id: '={{$credentials.apigeeAppId}}',
-			},
-		},
-	};
-
+	// The node fetches the access token itself (see GenericFunctions.ts) rather than relying on
+	// credential-level preAuthentication, so the test below only validates the consumer key/secret
+	// against the token endpoint (the same call the node makes before every API request).
 	test: ICredentialTestRequest = {
 		request: {
 			baseURL:
-				'={{$credentials.environment === "production" ? "https://api.kra.go.ke/etims-oscu/api/v1" : "https://sbx.kra.go.ke/etims-oscu/api/v1"}}',
-			url: '/selectCodeList',
-			method: 'POST',
-			body: {
-				tin: '={{$credentials.tin}}',
-				bhfId: '={{$credentials.bhfId}}',
-				lastReqDt: '19000101000000',
+				'={{$credentials.environment === "production" ? "https://api.kra.go.ke" : "https://sbx.kra.go.ke"}}',
+			url: '/v1/token/generate',
+			method: 'GET',
+			qs: { grant_type: 'client_credentials' },
+			auth: {
+				username: '={{$credentials.consumerKey}}',
+				password: '={{$credentials.consumerSecret}}',
 			},
 		},
 	};
 }
-
-export { BASE_URLS };
