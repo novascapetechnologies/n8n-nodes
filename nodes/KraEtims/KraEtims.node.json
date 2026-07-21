@@ -1,0 +1,18 @@
+{
+	"node": "n8n-nodes-kra-etims",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Finance", "Government"],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://developer.go.ke/apis/KRA-ETIMS-SBX"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://developer.go.ke/apis/KRA-ETIMS-SBX"
+			}
+		]
+	}
+}

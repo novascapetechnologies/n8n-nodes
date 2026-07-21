@@ -1,19 +1,19 @@
 {
-	"name": "n8n-nodes-<...>",
+	"name": "n8n-nodes-novascape",
 	"version": "0.1.0",
-	"description": "",
+	"description": "Custom n8n nodes for services without an existing n8n integration",
 	"license": "MIT",
 	"homepage": "",
 	"keywords": [
 		"n8n-community-node-package"
 	],
 	"author": {
-		"name": "",
-		"email": ""
+		"name": "Novascape Technologies",
+		"email": "novascapetechnologies@gmail.com"
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/<...>/n8n-nodes-<...>.git"
+		"url": "https://github.com/novascapetechnologies/n8n-nodes.git"
 	},
 	"scripts": {
 		"build": "n8n-node build",
@@ -31,17 +31,17 @@
 		"n8nNodesApiVersion": 1,
 		"strict": true,
 		"credentials": [
-			"dist/credentials/GithubIssuesApi.credentials.js",
-			"dist/credentials/GithubIssuesOAuth2Api.credentials.js"
+			"dist/credentials/KraEtims/KraEtimsApi.credentials.js"
 		],
 		"nodes": [
-			"dist/nodes/GithubIssues/GithubIssues.node.js",
-			"dist/nodes/Example/Example.node.js"
+			"dist/nodes/KraEtims/KraEtims.node.js"
 		]
 	},
 	"devDependencies": {
+		"@eslint/js": "^9.39.5",
 		"@n8n/node-cli": "*",
 		"eslint": "9.39.4",
+		"n8n-workflow": "^2.16.0",
 		"prettier": "3.8.3",
 		"release-it": "20.2.0",
 		"typescript": "5.9.3"

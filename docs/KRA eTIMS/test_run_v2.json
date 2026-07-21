@@ -1,0 +1,1390 @@
+{
+  "_meta": {
+    "version": "v2.1 — full bodies, post-attempt-6 learnings",
+    "purpose": "Foolproof ordered request bodies for OSCU eTIMS sandbox certification. Each body validated end-to-end on attempt 6 (2026-04-30, TIN P600003105A).",
+    "testWindow": {
+      "totalSession": "3 hours",
+      "phase1_apiTesting": "First 1 hour — target 50 minutes for all 23 validation rows green",
+      "phase2_completenessAndArtefacts": "Remaining 2 hours — additional coverage (more sales, items, customers), screenshot capture, GavaConnect-side requirements, artefact upload",
+      "portalDisplayFreeze": "GavaConnect validation page stops visually updating after the 60-min mark; API still works for the full 3 hours"
+    },
+    "criticalRules": [
+      "1. Never re-call a green row — failed retry flips it back to red.",
+      "2. itemCd suffix is server-enforced per (ProductType+PackagingUnit+QuantityUnit). Error 'Invalid itemCd Sequence. Expected sequence ending with: ********N' tells you the next free suffix; use it verbatim.",
+      "3. sarNo is server-enforced strict-sequential. Error 'Invalid sarNo: Expected: N but found: M' tells you the next value. Failed calls can consume sarNo silently.",
+      "4. rsdQty in /save/stockMaster must equal cumulative /insertStockIO qty for that itemCd. Error tells you the expected value.",
+      "5. itemCd embeds qtyUnitCd (chars 6-7) and pkgUnitCd (chars 4-5) — must match the body fields.",
+      "6. SAVE SALES TRANSACTION foolproof: clean linear chain (saveItem → insertStockIO → saveStockMaster → sale) on a fresh never-touched itemCd. Items with prior baggage cause stockMaster's 'Successful' to not actually persist.",
+      "7. SAVE ITEM COMPOSITION foolproof: use a freshly-saved finished item with ZERO stockIO. Composition validates raw_stock >= cpstQty * finished_stock; with finished=0 it always passes.",
+      "8. SAVE PURCHASES INFORMATION foolproof: spplrTin = P052240279A (sandbox-seeded supplier), spplrInvcNo from existing range 56-60 (discovered via /selectTrnsPurchaseSalesList), itemList uses YOUR saved items."
+    ],
+    "envVarsRequired": {
+      "url": "https://sbx.kra.go.ke/etims-oscu/api/v1",
+      "tokenUrl": "https://sbx.kra.go.ke/v1/token/generate?grant_type=client_credentials",
+      "tin": "from new app (e.g., P6000031XXA)",
+      "bhfId": "00",
+      "dvcSrlNo": "from new app",
+      "consumer_key": "from new app",
+      "consumer_secret": "from new app",
+      "apigee-access-token": "captured in step 01",
+      "cmcKey": "captured in step 02"
+    },
+    "headersBaseline": {
+      "Content-Type": "application/json",
+      "apigee-access-token": "Bearer {{apigee-access-token}}",
+      "tin": "{{tin}}",
+      "bhfId": "{{bhfId}}",
+      "cmcKey": "{{cmcKey}}"
+    },
+    "screenshotPlan": {
+      "1_ItemCreation": "After step 16 saveItem (or any saveItem) succeeds, capture Postman response + GavaConnect 'SAVE ITEM' row green",
+      "2_InvoiceGeneration": "After step 24 sale succeeds, capture Postman response showing intrlData/rcptSign/sdcDateTime",
+      "3_InvoiceCopy": "Open https://etims-sbx.kra.go.ke/common/link/etims/receipt/indexEtimsReceiptData?Data=<tin><bhfId><rcptSign> using values from step 24 response",
+      "4_CreditNoteCopy": "After step 25 credit note succeeds, capture Postman response + the corresponding etims-sbx receipt URL"
+    },
+    "timingTargets_phase1_50min": {
+      "tier1_lookups_done_by": "5 min",
+      "tier2_masterData_done_by": "10 min",
+      "tier3_items_done_by": "20 min",
+      "tier4_composition_done_by": "22 min",
+      "tier5_salesChain_done_by": "32 min",
+      "tier6_creditNote_done_by": "35 min",
+      "tier7_purchase_done_by": "40 min",
+      "tier8_importedItemUpdate_done_by": "42 min",
+      "all_23_validation_rows_green_by": "45 min",
+      "screenshots_1_2_3_4_done_by": "50 min"
+    },
+    "timingTargets_phase2_2hr_extras": {
+      "60min_clickGoLive": "Click Go Live before 60-min portal freeze",
+      "60_to_120min": "Run extras tier — additional sales (anonymous, exempt), additional purchases, additional items, additional customers (extras tier). Refines completeness percentage.",
+      "120_to_180min": "Compile and upload artefacts (4 screenshots + any required test-completion certificate). Verify all uploaded. Confirm with Novascape compliance team."
+    }
+  },
+
+  "_PHASE_1_TIER_1_LOOKUPS": "12 read-only routes — fastest part. Burn them in 5 min.",
+
+  "01_token_generate": {
+    "tier": 1,
+    "method": "GET",
+    "url": "{{tokenUrl}}",
+    "auth": "Basic {{consumer_key}}:{{consumer_secret}}",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "body": null,
+    "captures": "responseBody.access_token -> {{apigee-access-token}}",
+    "passesValidationRow": null
+  },
+
+  "02_selectInitOsdcInfo": {
+    "tier": 1,
+    "method": "POST",
+    "url": "{{url}}/selectInitOsdcInfo",
+    "passesValidationRow": "OSCU INITIALIZATION",
+    "captures": "data.info.cmcKey -> {{cmcKey}} ; data.info.dvcId ; data.info.sdcId ; data.info.mrcNo",
+    "body": {
+      "tin": "{{tin}}",
+      "bhfId": "{{bhfId}}",
+      "dvcSrlNo": "{{dvcSrlNo}}"
+    }
+  },
+
+  "03_selectCodeList": {
+    "tier": 1,
+    "method": "POST",
+    "url": "{{url}}/selectCodeList",
+    "passesValidationRow": "LOOK UP LIST OF CODE",
+    "body": {
+      "tin": "{{tin}}",
+      "bhfId": "{{bhfId}}",
+      "lastReqDt": "20180101000000"
+    }
+  },
+
+  "04_selectItemClsList": {
+    "tier": 1,
+    "method": "POST",
+    "url": "{{url}}/selectItemClsList",
+    "passesValidationRow": "LOOK UP ITEM CLASSIFICATION",
+    "captures": "data.itemClsList[*].itemClsCd — known-working: 1010151700 (Camels, taxTyCd B), 9901200000 (Zero Rated Goods, taxTyCd C)",
+    "body": {
+      "tin": "{{tin}}",
+      "bhfId": "{{bhfId}}",
+      "lastReqDt": "20180101000000"
+    }
+  },
+
+  "05_selectBhfList": {
+    "tier": 1,
+    "method": "POST",
+    "url": "{{url}}/selectBhfList",
+    "passesValidationRow": "LOOK UP BRANCH LIST",
+    "body": {
+      "lastReqDt": "20180101000000"
+    }
+  },
+
+  "06_selectNoticeList": {
+    "tier": 1,
+    "method": "POST",
+    "url": "{{url}}/selectNoticeList",
+    "passesValidationRow": "LOOK UP NOTICES LIST",
+    "body": {
+      "tin": "{{tin}}",
+      "bhfId": "{{bhfId}}",
+      "lastReqDt": "20180101000000"
+    }
+  },
+
+  "07_selectTaxpayerInfo": {
+    "tier": 1,
+    "method": "POST",
+    "url": "{{url}}/selectTaxpayerInfo",
+    "passesValidationRow": "LOOK UP TAX PAYER INFO",
+    "body": {
+      "tin": "{{tin}}",
+      "bhfId": "{{bhfId}}"
+    }
+  },
+
+  "08_selectImportItemList": {
+    "tier": 1,
+    "method": "POST",
+    "url": "{{url}}/selectImportItemList",
+    "passesValidationRow": "LOOK UP IMPORTED ITEM LIST",
+    "captures": "data.itemList[0].taskCd and data.itemList[0].dclDe — used in step 27. Attempt 6 returned taskCd=20230209029420, dclDe=01022023",
+    "body": {
+      "tin": "{{tin}}",
+      "bhfId": "{{bhfId}}",
+      "lastReqDt": "20180101000000"
+    }
+  },
+
+  "09_selectStockMoveList": {
+    "tier": 1,
+    "method": "POST",
+    "url": "{{url}}/selectStockMoveList",
+    "passesValidationRow": "LOOK UP STOCK MOVEMENT",
+    "body": {
+      "tin": "{{tin}}",
+      "bhfId": "{{bhfId}}",
+      "lastReqDt": "20180101000000"
+    }
+  },
+
+  "10_selectInvoiceDetails": {
+    "tier": 1,
+    "method": "POST",
+    "url": "{{url}}/selectInvoiceDetails",
+    "passesValidationRow": "LOOK UP INVOICE DETAILS",
+    "body": {
+      "tin": "{{tin}}",
+      "bhfId": "{{bhfId}}",
+      "invcNo": 1
+    }
+  },
+
+  "11_selectTrnsSalesList": {
+    "tier": 1,
+    "method": "POST",
+    "url": "{{url}}/selectTrnsSalesList",
+    "passesValidationRow": "LOOK UP TRANSACTION SALES LIST",
+    "body": {
+      "tin": "{{tin}}",
+      "bhfId": "{{bhfId}}",
+      "lastReqDt": "20180101000000"
+    }
+  },
+
+  "12_selectTrnsPurchaseSalesList": {
+    "tier": 1,
+    "method": "POST",
+    "url": "{{url}}/selectTrnsPurchaseSalesList",
+    "passesValidationRow": "LOOK UP PURCHASES SALES LIST",
+    "captures": "5 sandbox-seeded supplier invoices from spplrTin P052240279A (invcNos 56-60). KEY DISCOVERY ROUTE — used in step 26 purchase.",
+    "body": {
+      "tin": "{{tin}}",
+      "bhfId": "{{bhfId}}",
+      "lastReqDt": "20180101000000"
+    }
+  },
+
+  "_PHASE_1_TIER_2_MASTER_DATA": "Customer + branch saves. All independent.",
+
+  "13_saveBhfCustomer_JOHN_PHARMACY": {
+    "tier": 2,
+    "method": "POST",
+    "url": "{{url}}/saveBhfCustomer",
+    "passesValidationRow": "SAVE CUSTOMER BRANCH",
+    "body": {
+      "custNo": "999991113",
+      "custTin": "A111111111Z",
+      "custNm": "MEDORA PHARMACY LTD",
+      "adrs": null,
+      "telNo": null,
+      "email": null,
+      "faxNo": null,
+      "useYn": "Y",
+      "remark": null,
+      "regrNm": "Admin",
+      "regrId": "Admin",
+      "modrNm": "Admin",
+      "modrId": "Admin"
+    }
+  },
+
+  "14_selectCustomerList": {
+    "tier": 2,
+    "method": "POST",
+    "url": "{{url}}/selectCustomerList",
+    "passesValidationRow": "LOOK UP CUSTOMER LIST",
+    "body": {
+      "tin": "{{tin}}",
+      "bhfId": "{{bhfId}}",
+      "custmTin": "A111111111Z"
+    }
+  },
+
+  "15_saveBhfUser": {
+    "tier": 2,
+    "method": "POST",
+    "url": "{{url}}/saveBhfUser",
+    "passesValidationRow": "SAVE BRANCH USER ACCOUNT",
+    "body": {
+      "userId": "admin01",
+      "userNm": "Admin User",
+      "pwd": "Admin@123",
+      "adrs": null,
+      "cntc": null,
+      "authCd": "AT01",
+      "remark": null,
+      "useYn": "Y",
+      "regrNm": "Admin",
+      "regrId": "Admin",
+      "modrNm": "Admin",
+      "modrId": "Admin"
+    }
+  },
+
+  "16_saveBhfInsurance": {
+    "tier": 2,
+    "method": "POST",
+    "url": "{{url}}/saveBhfInsurance",
+    "passesValidationRow": "SAVE BRANCH INSURANCES",
+    "body": {
+      "isrccCd": "JUBILEE",
+      "isrccNm": "Jubilee Insurance",
+      "isrcRt": 10,
+      "useYn": "Y",
+      "regrNm": "Admin",
+      "regrId": "Admin",
+      "modrNm": "Admin",
+      "modrId": "Admin"
+    }
+  },
+
+  "_PHASE_1_TIER_3_ITEMS": "Save 3 items at minimum. Each item pre-fills item algorithm: KE + 1or2 + pkg(2) + qty(2) + 8-digit-suffix. If 'Invalid itemCd Sequence. Expected sequence ending with N' use that N.",
+
+  "17_saveItem_RAW_AmoxicillinAPI": {
+    "tier": 3,
+    "method": "POST",
+    "url": "{{url}}/saveItem",
+    "passesValidationRow": "SAVE ITEM",
+    "role": "Raw material — used as cpstItemCd in step 21 composition",
+    "body": {
+      "itemCd": "KE1BGKG00000001",
+      "itemClsCd": "1010151700",
+      "itemTyCd": "1",
+      "itemNm": "Amoxicillin API",
+      "itemStdNm": "Amoxicillin Powder",
+      "orgnNatCd": "KE",
+      "pkgUnitCd": "BG",
+      "qtyUnitCd": "KG",
+      "taxTyCd": "B",
+      "btchNo": "50001",
+      "dftPrc": 4500,
+      "grpPrcL1": 0,
+      "grpPrcL2": 0,
+      "grpPrcL3": 0,
+      "grpPrcL4": 0,
+      "grpPrcL5": null,
+      "addInfo": null,
+      "sftyQty": null,
+      "isrcAplcbYn": "N",
+      "useYn": "Y",
+      "regrNm": "Admin",
+      "regrId": "admin01",
+      "modrNm": "Admin",
+      "modrId": "admin01"
+    }
+  },
+
+  "18_saveItem_FINISHED_ParacetamolTablets_forSalesChain": {
+    "tier": 3,
+    "method": "POST",
+    "url": "{{url}}/saveItem",
+    "role": "Sales chain item (suffix 00000002, NT/BA combo). Will be stocked-in (step 22, sarNo=2) and sold (step 24). Suffix 00000001 of same combo is reserved as composition target 2 (step 19b, zero stock).",
+    "body": {
+      "itemCd": "KE2NTBA00000002",
+      "itemClsCd": "1010151700",
+      "itemTyCd": "2",
+      "itemNm": "Paracetamol 500mg Tablets",
+      "itemStdNm": "Paracetamol",
+      "orgnNatCd": "KE",
+      "pkgUnitCd": "NT",
+      "qtyUnitCd": "BA",
+      "taxTyCd": "B",
+      "btchNo": "50002",
+      "dftPrc": 250,
+      "grpPrcL1": 0,
+      "grpPrcL2": 0,
+      "grpPrcL3": 0,
+      "grpPrcL4": 0,
+      "grpPrcL5": null,
+      "addInfo": null,
+      "sftyQty": null,
+      "isrcAplcbYn": "N",
+      "useYn": "Y",
+      "regrNm": "Admin",
+      "regrId": "admin01",
+      "modrNm": "Admin",
+      "modrId": "admin01"
+    }
+  },
+
+  "19_saveItem_FINISHED_Effervescent_forCompositionTarget": {
+    "tier": 3,
+    "method": "POST",
+    "url": "{{url}}/saveItem",
+    "role": "Composition target — the finished product whose recipe we are defining. NEVER run insertStockIO or saveStockMaster for this item. With rsdQty=0 the composition formula (raw_stock >= cpstQty × finished_stock) becomes (10 >= 1×0=0) which always passes. If you accidentally stock this item, composition will require raw_stock >= cpstQty × stocked_qty and may fail.",
+    "body": {
+      "itemCd": "KE2PGBA00000003",
+      "itemClsCd": "1010151700",
+      "itemTyCd": "2",
+      "itemNm": "Paracetamol Effervescent Tablets 500mg",
+      "itemStdNm": "Paracetamol Effervescent",
+      "orgnNatCd": "KE",
+      "pkgUnitCd": "PG",
+      "qtyUnitCd": "BA",
+      "taxTyCd": "B",
+      "btchNo": "50003",
+      "dftPrc": 150,
+      "grpPrcL1": 0,
+      "grpPrcL2": 0,
+      "grpPrcL3": 0,
+      "grpPrcL4": 0,
+      "grpPrcL5": null,
+      "addInfo": null,
+      "sftyQty": null,
+      "isrcAplcbYn": "N",
+      "useYn": "Y",
+      "regrNm": "Admin",
+      "regrId": "admin01",
+      "modrNm": "Admin",
+      "modrId": "admin01"
+    }
+  },
+
+  "19b_saveItem_FINISHED_ParacetamolTablets_compositionTarget2": {
+    "tier": 3,
+    "method": "POST",
+    "url": "{{url}}/saveItem",
+    "role": "Composition target 2 — second finished product for step 21b. NEVER call insertStockIO or saveStockMaster for this item. Zero stock means formula (raw >= cpstQty × 0) always passes.",
+    "body": {
+      "itemCd": "KE2NTBA00000004",
+      "itemClsCd": "1010151700",
+      "itemTyCd": "2",
+      "itemNm": "Paracetamol 500mg Tablets Variant",
+      "itemStdNm": "Paracetamol",
+      "orgnNatCd": "KE",
+      "pkgUnitCd": "NT",
+      "qtyUnitCd": "BA",
+      "taxTyCd": "B",
+      "btchNo": "50004",
+      "dftPrc": 200,
+      "grpPrcL1": 0,
+      "grpPrcL2": 0,
+      "grpPrcL3": 0,
+      "grpPrcL4": 0,
+      "grpPrcL5": null,
+      "addInfo": null,
+      "sftyQty": null,
+      "isrcAplcbYn": "N",
+      "useYn": "Y",
+      "regrNm": "Admin",
+      "regrId": "admin01",
+      "modrNm": "Admin",
+      "modrId": "admin01"
+    }
+  },
+
+  "20_selectItemList": {
+    "tier": 3,
+    "method": "POST",
+    "url": "{{url}}/selectItemList",
+    "passesValidationRow": "LOOK UP PRODUCT LIST",
+    "screenshot": "SCREENSHOT 1 (Item Creation) — capture this response showing all saved items + the saveItem (#17) success response. Also screenshot the GavaConnect validation page row 'SAVE ITEM' green.",
+    "body": {
+      "tin": "{{tin}}",
+      "bhfId": "{{bhfId}}",
+      "lastReqDt": "20180101000000"
+    }
+  },
+
+  "_PHASE_1_TIER_4_COMPOSITION": "TWO compositions. EXACT order: (1) saveItem raw KE1BGKG00000001 (step 17) + saveItem comp-target-1 KE2PGBA00000003 (step 19) + saveItem comp-target-2 KE2NTBA00000004 (step 19b). (2) insertStockIO raw ONLY (step 20a, sarNo=1, qty=10). (3) saveStockMaster raw ONLY (step 20b, rsdQty=10 — MUST exactly equal step-20a qty). (4) saveItemComposition x2 (steps 21 and 21b — both use zero-stock targets so formula raw(10) >= cpstQty(1) × 0 = 0 always passes). NEVER stock the composition targets (steps 19 and 19b). NEVER mismatch rsdQty with stockIO qty — saveStockMaster silently rejects mismatches and composition then errors 'does not exist in stock master'.",
+
+  "20a_insertStockIO_raw_material": {
+    "tier": 4,
+    "method": "POST",
+    "url": "{{url}}/insertStockIO",
+    "passesValidationRow": "SAVE STOCK IN/OUT",
+    "note": "Fresh app: this is sarNo=1, the very first insertStockIO on this TIN. Step 22 (sales chain stockIO for KE2NTBA00000002) uses sarNo=2. If error says 'Expected: N but found: 1', use N verbatim.",
+    "body": {
+      "sarNo": 1,
+      "orgSarNo": 0,
+      "regTyCd": "M",
+      "custTin": null,
+      "custNm": null,
+      "custBhfId": null,
+      "sarTyCd": "03",
+      "ocrnDt": "{{currentDate}}",
+      "totItemCnt": 1,
+      "totTaxblAmt": 38793.1,
+      "totTaxAmt": 6206.9,
+      "totAmt": 45000,
+      "remark": "Initial stock for raw material",
+      "regrId": "admin01",
+      "regrNm": "Admin",
+      "modrNm": "Admin",
+      "modrId": "admin01",
+      "itemList": [
+        {
+          "itemSeq": 1,
+          "itemCd": "KE1BGKG00000001",
+          "itemClsCd": "1010151700",
+          "itemNm": "Amoxicillin API",
+          "bcd": null,
+          "pkgUnitCd": "BG",
+          "pkg": 1,
+          "qtyUnitCd": "KG",
+          "qty": 10,
+          "itemExprDt": null,
+          "prc": 4500,
+          "splyAmt": 45000,
+          "totDcAmt": 0,
+          "taxblAmt": 38793.1,
+          "taxTyCd": "B",
+          "taxAmt": 6206.9,
+          "totAmt": 45000
+        }
+      ]
+    }
+  },
+
+  "20b_saveStockMaster_raw_material": {
+    "tier": 4,
+    "method": "POST",
+    "url": "{{url}}/save/stockMaster",
+    "role": "Register raw material in stock master BEFORE composition. Composition validates against stock master, not stockIO directly.",
+    "CRITICAL": "rsdQty MUST EXACTLY EQUAL the qty from step 20a insertStockIO. stockIO qty=10 → rsdQty=10. If you enter any other value (e.g. 20), saveStockMaster silently rejects and the item will NOT be in stock master, causing composition to fail with 'does not exist in stock master'.",
+    "body": {
+      "itemCd": "KE1BGKG00000001",
+      "rsdQty": 10,
+      "regrId": "admin01",
+      "regrNm": "Admin",
+      "modrNm": "Admin",
+      "modrId": "admin01"
+    }
+  },
+
+  "21_saveItemComposition": {
+    "tier": 4,
+    "method": "POST",
+    "url": "{{url}}/saveItemComposition",
+    "passesValidationRow": "SAVE ITEM COMPOSITION",
+    "body": {
+      "itemCd": "KE2PGBA00000003",
+      "cpstItemCd": "KE1BGKG00000001",
+      "cpstQty": 1,
+      "regrNm": "admin",
+      "regrId": "admin01",
+      "modrNm": "admin",
+      "modrId": "admin01"
+    }
+  },
+
+  "21b_saveItemComposition_target2": {
+    "tier": 4,
+    "method": "POST",
+    "url": "{{url}}/saveItemComposition",
+    "passesValidationRow": "(SAVE ITEM COMPOSITION already passed by step 21)",
+    "role": "Second composition — links step-19b item (KE2NTBA00000004, zero stock) to same raw material. Formula: raw_rsdQty(10) >= cpstQty(1) × finished_rsdQty(0) = 0 ✓",
+    "body": {
+      "itemCd": "KE2NTBA00000004",
+      "cpstItemCd": "KE1BGKG00000001",
+      "cpstQty": 1,
+      "regrNm": "admin",
+      "regrId": "admin01",
+      "modrNm": "admin",
+      "modrId": "admin01"
+    }
+  },
+
+  "_PHASE_1_TIER_5_SALES_CHAIN": "Clean linear chain on fresh item KE2NTBA00000002: insertStockIO(sarNo=2) → saveStockMaster(rsdQty=10) → sale. sarNo=2 because fresh app only used sarNo=1 for raw material (step 20a). If error says 'Expected: N', use that N and do NOT re-run 20a.",
+
+  "22_insertStockIO_finished_paracetamol": {
+    "tier": 5,
+    "method": "POST",
+    "url": "{{url}}/insertStockIO",
+    "passesValidationRow": "SAVE STOCK IN/OUT",
+    "body": {
+      "sarNo": 2,
+      "orgSarNo": 0,
+      "regTyCd": "M",
+      "custTin": null,
+      "custNm": null,
+      "custBhfId": null,
+      "sarTyCd": "03",
+      "ocrnDt": "{{currentDate}}",
+      "totItemCnt": 1,
+      "totTaxblAmt": 2155.17,
+      "totTaxAmt": 344.83,
+      "totAmt": 2500,
+      "remark": "Initial stock for paracetamol tablets",
+      "regrId": "admin01",
+      "regrNm": "Admin",
+      "modrNm": "Admin",
+      "modrId": "admin01",
+      "itemList": [
+        {
+          "itemSeq": 1,
+          "itemCd": "KE2NTBA00000002",
+          "itemClsCd": "1010151700",
+          "itemNm": "Paracetamol 500mg Tablets",
+          "bcd": null,
+          "pkgUnitCd": "NT",
+          "pkg": 1,
+          "qtyUnitCd": "BA",
+          "qty": 10,
+          "itemExprDt": null,
+          "prc": 250,
+          "splyAmt": 2500,
+          "totDcAmt": 0,
+          "taxblAmt": 2155.17,
+          "taxTyCd": "B",
+          "taxAmt": 344.83,
+          "totAmt": 2500
+        }
+      ]
+    }
+  },
+
+  "23_saveStockMaster_paracetamol": {
+    "tier": 5,
+    "method": "POST",
+    "url": "{{url}}/save/stockMaster",
+    "passesValidationRow": "SAVE STOCK MASTER INFORMATION",
+    "body": {
+      "itemCd": "KE2NTBA00000002",
+      "rsdQty": 10,
+      "regrId": "admin01",
+      "regrNm": "Admin",
+      "modrNm": "Admin",
+      "modrId": "admin01"
+    }
+  },
+
+  "24_insertTrnsSalesTransaction_sale1_JohnPharmacy": {
+    "tier": 5,
+    "method": "POST",
+    "url": "{{url}}/insertTrnsSalesTransaction",
+    "passesValidationRow": "SAVE SALES TRANSACTION",
+    "screenshot": "SCREENSHOT 2 (Invoice Generation) — capture response showing intrlData, rcptSign, sdcDateTime. SCREENSHOT 3 (Invoice Copy) — open https://etims-sbx.kra.go.ke/common/link/etims/receipt/indexEtimsReceiptData?Data={{tin}}{{bhfId}}{{rcptSign}} (concatenate values).",
+    "body": {
+      "invcNo": 1,
+      "orgInvcNo": 0,
+      "custTin": "A111111111Z",
+      "custNm": "MEDORA PHARMACY LTD",
+      "salesTyCd": "N",
+      "rcptTyCd": "S",
+      "pmtTyCd": "01",
+      "salesSttsCd": "02",
+      "cfmDt": "{{currentDateTime}}",
+      "salesDt": "{{currentDate}}",
+      "stockRlsDt": "{{currentDateTime}}",
+      "cnclReqDt": null,
+      "cnclDt": null,
+      "rfdDt": null,
+      "rfdRsnCd": null,
+      "totItemCnt": 1,
+      "taxblAmtA": 0,
+      "taxblAmtB": 215.52,
+      "taxblAmtC": 0,
+      "taxblAmtD": 0,
+      "taxblAmtE": 0,
+      "taxRtA": 0,
+      "taxRtB": 16,
+      "taxRtC": 0,
+      "taxRtD": 0,
+      "taxRtE": 0,
+      "taxAmtA": 0,
+      "taxAmtB": 34.48,
+      "taxAmtC": 0,
+      "taxAmtD": 0,
+      "taxAmtE": 0,
+      "totTaxblAmt": 215.52,
+      "totTaxAmt": 34.48,
+      "totAmt": 250,
+      "prchrAcptcYn": "N",
+      "remark": "Sale of Paracetamol Tablets",
+      "regrId": "admin01",
+      "regrNm": "Admin",
+      "modrId": "admin01",
+      "modrNm": "Admin",
+      "receipt": {
+        "custTin": "A111111111Z",
+        "custMblNo": null,
+        "rptNo": 1,
+        "rcptPbctDt": "{{currentDateTime}}",
+        "trdeNm": "MEDORA PHARMACY LTD",
+        "adrs": null,
+        "topMsg": "Thank you",
+        "btmMsg": "eTIMS Receipt",
+        "prchrAcptcYn": "N"
+      },
+      "itemList": [
+        {
+          "itemSeq": 1,
+          "itemCd": "KE2NTBA00000002",
+          "itemClsCd": "1010151700",
+          "itemNm": "Paracetamol 500mg Tablets",
+          "bcd": null,
+          "pkgUnitCd": "NT",
+          "pkg": 1,
+          "qtyUnitCd": "BA",
+          "qty": 1,
+          "prc": 250,
+          "splyAmt": 250,
+          "dcRt": 0,
+          "dcAmt": 0,
+          "taxTyCd": "B",
+          "taxblAmt": 215.52,
+          "taxAmt": 34.48,
+          "totAmt": 250
+        }
+      ]
+    }
+  },
+
+  "_PHASE_1_TIER_6_CREDIT_NOTE": "Refund of Sale 1. rcptTyCd=R, orgInvcNo=1, rfdRsnCd=01. itemList qty MUST BE POSITIVE (1, not -1) — rcptTyCd:R already tells the server it is a return. Only the monetary amounts (splyAmt, taxblAmt, taxAmt, totAmt) are negative. Sending qty=-1 causes error 'You cannot sell 0 qty'.",
+
+  "25_insertTrnsSalesTransaction_creditNote_forSale1": {
+    "tier": 6,
+    "method": "POST",
+    "url": "{{url}}/insertTrnsSalesTransaction",
+    "passesValidationRow": "(SAVE SALES TRANSACTION already passed by 24)",
+    "screenshot": "SCREENSHOT 4 (Credit Note Copy) — capture response with rcptTyCd:R, negative amounts. Open https://etims-sbx.kra.go.ke/common/link/etims/receipt/indexEtimsReceiptData?Data={{tin}}{{bhfId}}{{creditNoteRcptSign}} for the rendered credit note.",
+    "body": {
+      "invcNo": 2,
+      "orgInvcNo": 1,
+      "custTin": "A111111111Z",
+      "custNm": "MEDORA PHARMACY LTD",
+      "salesTyCd": "N",
+      "rcptTyCd": "R",
+      "pmtTyCd": "01",
+      "salesSttsCd": "02",
+      "cfmDt": "{{currentDateTime}}",
+      "salesDt": "{{currentDate}}",
+      "stockRlsDt": "{{currentDateTime}}",
+      "cnclReqDt": null,
+      "cnclDt": null,
+      "rfdDt": "{{currentDateTime}}",
+      "rfdRsnCd": "01",
+      "totItemCnt": 1,
+      "taxblAmtA": 0,
+      "taxblAmtB": 215.52,
+      "taxblAmtC": 0,
+      "taxblAmtD": 0,
+      "taxblAmtE": 0,
+      "taxRtA": 0,
+      "taxRtB": 16,
+      "taxRtC": 0,
+      "taxRtD": 0,
+      "taxRtE": 0,
+      "taxAmtA": 0,
+      "taxAmtB": 34.48,
+      "taxAmtC": 0,
+      "taxAmtD": 0,
+      "taxAmtE": 0,
+      "totTaxblAmt": 215.52,
+      "totTaxAmt": 34.48,
+      "totAmt": 250,
+      "prchrAcptcYn": "N",
+      "remark": "Credit note for invoice 1",
+      "regrId": "admin01",
+      "regrNm": "Admin",
+      "modrId": "admin01",
+      "modrNm": "Admin",
+      "receipt": {
+        "custTin": "A111111111Z",
+        "custMblNo": null,
+        "rptNo": 2,
+        "rcptPbctDt": "{{currentDateTime}}",
+        "trdeNm": "MEDORA PHARMACY LTD",
+        "adrs": null,
+        "topMsg": "Refund",
+        "btmMsg": "eTIMS Credit Note",
+        "prchrAcptcYn": "N"
+      },
+      "itemList": [
+        {
+          "itemSeq": 1,
+          "itemCd": "KE2NTBA00000002",
+          "itemClsCd": "1010151700",
+          "itemNm": "Paracetamol 500mg Tablets",
+          "bcd": null,
+          "pkgUnitCd": "NT",
+          "pkg": 1,
+          "qtyUnitCd": "BA",
+          "qty": 1,
+          "prc": 250,
+          "splyAmt": 250,
+          "dcRt": 0,
+          "dcAmt": 0,
+          "taxTyCd": "B",
+          "taxblAmt": 215.52,
+          "taxAmt": 34.48,
+          "totAmt": 250
+        }
+      ]
+    }
+  },
+
+  "_PHASE_1_TIER_7_PURCHASE": "Sandbox supplier P052240279A + existing invoice 56-60 + YOUR own item.",
+
+  "26_insertTrnsPurchase_spplrInvcNo_from_step12": {
+    "tier": 7,
+    "method": "POST",
+    "url": "{{url}}/insertTrnsPurchase",
+    "passesValidationRow": "SAVE PURCHASES INFORMATION",
+    "runtimeFill": "spplrInvcNo MUST come from step 12 response (selectTrnsPurchaseSalesList). Read data.saleList[0].spplrInvcNo from step 12 and use it. Invoice numbers shift each test session: was 56-60 (Apr 30), was 61-65 (May 4). Never hardcode.",
+    "body": {
+      "invcNo": 1,
+      "orgInvcNo": 0,
+      "spplrTin": "P052240279A",
+      "spplrBhfId": "00",
+      "spplrNm": "Novascape Technologies Limited",
+      "spplrInvcNo": "<<READ_FROM_STEP_12_saleList[0].spplrInvcNo>>",
+      "regTyCd": "M",
+      "pchsTyCd": "N",
+      "rcptTyCd": "P",
+      "pmtTyCd": "01",
+      "pchsSttsCd": "02",
+      "cfmDt": "{{currentDateTime}}",
+      "pchsDt": "{{currentDate}}",
+      "wrhsDt": null,
+      "cnclReqDt": null,
+      "cnclDt": null,
+      "rfdDt": null,
+      "totItemCnt": 1,
+      "taxblAmtA": 0,
+      "taxblAmtB": 215.52,
+      "taxblAmtC": 0,
+      "taxblAmtD": 0,
+      "taxblAmtE": 0,
+      "taxRtA": 0,
+      "taxRtB": 16,
+      "taxRtC": 0,
+      "taxRtD": 0,
+      "taxRtE": 0,
+      "taxAmtA": 0,
+      "taxAmtB": 34.48,
+      "taxAmtC": 0,
+      "taxAmtD": 0,
+      "taxAmtE": 0,
+      "totTaxblAmt": 215.52,
+      "totTaxAmt": 34.48,
+      "totAmt": 250,
+      "remark": "Purchase from sandbox supplier",
+      "regrNm": "Admin",
+      "regrId": "admin01",
+      "modrNm": "Admin",
+      "modrId": "admin01",
+      "itemList": [
+        {
+          "itemSeq": 1,
+          "itemCd": "KE2NTBA00000002",
+          "itemClsCd": "1010151700",
+          "itemNm": "Paracetamol 500mg Tablets",
+          "bcd": null,
+          "spplrItemClsCd": "1010151700",
+          "spplrItemCd": "SUPP_KE2NTBA00000002",
+          "spplrItemNm": "Paracetamol Tablets",
+          "pkgUnitCd": "NT",
+          "pkg": 1,
+          "qtyUnitCd": "BA",
+          "qty": 1,
+          "prc": 250,
+          "splyAmt": 250,
+          "dcRt": 0,
+          "dcAmt": 0,
+          "taxblAmt": 215.52,
+          "taxTyCd": "B",
+          "taxAmt": 34.48,
+          "totAmt": 250,
+          "itemExprDt": null
+        }
+      ]
+    }
+  },
+
+  "_PHASE_1_TIER_8_IMPORTED_ITEM_UPDATE": "Use taskCd/dclDe captured in step 08. Reference your saved raw itemCd from step 17.",
+
+  "27_updateImportItem": {
+    "tier": 8,
+    "method": "POST",
+    "url": "{{url}}/updateImportItem",
+    "passesValidationRow": "UPDATE IMPORTED ITEMS",
+    "runtimeFill": "taskCd and dclDe MUST come from step 08 response (selectImportItemList). Use data.itemList[0].taskCd and data.itemList[0].dclDe. taskCd changes every session: was 20230209029420 (Apr 30), is 20230209029453 (May 4). Never hardcode.",
+    "body": {
+      "taskCd": "<<READ_FROM_STEP_08_itemList[0].taskCd>>",
+      "dclDe": "<<READ_FROM_STEP_08_itemList[0].dclDe>>",
+      "itemSeq": 1,
+      "hsCd": "1231531231",
+      "itemClsCd": "1010151700",
+      "itemCd": "KE1BGKG00000001",
+      "imptItemSttsCd": "3",
+      "remark": "Approved import",
+      "modrNm": "Admin",
+      "modrId": "Admin"
+    }
+  },
+
+  "_PHASE_2_EXTRAS_HOUR2_AND_HOUR3": "Optional but recommended for completeness. These calls do not flip new validation rows (they re-hit the same routes from phase 1) — they enrich your transaction history for the artefact-upload phase. Run after Go Live (step 27 done, all rows green).",
+
+  "EXTRA_28_saveBhfCustomer_MARY_CLINICS": {
+    "tier": "extras",
+    "method": "POST",
+    "url": "{{url}}/saveBhfCustomer",
+    "purpose": "Second customer for variety in sales artefacts",
+    "body": {
+      "custNo": "999991114",
+      "custTin": "A222222222Z",
+      "custNm": "MARY CLINICS",
+      "adrs": null,
+      "telNo": null,
+      "email": null,
+      "faxNo": null,
+      "useYn": "Y",
+      "remark": null,
+      "regrNm": "Admin",
+      "regrId": "Admin",
+      "modrNm": "Admin",
+      "modrId": "Admin"
+    }
+  },
+
+  "EXTRA_29_saveItem_finished_capsules": {
+    "tier": "extras",
+    "method": "POST",
+    "url": "{{url}}/saveItem",
+    "purpose": "Additional finished product (NT/BA combo, suffix 00000003). If server rejects suffix, use value from error message.",
+    "body": {
+      "itemCd": "KE2NTBA00000003",
+      "itemClsCd": "1010151700",
+      "itemTyCd": "2",
+      "itemNm": "Amoxicillin 250mg Capsules",
+      "itemStdNm": "Amoxicillin",
+      "orgnNatCd": "KE",
+      "pkgUnitCd": "NT",
+      "qtyUnitCd": "BA",
+      "taxTyCd": "B",
+      "btchNo": "50005",
+      "dftPrc": 120,
+      "grpPrcL1": 0,
+      "grpPrcL2": 0,
+      "grpPrcL3": 0,
+      "grpPrcL4": 0,
+      "grpPrcL5": null,
+      "addInfo": null,
+      "sftyQty": null,
+      "isrcAplcbYn": "N",
+      "useYn": "Y",
+      "regrNm": "Admin",
+      "regrId": "admin01",
+      "modrNm": "Admin",
+      "modrId": "admin01"
+    }
+  },
+
+  "EXTRA_30_saveItem_finished_paracetamol": {
+    "tier": "extras",
+    "method": "POST",
+    "url": "{{url}}/saveItem",
+    "purpose": "Additional finished product — extra paracetamol tabs (NT/BA combo, suffix 00000004). If server rejects suffix, use value from error message.",
+    "body": {
+      "itemCd": "KE2NTBA00000004",
+      "itemClsCd": "1010151700",
+      "itemTyCd": "2",
+      "itemNm": "Paracetamol 500mg Tablets",
+      "itemStdNm": "Paracetamol",
+      "orgnNatCd": "KE",
+      "pkgUnitCd": "NT",
+      "qtyUnitCd": "BA",
+      "taxTyCd": "B",
+      "btchNo": "50006",
+      "dftPrc": 100,
+      "grpPrcL1": 0,
+      "grpPrcL2": 0,
+      "grpPrcL3": 0,
+      "grpPrcL4": 0,
+      "grpPrcL5": null,
+      "addInfo": null,
+      "sftyQty": null,
+      "isrcAplcbYn": "N",
+      "useYn": "Y",
+      "regrNm": "Admin",
+      "regrId": "admin01",
+      "modrNm": "Admin",
+      "modrId": "admin01"
+    }
+  },
+
+  "EXTRA_31_insertStockIO_capsules": {
+    "tier": "extras",
+    "method": "POST",
+    "url": "{{url}}/insertStockIO",
+    "purpose": "Stock-in capsules. sarNo=3 on a fresh app (raw=1, paracetamol=2 consumed by step 22). ALWAYS use the 'Expected: N' value from any sarNo error.",
+    "body": {
+      "sarNo": 3,
+      "orgSarNo": 0,
+      "regTyCd": "M",
+      "custTin": null,
+      "custNm": null,
+      "custBhfId": null,
+      "sarTyCd": "03",
+      "ocrnDt": "{{currentDate}}",
+      "totItemCnt": 1,
+      "totTaxblAmt": 10344.83,
+      "totTaxAmt": 1655.17,
+      "totAmt": 12000,
+      "remark": "Initial stock for capsules",
+      "regrId": "admin01",
+      "regrNm": "Admin",
+      "modrNm": "Admin",
+      "modrId": "admin01",
+      "itemList": [
+        {
+          "itemSeq": 1,
+          "itemCd": "KE2NTBA00000003",
+          "itemClsCd": "1010151700",
+          "itemNm": "Amoxicillin 250mg Capsules",
+          "bcd": null,
+          "pkgUnitCd": "NT",
+          "pkg": 1,
+          "qtyUnitCd": "BA",
+          "qty": 100,
+          "itemExprDt": null,
+          "prc": 120,
+          "splyAmt": 12000,
+          "totDcAmt": 0,
+          "taxblAmt": 10344.83,
+          "taxTyCd": "B",
+          "taxAmt": 1655.17,
+          "totAmt": 12000
+        }
+      ]
+    }
+  },
+
+  "EXTRA_32_saveStockMaster_capsules": {
+    "tier": "extras",
+    "method": "POST",
+    "url": "{{url}}/save/stockMaster",
+    "purpose": "Register capsules stock master — rsdQty=100 matches step 31 stockIO",
+    "body": {
+      "itemCd": "KE2NTBA00000003",
+      "rsdQty": 100,
+      "regrId": "admin01",
+      "regrNm": "Admin",
+      "modrNm": "Admin",
+      "modrId": "admin01"
+    }
+  },
+
+  "EXTRA_33_insertStockIO_paracetamol": {
+    "tier": "extras",
+    "method": "POST",
+    "url": "{{url}}/insertStockIO",
+    "purpose": "Stock-in extra paracetamol. sarNo=4 on a fresh app (raw=1, paracetamol=2, capsules=3 consumed). Use error message value if different.",
+    "body": {
+      "sarNo": 4,
+      "orgSarNo": 0,
+      "regTyCd": "M",
+      "custTin": null,
+      "custNm": null,
+      "custBhfId": null,
+      "sarTyCd": "03",
+      "ocrnDt": "{{currentDate}}",
+      "totItemCnt": 1,
+      "totTaxblAmt": 8620.69,
+      "totTaxAmt": 1379.31,
+      "totAmt": 10000,
+      "remark": "Initial stock for paracetamol",
+      "regrId": "admin01",
+      "regrNm": "Admin",
+      "modrNm": "Admin",
+      "modrId": "admin01",
+      "itemList": [
+        {
+          "itemSeq": 1,
+          "itemCd": "KE2NTBA00000004",
+          "itemClsCd": "1010151700",
+          "itemNm": "Paracetamol 500mg Tablets",
+          "bcd": null,
+          "pkgUnitCd": "NT",
+          "pkg": 1,
+          "qtyUnitCd": "BA",
+          "qty": 100,
+          "itemExprDt": null,
+          "prc": 100,
+          "splyAmt": 10000,
+          "totDcAmt": 0,
+          "taxblAmt": 8620.69,
+          "taxTyCd": "B",
+          "taxAmt": 1379.31,
+          "totAmt": 10000
+        }
+      ]
+    }
+  },
+
+  "EXTRA_34_saveStockMaster_paracetamol": {
+    "tier": "extras",
+    "method": "POST",
+    "url": "{{url}}/save/stockMaster",
+    "purpose": "Register paracetamol stock master — rsdQty=100 matches step 33",
+    "body": {
+      "itemCd": "KE2NTBA00000004",
+      "rsdQty": 100,
+      "regrId": "admin01",
+      "regrNm": "Admin",
+      "modrNm": "Admin",
+      "modrId": "admin01"
+    }
+  },
+
+  "EXTRA_35_insertTrnsSalesTransaction_sale2_MaryClinics": {
+    "tier": "extras",
+    "method": "POST",
+    "url": "{{url}}/insertTrnsSalesTransaction",
+    "purpose": "Sale 2 — MARY CLINICS, Paracetamol, full receipt details",
+    "body": {
+      "invcNo": 3,
+      "orgInvcNo": 0,
+      "custTin": "A222222222Z",
+      "custNm": "MARY CLINICS",
+      "salesTyCd": "N",
+      "rcptTyCd": "S",
+      "pmtTyCd": "01",
+      "salesSttsCd": "02",
+      "cfmDt": "{{currentDateTime}}",
+      "salesDt": "{{currentDate}}",
+      "stockRlsDt": "{{currentDateTime}}",
+      "cnclReqDt": null,
+      "cnclDt": null,
+      "rfdDt": null,
+      "rfdRsnCd": null,
+      "totItemCnt": 1,
+      "taxblAmtA": 0,
+      "taxblAmtB": 862.07,
+      "taxblAmtC": 0,
+      "taxblAmtD": 0,
+      "taxblAmtE": 0,
+      "taxRtA": 0,
+      "taxRtB": 16,
+      "taxRtC": 0,
+      "taxRtD": 0,
+      "taxRtE": 0,
+      "taxAmtA": 0,
+      "taxAmtB": 137.93,
+      "taxAmtC": 0,
+      "taxAmtD": 0,
+      "taxAmtE": 0,
+      "totTaxblAmt": 862.07,
+      "totTaxAmt": 137.93,
+      "totAmt": 1000,
+      "prchrAcptcYn": "N",
+      "remark": "Sale of Paracetamol Tablets",
+      "regrId": "admin01",
+      "regrNm": "Admin",
+      "modrId": "admin01",
+      "modrNm": "Admin",
+      "receipt": {
+        "custTin": "A222222222Z",
+        "custMblNo": null,
+        "rptNo": 3,
+        "rcptPbctDt": "{{currentDateTime}}",
+        "trdeNm": "MARY CLINICS",
+        "adrs": null,
+        "topMsg": "Thank you",
+        "btmMsg": "eTIMS Receipt",
+        "prchrAcptcYn": "N"
+      },
+      "itemList": [
+        {
+          "itemSeq": 1,
+          "itemCd": "KE2NTBA00000004",
+          "itemClsCd": "1010151700",
+          "itemNm": "Paracetamol 500mg Tablets",
+          "bcd": null,
+          "pkgUnitCd": "NT",
+          "pkg": 1,
+          "qtyUnitCd": "BA",
+          "qty": 10,
+          "prc": 100,
+          "splyAmt": 1000,
+          "dcRt": 0,
+          "dcAmt": 0,
+          "taxTyCd": "B",
+          "taxblAmt": 862.07,
+          "taxAmt": 137.93,
+          "totAmt": 1000
+        }
+      ]
+    }
+  },
+
+  "EXTRA_36_insertTrnsSalesTransaction_sale3_anonymous_capsules": {
+    "tier": "extras",
+    "method": "POST",
+    "url": "{{url}}/insertTrnsSalesTransaction",
+    "purpose": "Sale 3 — anonymous walk-in (custTin null), Capsules, taxTyCd B",
+    "body": {
+      "invcNo": 4,
+      "orgInvcNo": 0,
+      "custTin": null,
+      "custNm": null,
+      "salesTyCd": "N",
+      "rcptTyCd": "S",
+      "pmtTyCd": "01",
+      "salesSttsCd": "02",
+      "cfmDt": "{{currentDateTime}}",
+      "salesDt": "{{currentDate}}",
+      "stockRlsDt": "{{currentDateTime}}",
+      "cnclReqDt": null,
+      "cnclDt": null,
+      "rfdDt": null,
+      "rfdRsnCd": null,
+      "totItemCnt": 1,
+      "taxblAmtA": 0,
+      "taxblAmtB": 517.24,
+      "taxblAmtC": 0,
+      "taxblAmtD": 0,
+      "taxblAmtE": 0,
+      "taxRtA": 0,
+      "taxRtB": 16,
+      "taxRtC": 0,
+      "taxRtD": 0,
+      "taxRtE": 0,
+      "taxAmtA": 0,
+      "taxAmtB": 82.76,
+      "taxAmtC": 0,
+      "taxAmtD": 0,
+      "taxAmtE": 0,
+      "totTaxblAmt": 517.24,
+      "totTaxAmt": 82.76,
+      "totAmt": 600,
+      "prchrAcptcYn": "N",
+      "remark": "Anonymous sale of Capsules",
+      "regrId": "admin01",
+      "regrNm": "Admin",
+      "modrId": "admin01",
+      "modrNm": "Admin",
+      "receipt": {
+        "custTin": null,
+        "custMblNo": null,
+        "rptNo": 4,
+        "rcptPbctDt": "{{currentDateTime}}",
+        "trdeNm": null,
+        "adrs": null,
+        "topMsg": "Thank you",
+        "btmMsg": "eTIMS Receipt",
+        "prchrAcptcYn": "N"
+      },
+      "itemList": [
+        {
+          "itemSeq": 1,
+          "itemCd": "KE2NTBA00000003",
+          "itemClsCd": "1010151700",
+          "itemNm": "Amoxicillin 250mg Capsules",
+          "bcd": null,
+          "pkgUnitCd": "NT",
+          "pkg": 1,
+          "qtyUnitCd": "BA",
+          "qty": 5,
+          "prc": 120,
+          "splyAmt": 600,
+          "dcRt": 0,
+          "dcAmt": 0,
+          "taxTyCd": "B",
+          "taxblAmt": 517.24,
+          "taxAmt": 82.76,
+          "totAmt": 600
+        }
+      ]
+    }
+  },
+
+  "EXTRA_37_insertTrnsPurchase_invoice57": {
+    "tier": "extras",
+    "method": "POST",
+    "url": "{{url}}/insertTrnsPurchase",
+    "purpose": "Second purchase — different sandbox invoice number 57, references your capsules",
+    "body": {
+      "invcNo": 2,
+      "orgInvcNo": 0,
+      "spplrTin": "P052240279A",
+      "spplrBhfId": "00",
+      "spplrNm": "Novascape Technologies Limited",
+      "spplrInvcNo": "57",
+      "regTyCd": "M",
+      "pchsTyCd": "N",
+      "rcptTyCd": "P",
+      "pmtTyCd": "01",
+      "pchsSttsCd": "02",
+      "cfmDt": "{{currentDateTime}}",
+      "pchsDt": "{{currentDate}}",
+      "wrhsDt": null,
+      "cnclReqDt": null,
+      "cnclDt": null,
+      "rfdDt": null,
+      "totItemCnt": 1,
+      "taxblAmtA": 0,
+      "taxblAmtB": 10344.83,
+      "taxblAmtC": 0,
+      "taxblAmtD": 0,
+      "taxblAmtE": 0,
+      "taxRtA": 0,
+      "taxRtB": 16,
+      "taxRtC": 0,
+      "taxRtD": 0,
+      "taxRtE": 0,
+      "taxAmtA": 0,
+      "taxAmtB": 1655.17,
+      "taxAmtC": 0,
+      "taxAmtD": 0,
+      "taxAmtE": 0,
+      "totTaxblAmt": 10344.83,
+      "totTaxAmt": 1655.17,
+      "totAmt": 12000,
+      "remark": "Second purchase from sandbox supplier",
+      "regrNm": "Admin",
+      "regrId": "admin01",
+      "modrNm": "Admin",
+      "modrId": "admin01",
+      "itemList": [
+        {
+          "itemSeq": 1,
+          "itemCd": "KE2NTBA00000003",
+          "itemClsCd": "1010151700",
+          "itemNm": "Amoxicillin 250mg Capsules",
+          "bcd": null,
+          "spplrItemClsCd": "1010151700",
+          "spplrItemCd": "SUPP_KE2NTBA00000003",
+          "spplrItemNm": "Amoxicillin 250mg Capsules",
+          "pkgUnitCd": "NT",
+          "pkg": 1,
+          "qtyUnitCd": "BA",
+          "qty": 100,
+          "prc": 120,
+          "splyAmt": 12000,
+          "dcRt": 0,
+          "dcAmt": 0,
+          "taxblAmt": 10344.83,
+          "taxTyCd": "B",
+          "taxAmt": 1655.17,
+          "totAmt": 12000,
+          "itemExprDt": null
+        }
+      ]
+    }
+  },
+
+  "EXTRA_38_selectStockMoveList_afterMovements": {
+    "tier": "extras",
+    "method": "POST",
+    "url": "{{url}}/selectStockMoveList",
+    "purpose": "Re-query stock movements — now returns rich data after stockIO + sales activity. Useful for screenshots showing inventory tracking is working.",
+    "body": {
+      "tin": "{{tin}}",
+      "bhfId": "{{bhfId}}",
+      "lastReqDt": "20180101000000"
+    }
+  },
+
+  "EXTRA_39_selectInvoiceDetails_afterSale1": {
+    "tier": "extras",
+    "method": "POST",
+    "url": "{{url}}/selectInvoiceDetails",
+    "purpose": "Re-query invoice details for invcNo=1 (the sale 1 from step 24) — returns full invoice payload for the rendered receipt screenshot",
+    "body": {
+      "tin": "{{tin}}",
+      "bhfId": "{{bhfId}}",
+      "invcNo": 1
+    }
+  },
+
+  "EXTRA_40_selectTrnsSalesList_afterSales": {
+    "tier": "extras",
+    "method": "POST",
+    "url": "{{url}}/selectTrnsSalesList",
+    "purpose": "Re-query sales list — now shows your 3 sales + credit note for verification",
+    "body": {
+      "tin": "{{tin}}",
+      "bhfId": "{{bhfId}}",
+      "lastReqDt": "20180101000000"
+    }
+  },
+
+  "_VALIDATION_ROWS_COVERAGE": {
+    "23_routes_passing_in_phase_1": [
+      "Row OSCU INITIALIZATION → step 02",
+      "Row LOOK UP LIST OF CODE → step 03",
+      "Row LOOK UP ITEM CLASSIFICATION → step 04",
+      "Row LOOK UP BRANCH LIST → step 05",
+      "Row LOOK UP NOTICES LIST → step 06",
+      "Row LOOK UP TAX PAYER INFO → step 07",
+      "Row LOOK UP IMPORTED ITEM LIST → step 08",
+      "Row LOOK UP STOCK MOVEMENT → step 09",
+      "Row LOOK UP INVOICE DETAILS → step 10",
+      "Row LOOK UP TRANSACTION SALES LIST → step 11",
+      "Row LOOK UP PURCHASES SALES LIST → step 12",
+      "Row SAVE CUSTOMER BRANCH → step 13",
+      "Row LOOK UP CUSTOMER LIST → step 14",
+      "Row SAVE BRANCH USER ACCOUNT → step 15",
+      "Row SAVE BRANCH INSURANCES → step 16",
+      "Row SAVE ITEM → step 17 (or 18, 19)",
+      "Row LOOK UP PRODUCT LIST → step 20",
+      "Row SAVE ITEM COMPOSITION → step 21 (step 21b adds second composition, same row stays green)",
+      "Row SAVE STOCK IN/OUT → step 20a (raw material stockIO, sarNo=1) — step 22 (paracetamol, sarNo=2 on fresh app) keeps it green",
+      "Row SAVE STOCK MASTER INFORMATION → step 23",
+      "Row SAVE SALES TRANSACTION → step 24 (credit note step 25 keeps it green)",
+      "Row SAVE PURCHASES INFORMATION → step 26",
+      "Row UPDATE IMPORTED ITEMS → step 27"
+    ]
+  },
+
+  "_NEVER_DO": [
+    "Never re-call a green row with a body that may error — the row flips back to red.",
+    "Never use negative qty in a credit note itemList — qty must be POSITIVE (e.g. 1, not -1). The rcptTyCd:'R' tells the server it is a return; only the monetary amounts (splyAmt, taxblAmt, taxAmt, totAmt) should be negative. Negative qty causes error 'You cannot sell 0 qty'.",
+    "Never call extra /save/stockMaster or /insertStockIO between an item's initial save chain and its first sale — that breaks stockMaster persistence and the sale rejects 'does not exist in stock master'.",
+    "Never hardcode spplrInvcNo — must query /selectTrnsPurchaseSalesList (step 12) first each session and use the first returned spplrInvcNo. Invoice range shifts per session (was 56-60, became 61-65).",
+    "Never hardcode taskCd in /updateImportItem — must query /selectImportItemList (step 08) first each session and use data.itemList[0].taskCd. taskCd changes per session.",
+    "Never run composition (step 21) before stocking-in the raw material (step 20a) AND registering it in stock master (step 20b) — composition validates against stock MASTER, not stockIO alone.",
+    "Never enter a rsdQty in saveStockMaster that differs from the cumulative insertStockIO qty for that item. Mismatch causes saveStockMaster to silently fail and the item will be absent from stock master — causing composition to report 'does not exist in stock master'.",
+    "Never call insertStockIO or saveStockMaster for the composition target item (step 19 KE2PGBA) — it must stay at 0 stock so the formula (raw_stock >= cpstQty × 0) always passes.",
+    "Never try to save items with non-standard itemCd format (e.g., supplier's KE1NTXU prefix where qtyUnitCd 'XU' isn't valid 2-char code) — qtyUnitCd validation rejects them.",
+    "Never guess sarNo or rsdQty — read the error message which tells you the expected value and use it verbatim."
+  ]
+}
