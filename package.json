@@ -31,10 +31,12 @@
 		"n8nNodesApiVersion": 1,
 		"strict": true,
 		"credentials": [
-			"dist/credentials/KraEtims/KraEtimsApi.credentials.js"
+			"dist/credentials/KraEtims/KraEtimsApi.credentials.js",
+			"dist/credentials/HostPinnacle/HostPinnacleSmsApi.credentials.js"
 		],
 		"nodes": [
-			"dist/nodes/KraEtims/KraEtims.node.js"
+			"dist/nodes/KraEtims/KraEtims.node.js",
+			"dist/nodes/HostPinnacle/HostPinnacle.node.js"
 		]
 	},
 	"devDependencies": {

@@ -1,0 +1,136 @@
+{
+	"id": "931aa762-2811-4ada-ac6d-f634aecae5f7",
+	"name": "HOSTPINNACLE",
+	"values": [
+		{
+			"key": "base_url",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "user_id",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "password",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "sender_name",
+			"value": "",
+			"type": "default",
+			"enabled": false
+		},
+		{
+			"key": "sender_name",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "api_key",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "message",
+			"value": "",
+			"type": "default",
+			"enabled": false
+		},
+		{
+			"key": "message",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "message",
+			"value": "",
+			"type": "default",
+			"enabled": false
+		},
+		{
+			"key": "message",
+			"value": "",
+			"type": "default",
+			"enabled": false
+		},
+		{
+			"key": "recipient_mobile",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "recipient_mobile",
+			"value": "",
+			"type": "default",
+			"enabled": false
+		},
+		{
+			"key": "smartlink_title",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "smartlink_message",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "user_id",
+			"value": "",
+			"type": "default",
+			"enabled": false
+		},
+		{
+			"key": "password",
+			"value": "",
+			"type": "default",
+			"enabled": false
+		},
+		{
+			"key": "scheduled_time",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "group_name",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "group_id",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "user_name",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "sender_id",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"color": null,
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2026-07-21T11:20:59.460Z",
+	"_postman_exported_using": "Postman/12.20.0"
+}

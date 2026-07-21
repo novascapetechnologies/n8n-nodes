@@ -1,0 +1,18 @@
+{
+	"node": "n8n-nodes-hostpinnacle-sms",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Communication"],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://smsportal.hostpinnacle.co.ke"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://smsportal.hostpinnacle.co.ke"
+			}
+		]
+	}
+}
