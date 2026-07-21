@@ -2,3 +2,4 @@ dist
 node_modules
 vps-docker-compose.md
 Dockerfile
+error.md
