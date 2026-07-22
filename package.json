@@ -1,54 +1,59 @@
 {
-	"name": "n8n-nodes-novascape",
-	"version": "0.1.0",
-	"description": "Custom n8n nodes for services without an existing n8n integration",
-	"license": "MIT",
-	"homepage": "",
-	"keywords": [
-		"n8n-community-node-package"
-	],
-	"author": {
-		"name": "Novascape Technologies",
-		"email": "novascapetechnologies@gmail.com"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/novascapetechnologies/n8n-nodes.git"
-	},
-	"scripts": {
-		"build": "n8n-node build",
-		"build:watch": "tsc --watch",
-		"dev": "n8n-node dev",
-		"lint": "n8n-node lint",
-		"lint:fix": "n8n-node lint --fix",
-		"release": "n8n-node release",
-		"prepublishOnly": "n8n-node prerelease"
-	},
-	"files": [
-		"dist"
-	],
-	"n8n": {
-		"n8nNodesApiVersion": 1,
-		"strict": true,
-		"credentials": [
-			"dist/credentials/KraEtims/KraEtimsApi.credentials.js",
-			"dist/credentials/HostPinnacle/HostPinnacleSmsApi.credentials.js"
-		],
-		"nodes": [
-			"dist/nodes/KraEtims/KraEtims.node.js",
-			"dist/nodes/HostPinnacle/HostPinnacle.node.js"
-		]
-	},
-	"devDependencies": {
-		"@eslint/js": "9.29.0",
-		"@n8n/node-cli": "*",
-		"eslint": "9.29.0",
-		"n8n-workflow": "^2.16.0",
-		"prettier": "3.8.3",
-		"release-it": "20.2.0",
-		"typescript": "5.9.3"
-	},
-	"peerDependencies": {
-		"n8n-workflow": "*"
-	}
+  "name": "n8n-nodes-novascape",
+  "version": "0.1.0",
+  "description": "Custom n8n nodes for services without an existing n8n integration",
+  "license": "MIT",
+  "homepage": "",
+  "keywords": [
+    "n8n-community-node-package"
+  ],
+  "author": {
+    "name": "Novascape Technologies",
+    "email": "novascapetechnologies@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/novascapetechnologies/n8n-nodes.git"
+  },
+  "scripts": {
+    "build": "n8n-node build",
+    "build:watch": "tsc --watch",
+    "dev": "n8n-node dev",
+    "lint": "n8n-node lint",
+    "lint:fix": "n8n-node lint --fix",
+    "release": "n8n-node release",
+    "prepublishOnly": "n8n-node prerelease"
+  },
+  "files": [
+    "dist"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "strict": true,
+    "credentials": [
+      "dist/credentials/KraEtims/KraEtimsApi.credentials.js",
+      "dist/credentials/HostPinnacle/HostPinnacleSmsApi.credentials.js",
+      "dist/credentials/AWSSES/AwsSesApi.credentials.js",
+      "dist/credentials/PharmaSync/PharmaSyncApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/KraEtims/KraEtims.node.js",
+      "dist/nodes/HostPinnacle/HostPinnacle.node.js",
+      "dist/nodes/AWSSES/AwsSes.node.js",
+      "dist/nodes/PharmaSync/PharmaSync.node.js"
+    ]
+  },
+  "devDependencies": {
+    "@eslint/js": "9.29.0",
+    "@n8n/node-cli": "*",
+    "@types/node": "^20.0.0",
+    "eslint": "9.29.0",
+    "n8n-workflow": "^2.16.0",
+    "prettier": "3.8.3",
+    "release-it": "20.2.0",
+    "typescript": "5.9.3"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  }
 }

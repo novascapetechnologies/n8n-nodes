@@ -1,0 +1,67 @@
+{
+	"id": "aws-ses-novascape-env",
+	"name": "AWS SES (Novascape)",
+	"values": [
+		{
+			"key": "aws_simple_email_service_base_url",
+			"value": "https://email.us-east-1.amazonaws.com",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "aws_simple_email_service_service",
+			"value": "ses",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "aws_simple_email_service_region",
+			"value": "us-east-1",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "accessKey",
+			"value": "",
+			"type": "secret",
+			"enabled": true
+		},
+		{
+			"key": "secretKey",
+			"value": "",
+			"type": "secret",
+			"enabled": true
+		},
+		{
+			"key": "sessionToken",
+			"value": "",
+			"type": "secret",
+			"enabled": false
+		},
+		{
+			"key": "senderEmail",
+			"value": "sender@example.com",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "recipientEmail",
+			"value": "recipient@example.com",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "configurationSetName",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "templateName",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment"
+}

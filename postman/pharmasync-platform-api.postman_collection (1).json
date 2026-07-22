@@ -1,0 +1,956 @@
+{
+  "info": {
+    "_postman_id": "pharmasync-platform-api-v1",
+    "name": "PharmaSync Platform Admin API v1",
+    "description": "REST API for PharmaSync platform administrators — tenants, subscriptions, organizations, users, support, messaging, automations, data management, system, and roles. Supports OAuth2 client credentials and platform API keys.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://app.pharmasync.co.ke/api/v1/platform",
+      "type": "string"
+    },
+    {
+      "key": "client_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "client_secret",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "api_key",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "access_token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{access_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Auto-refresh OAuth2 token if expired",
+          "const tokenExpiry = pm.collectionVariables.get('token_expiry');",
+          "if (!tokenExpiry || Date.now() > parseInt(tokenExpiry)) {",
+          "  const clientId = pm.collectionVariables.get('client_id');",
+          "  const clientSecret = pm.collectionVariables.get('client_secret');",
+          "  if (!clientId || !clientSecret) return;",
+          "  pm.sendRequest({",
+          "    url: pm.collectionVariables.get('base_url') + '/auth/token',",
+          "    method: 'POST',",
+          "    header: { 'Content-Type': 'application/x-www-form-urlencoded' },",
+          "    body: { mode: 'urlencoded', urlencoded: [",
+          "      { key: 'grant_type', value: 'client_credentials' },",
+          "      { key: 'client_id', value: clientId },",
+          "      { key: 'client_secret', value: clientSecret }",
+          "    ]}",
+          "  }, (err, res) => {",
+          "    if (!err && res.code === 200) {",
+          "      const json = res.json();",
+          "      pm.collectionVariables.set('access_token', json.access_token);",
+          "      pm.collectionVariables.set('token_expiry', String(Date.now() + (json.expires_in - 60) * 1000));",
+          "    }",
+          "  });",
+          "}"
+        ]
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Get Access Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "  const json = pm.response.json();",
+                  "  pm.collectionVariables.set('access_token', json.access_token);",
+                  "  pm.collectionVariables.set('token_expiry', String(Date.now() + (json.expires_in - 60) * 1000));",
+                  "  pm.test('Token received', () => pm.expect(json.access_token).to.exist);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                },
+                {
+                  "key": "client_id",
+                  "value": "{{client_id}}"
+                },
+                {
+                  "key": "client_secret",
+                  "value": "{{client_secret}}"
+                },
+                {
+                  "key": "scope",
+                  "value": "dashboard:read tenants:read tenants:write subscriptions:read organizations:read platform_users:read support:read messaging:read messaging:write"
+                }
+              ]
+            },
+            "url": "{{base_url}}/auth/token",
+            "description": "Exchange platform client credentials for a JWT access token (valid 1 hour)."
+          }
+        },
+        {
+          "name": "Revoke Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"token\": \"{{access_token}}\"}"
+            },
+            "url": "{{base_url}}/auth/revoke"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Dashboard",
+      "item": [
+        {
+          "name": "Get Dashboard Stats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/dashboard/stats"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tenants",
+      "item": [
+        {
+          "name": "List Tenants",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tenants?page=1&limit=20",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Tenant by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/tenants/:tenantId"
+          }
+        },
+        {
+          "name": "Update Tenant",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Pharmacy Name\",\n  \"phone\": \"+254700000000\"\n}"
+            },
+            "url": "{{base_url}}/tenants/:tenantId"
+          }
+        },
+        {
+          "name": "Suspend Tenant",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": "{{base_url}}/tenants/:tenantId/suspend"
+          }
+        },
+        {
+          "name": "Reactivate Tenant",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": "{{base_url}}/tenants/:tenantId/reactivate"
+          }
+        },
+        {
+          "name": "Get Tenant Subscription",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/tenants/:tenantId/subscription"
+          }
+        },
+        {
+          "name": "Update Tenant Subscription",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"ACTIVE\"\n}"
+            },
+            "url": "{{base_url}}/tenants/:tenantId/subscription"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Subscriptions",
+      "item": [
+        {
+          "name": "List Subscriptions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/subscriptions?status=ACTIVE"
+          }
+        },
+        {
+          "name": "List Plans",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/subscriptions/plans"
+          }
+        },
+        {
+          "name": "Create Plan",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"GROWTH\",\n  \"monthlyPrice\": 4500,\n  \"features\": [\"POS\", \"Inventory\"]\n}"
+            },
+            "url": "{{base_url}}/subscriptions/plans"
+          }
+        },
+        {
+          "name": "Update Plan",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"monthlyPrice\": 5000\n}"
+            },
+            "url": "{{base_url}}/subscriptions/plans/:planId"
+          }
+        },
+        {
+          "name": "List Discounts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/subscriptions/discounts"
+          }
+        },
+        {
+          "name": "Create Discount",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"planId\": \"plan-uuid\",\n  \"code\": \"LAUNCH20\",\n  \"discount\": \"PERCENTAGE\",\n  \"discountMonthlyValue\": 20\n}"
+            },
+            "url": "{{base_url}}/subscriptions/discounts"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Organizations",
+      "item": [
+        {
+          "name": "List Organizations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/organizations?page=1&limit=20"
+          }
+        },
+        {
+          "name": "Create Organization",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Acme Pharmacy Group\",\n  \"slug\": \"acme-pharmacy-group\"\n}"
+            },
+            "url": "{{base_url}}/organizations"
+          }
+        },
+        {
+          "name": "Get Organization by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/organizations/:organizationId"
+          }
+        },
+        {
+          "name": "Update Organization",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"description\": \"Updated description\"\n}"
+            },
+            "url": "{{base_url}}/organizations/:organizationId"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "List Platform Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/users/platform"
+          }
+        },
+        {
+          "name": "Create Platform User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"newstaff@pharmasync.co.ke\",\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Doe\",\n  \"role\": \"SUPPORT\"\n}"
+            },
+            "url": "{{base_url}}/users/platform"
+          }
+        },
+        {
+          "name": "Get Platform User by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/users/platform/:platformUserId"
+          }
+        },
+        {
+          "name": "Update Platform User",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"isActive\": false\n}"
+            },
+            "url": "{{base_url}}/users/platform/:platformUserId"
+          }
+        },
+        {
+          "name": "List Tenant Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/users/tenant?tenantId="
+          }
+        }
+      ]
+    },
+    {
+      "name": "Roles",
+      "item": [
+        {
+          "name": "List Platform Roles",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/roles"
+          }
+        },
+        {
+          "name": "Create Platform Role",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Regional Support Lead\",\n  \"permissions\": [\"support.view_tickets\", \"support.manage_tickets\"]\n}"
+            },
+            "url": "{{base_url}}/roles"
+          }
+        },
+        {
+          "name": "Update Platform Role",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"permissions\": [\"support.view_tickets\"]\n}"
+            },
+            "url": "{{base_url}}/roles/:roleId"
+          }
+        },
+        {
+          "name": "Delete Platform Role",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{base_url}}/roles/:roleId"
+          }
+        },
+        {
+          "name": "List Role Defaults",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/roles/defaults"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Support",
+      "item": [
+        {
+          "name": "List Tickets",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/support/tickets?status=OPEN"
+          }
+        },
+        {
+          "name": "Create Ticket",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tenantId\": \"tenant-uuid\",\n  \"subject\": \"Login issue\",\n  \"description\": \"Cannot log in\",\n  \"category\": \"TECHNICAL\"\n}"
+            },
+            "url": "{{base_url}}/support/tickets"
+          }
+        },
+        {
+          "name": "Get Ticket by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/support/tickets/:ticketId"
+          }
+        },
+        {
+          "name": "Update Ticket",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"RESOLVED\"\n}"
+            },
+            "url": "{{base_url}}/support/tickets/:ticketId"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Messaging",
+      "item": [
+        {
+          "name": "List Email Sends",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/messaging/emails?page=1&limit=20"
+          }
+        },
+        {
+          "name": "Compose Email",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"to\": [\"owner@pharmacy.co.ke\"],\n  \"subject\": \"Platform update\",\n  \"html\": \"<p>Hello from PharmaSync</p>\"\n}"
+            },
+            "url": "{{base_url}}/messaging/emails"
+          }
+        },
+        {
+          "name": "Send SMS",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mobile\": \"+254712345678\",\n  \"message\": \"Your PharmaSync account has been updated.\"\n}"
+            },
+            "url": "{{base_url}}/messaging/sms"
+          }
+        },
+        {
+          "name": "Message History",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/messaging/history?page=1&limit=20"
+          }
+        },
+        {
+          "name": "List Templates",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/messaging/templates"
+          }
+        },
+        {
+          "name": "Create Template",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tenantId\": \"tenant-uuid\",\n  \"name\": \"Welcome SMS\",\n  \"slug\": \"welcome-sms\",\n  \"channel\": \"SMS\",\n  \"category\": \"INTERNAL\",\n  \"content\": \"Welcome to PharmaSync, {{name}}!\"\n}"
+            },
+            "url": "{{base_url}}/messaging/templates"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Automations",
+      "item": [
+        {
+          "name": "List Automations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/automations?page=1&limit=20"
+          }
+        },
+        {
+          "name": "Create Automation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Trial expiry reminder\",\n  \"category\": \"EVENT_AUTOMATION\",\n  \"triggerType\": \"EVENT\",\n  \"triggerConfig\": {},\n  \"workflowJson\": {},\n  \"channels\": [\"EMAIL\"]\n}"
+            },
+            "url": "{{base_url}}/automations"
+          }
+        },
+        {
+          "name": "Get Automation by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/automations/:automationId"
+          }
+        },
+        {
+          "name": "Update Automation",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"isActive\": true\n}"
+            },
+            "url": "{{base_url}}/automations/:automationId"
+          }
+        },
+        {
+          "name": "Delete Automation",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{base_url}}/automations/:automationId"
+          }
+        },
+        {
+          "name": "Automation Analytics",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/automations/analytics"
+          }
+        },
+        {
+          "name": "Get Automation Settings",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/automations/settings"
+          }
+        },
+        {
+          "name": "Update Automation Settings",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quietHoursEnabled\": true\n}"
+            },
+            "url": "{{base_url}}/automations/settings"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Data Management",
+      "item": [
+        {
+          "name": "List Product Catalog",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/catalog/product-catalog?page=1&limit=20&search="
+          }
+        },
+        {
+          "name": "Create Catalog Item",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Paracetamol 500mg\",\n  \"category\": \"Analgesics\",\n  \"catalogType\": \"PHARMA\"\n}"
+            },
+            "url": "{{base_url}}/catalog/product-catalog"
+          }
+        },
+        {
+          "name": "Get Catalog Item by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/catalog/product-catalog/:id"
+          }
+        },
+        {
+          "name": "Update Catalog Item",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"manufacturer\": \"GSK\"\n}"
+            },
+            "url": "{{base_url}}/catalog/product-catalog/:id"
+          }
+        },
+        {
+          "name": "Delete Catalog Item",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{base_url}}/catalog/product-catalog/:id"
+          }
+        },
+        {
+          "name": "List Insurance Providers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/catalog/insurance-providers"
+          }
+        },
+        {
+          "name": "Create Insurance Provider",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"providerId\": \"jubilee_health_insurance\",\n  \"displayName\": \"Jubilee Health Insurance\",\n  \"shortName\": \"Jubilee\"\n}"
+            },
+            "url": "{{base_url}}/catalog/insurance-providers"
+          }
+        },
+        {
+          "name": "Update Insurance Provider",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"hasApiAccess\": true\n}"
+            },
+            "url": "{{base_url}}/catalog/insurance-providers/:id"
+          }
+        },
+        {
+          "name": "List Integration Providers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/catalog/integration-providers"
+          }
+        },
+        {
+          "name": "Create Integration Provider",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"slug\": \"twilio-sms\",\n  \"name\": \"Twilio\",\n  \"displayName\": \"Twilio SMS\",\n  \"type\": \"SMS\",\n  \"authMethod\": \"API_KEY\",\n  \"configSchema\": {}\n}"
+            },
+            "url": "{{base_url}}/catalog/integration-providers"
+          }
+        },
+        {
+          "name": "Update Integration Provider",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"description\": \"Updated\"\n}"
+            },
+            "url": "{{base_url}}/catalog/integration-providers/:id"
+          }
+        }
+      ]
+    },
+    {
+      "name": "System",
+      "item": [
+        {
+          "name": "System Health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/system/health"
+          }
+        },
+        {
+          "name": "System Logs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/system/logs?level=ERROR"
+          }
+        },
+        {
+          "name": "Audit Trail",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/system/audit?entity=Tenant"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Analytics",
+      "item": [
+        {
+          "name": "Analytics Overview",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/analytics/overview"
+          }
+        },
+        {
+          "name": "Usage Analytics",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/analytics/usage"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1925 @@
+{
+  "info": {
+    "_postman_id": "66a89f39-696a-4743-aba4-e3c44fc52555",
+    "name": "AWS SES v2",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "31008811",
+    "_collection_link": "https://go.postman.co/collection/31008811-66a89f39-696a-4743-aba4-e3c44fc52555?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Get Account Details",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "awsv4",
+          "awsv4": [
+            {
+              "key": "service",
+              "value": "{{service}}",
+              "type": "string"
+            },
+            {
+              "key": "region",
+              "value": "{{aws_region}}",
+              "type": "string"
+            },
+            {
+              "key": "secretKey",
+              "value": "{{secret_key}}",
+              "type": "string"
+            },
+            {
+              "key": "accessKey",
+              "value": "{{access_key}}",
+              "type": "string"
+            },
+            {
+              "key": "addAuthDataToQuery",
+              "value": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/v2/email/account",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "v2",
+            "email",
+            "account"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Success",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/v2/email/account",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v2",
+                "email",
+                "account"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": ":status",
+              "value": 200
+            },
+            {
+              "key": "date",
+              "value": "Fri, 15 May 2026 02:44:02 GMT"
+            },
+            {
+              "key": "content-type",
+              "value": "application/x-amz-json-1.1"
+            },
+            {
+              "key": "content-length",
+              "value": "514"
+            },
+            {
+              "key": "x-amzn-requestid",
+              "value": "767f2f93-3c3a-40b2-a2fc-4c22983071da"
+            },
+            {
+              "key": "content-encoding",
+              "value": "gzip"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"DedicatedIpAutoWarmupEnabled\": true,\n    \"Details\": {\n        \"AdditionalContactEmailAddresses\": [\n            \"novascapetechnologies@gmail.com\"\n        ],\n        \"ContactLanguage\": \"EN\",\n        \"MailType\": \"TRANSACTIONAL\",\n        \"ReviewDetails\": {\n            \"CaseId\": \"177799265600563\",\n            \"Status\": \"GRANTED\"\n        },\n        \"UseCaseDescription\": null,\n        \"WebsiteURL\": \"https://novascape.co.ke\"\n    },\n    \"EnforcementStatus\": \"HEALTHY\",\n    \"ProductionAccessEnabled\": true,\n    \"SendQuota\": {\n        \"Max24HourSend\": 50000,\n        \"MaxSendRate\": 14,\n        \"SentLast24Hours\": 1\n    },\n    \"SendingEnabled\": true,\n    \"SuppressionAttributes\": {\n        \"SuppressedReasons\": [\n            \"BOUNCE\",\n            \"COMPLAINT\"\n        ],\n        \"ValidationAttributes\": {\n            \"ConditionThreshold\": {\n                \"ConditionThresholdEnabled\": \"ENABLED\",\n                \"OverallConfidenceThreshold\": {\n                    \"ConfidenceVerdictThreshold\": \"MANAGED\"\n                }\n            }\n        }\n    },\n    \"VdmAttributes\": {\n        \"DashboardAttributes\": {\n            \"EngagementMetrics\": \"ENABLED\"\n        },\n        \"GuardianAttributes\": {\n            \"OptimizedSharedDelivery\": \"ENABLED\"\n        },\n        \"MonitorIPBlocklists\": \"DISABLED\",\n        \"VdmEnabled\": \"ENABLED\"\n    }\n}"
+        },
+        {
+          "name": "Unauthorized",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/v2/email/account",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v2",
+                "email",
+                "account"
+              ]
+            }
+          },
+          "status": "Forbidden",
+          "code": 403,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": ":status",
+              "value": 403
+            },
+            {
+              "key": "date",
+              "value": "Fri, 15 May 2026 02:45:18 GMT"
+            },
+            {
+              "key": "content-type",
+              "value": "application/x-amz-json-1.1"
+            },
+            {
+              "key": "content-length",
+              "value": "158"
+            },
+            {
+              "key": "x-amzn-requestid",
+              "value": "29c9a969-7912-42cb-86c7-e131fb579f01"
+            },
+            {
+              "key": "content-encoding",
+              "value": "gzip"
+            },
+            {
+              "key": "x-amzn-errortype",
+              "value": "AccessDeniedException"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"Message\": \"User: arn:aws:iam::116137269484:user/caesar is not authorized to perform: ses:GetAccount on resource: * because no identity-based policy allows the ses:GetAccount action\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "List Identities",
+      "request": {
+        "auth": {
+          "type": "awsv4",
+          "awsv4": [
+            {
+              "key": "service",
+              "value": "{{service}}",
+              "type": "string"
+            },
+            {
+              "key": "region",
+              "value": "{{aws_region}}",
+              "type": "string"
+            },
+            {
+              "key": "secretKey",
+              "value": "{{secret_key}}",
+              "type": "string"
+            },
+            {
+              "key": "accessKey",
+              "value": "{{access_key}}",
+              "type": "string"
+            },
+            {
+              "key": "addAuthDataToQuery",
+              "value": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/v2/email/identities",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "v2",
+            "email",
+            "identities"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Unauthorized",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/v2/email/identities",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v2",
+                "email",
+                "identities"
+              ]
+            }
+          },
+          "status": "Forbidden",
+          "code": 403,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": ":status",
+              "value": 403
+            },
+            {
+              "key": "date",
+              "value": "Fri, 15 May 2026 02:46:04 GMT"
+            },
+            {
+              "key": "content-type",
+              "value": "application/x-amz-json-1.1"
+            },
+            {
+              "key": "content-length",
+              "value": "163"
+            },
+            {
+              "key": "x-amzn-requestid",
+              "value": "5c18be3e-72d1-4f6a-8a57-89462afe730c"
+            },
+            {
+              "key": "content-encoding",
+              "value": "gzip"
+            },
+            {
+              "key": "x-amzn-errortype",
+              "value": "AccessDeniedException"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"Message\": \"User: arn:aws:iam::116137269484:user/caesar is not authorized to perform: ses:ListEmailIdentities on resource: * because no identity-based policy allows the ses:ListEmailIdentities action\"\n}"
+        },
+        {
+          "name": "Success",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/v2/email/identities",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v2",
+                "email",
+                "identities"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": ":status",
+              "value": 200
+            },
+            {
+              "key": "date",
+              "value": "Fri, 15 May 2026 02:46:57 GMT"
+            },
+            {
+              "key": "content-type",
+              "value": "application/x-amz-json-1.1"
+            },
+            {
+              "key": "content-length",
+              "value": "243"
+            },
+            {
+              "key": "x-amzn-requestid",
+              "value": "9aa06ec0-f31d-4031-8cd5-9c6934698a02"
+            },
+            {
+              "key": "content-encoding",
+              "value": "gzip"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"EmailIdentities\": [\n        {\n            \"IdentityName\": \"pharmasync.co.ke\",\n            \"IdentityType\": \"DOMAIN\",\n            \"SendingEnabled\": true,\n            \"VdmAttributes\": {\n                \"MonitorBlocklists\": \"DISABLED\",\n                \"MonitorPanelData\": \"DISABLED\"\n            },\n            \"VerificationStatus\": \"SUCCESS\"\n        },\n        {\n            \"IdentityName\": \"novascape.co.ke\",\n            \"IdentityType\": \"DOMAIN\",\n            \"SendingEnabled\": true,\n            \"VdmAttributes\": {\n                \"MonitorBlocklists\": \"DISABLED\",\n                \"MonitorPanelData\": \"DISABLED\"\n            },\n            \"VerificationStatus\": \"SUCCESS\"\n        },\n        {\n            \"IdentityName\": \"invosync.co.ke\",\n            \"IdentityType\": \"DOMAIN\",\n            \"SendingEnabled\": true,\n            \"VdmAttributes\": {\n                \"MonitorBlocklists\": \"DISABLED\",\n                \"MonitorPanelData\": \"DISABLED\"\n            },\n            \"VerificationStatus\": \"SUCCESS\"\n        },\n        {\n            \"IdentityName\": \"novascapetechnologies@gmail.com\",\n            \"IdentityType\": \"EMAIL_ADDRESS\",\n            \"SendingEnabled\": true,\n            \"VdmAttributes\": {\n                \"MonitorBlocklists\": \"DISABLED\",\n                \"MonitorPanelData\": \"DISABLED\"\n            },\n            \"VerificationStatus\": \"SUCCESS\"\n        }\n    ],\n    \"NextToken\": null\n}"
+        }
+      ]
+    },
+    {
+      "name": "Get Identity Details",
+      "request": {
+        "auth": {
+          "type": "awsv4",
+          "awsv4": [
+            {
+              "key": "service",
+              "value": "{{service}}",
+              "type": "string"
+            },
+            {
+              "key": "region",
+              "value": "{{aws_region}}",
+              "type": "string"
+            },
+            {
+              "key": "secretKey",
+              "value": "{{secret_key}}",
+              "type": "string"
+            },
+            {
+              "key": "accessKey",
+              "value": "{{access_key}}",
+              "type": "string"
+            },
+            {
+              "key": "addAuthDataToQuery",
+              "value": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/v2/email/identities/{{identity_example}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "v2",
+            "email",
+            "identities",
+            "{{identity_example}}"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Success",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/v2/email/identities/{{identity_example}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v2",
+                "email",
+                "identities",
+                "{{identity_example}}"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": ":status",
+              "value": 200
+            },
+            {
+              "key": "date",
+              "value": "Fri, 15 May 2026 02:48:55 GMT"
+            },
+            {
+              "key": "content-type",
+              "value": "application/x-amz-json-1.1"
+            },
+            {
+              "key": "content-length",
+              "value": "609"
+            },
+            {
+              "key": "x-amzn-requestid",
+              "value": "bed41898-41ab-415e-a896-068a70606bb4"
+            },
+            {
+              "key": "content-encoding",
+              "value": "gzip"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"ConfigurationSetName\": null,\n    \"DkimAttributes\": {\n        \"CurrentSigningKeyLength\": \"RSA_2048_BIT\",\n        \"LastKeyGenerationTimestamp\": 1777993588.999,\n        \"NextSigningKeyLength\": \"RSA_2048_BIT\",\n        \"SigningAttributesOrigin\": \"AWS_SES\",\n        \"SigningEnabled\": true,\n        \"SigningHostedZone\": \"dkim.amazonses.com\",\n        \"Status\": \"SUCCESS\",\n        \"Tokens\": [\n            \"lynnbdns7e4d2fjydbbejs2xyebq3puv\",\n            \"qftlhui425lj6fsqtcyvbcnmyxhyoqjw\",\n            \"wnvw75odxnwl64ml6jxs7v6uruvsxcrv\"\n        ]\n    },\n    \"FeedbackForwardingStatus\": true,\n    \"IdentityType\": \"DOMAIN\",\n    \"MailFromAttributes\": {\n        \"BehaviorOnMxFailure\": \"USE_DEFAULT_VALUE\",\n        \"MailFromDomain\": \"mail.pharmasync.co.ke\",\n        \"MailFromDomainStatus\": \"SUCCESS\"\n    },\n    \"Policies\": {},\n    \"Tags\": [],\n    \"VdmAttributes\": {\n        \"MonitorBlocklists\": \"DISABLED\",\n        \"MonitorPanelData\": \"DISABLED\"\n    },\n    \"VerificationInfo\": {\n        \"ErrorType\": \"TYPE_NOT_FOUND\",\n        \"LastCheckedTimestamp\": 1778800652.876,\n        \"LastSuccessTimestamp\": 1778800654.01,\n        \"SOARecord\": {\n            \"AdminEmail\": \"dns.cloudflare.com\",\n            \"PrimaryNameServer\": \"luciane.ns.cloudflare.com\",\n            \"SerialNumber\": 2403479430\n        }\n    },\n    \"VerificationStatus\": \"SUCCESS\",\n    \"VerifiedForSendingStatus\": true\n}"
+        },
+        {
+          "name": "Unauthorized",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/v2/email/identities/{{identity_example}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v2",
+                "email",
+                "identities",
+                "{{identity_example}}"
+              ]
+            }
+          },
+          "status": "Forbidden",
+          "code": 403,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": ":status",
+              "value": 403
+            },
+            {
+              "key": "date",
+              "value": "Fri, 15 May 2026 02:49:14 GMT"
+            },
+            {
+              "key": "content-type",
+              "value": "application/x-amz-json-1.1"
+            },
+            {
+              "key": "content-length",
+              "value": "189"
+            },
+            {
+              "key": "x-amzn-requestid",
+              "value": "ad06ee11-6917-4d88-8638-6240e3c4c3ff"
+            },
+            {
+              "key": "content-encoding",
+              "value": "gzip"
+            },
+            {
+              "key": "x-amzn-errortype",
+              "value": "AccessDeniedException"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"Message\": \"User: arn:aws:iam::116137269484:user/caesar is not authorized to perform: ses:GetEmailIdentity on resource: arn:aws:ses:eu-west-1:116137269484:identity/pharmasync.co.ke because no identity-based policy allows the ses:GetEmailIdentity action\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Send Basic Email",
+      "request": {
+        "auth": {
+          "type": "awsv4",
+          "awsv4": [
+            {
+              "key": "service",
+              "value": "{{service}}",
+              "type": "string"
+            },
+            {
+              "key": "region",
+              "value": "{{aws_region}}",
+              "type": "string"
+            },
+            {
+              "key": "secretKey",
+              "value": "{{secret_key}}",
+              "type": "string"
+            },
+            {
+              "key": "accessKey",
+              "value": "{{access_key}}",
+              "type": "string"
+            },
+            {
+              "key": "addAuthDataToQuery",
+              "value": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "",
+            "value": "",
+            "type": "text",
+            "disabled": true
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"FromEmailAddress\": \"{{sender_email}}\",\r\n  \"Destination\": {\r\n    \"ToAddresses\": [\r\n      \"{{recipient_email}}\"\r\n    ]\r\n  },\r\n  \"Content\": {\r\n    \"Simple\": {\r\n      \"Subject\": {\r\n        \"Data\": \"SES SDK Test\"\r\n      },\r\n      \"Body\": {\r\n        \"Html\": {\r\n          \"Data\": \"<h1>SES Production Test</h1><p>Working successfully.</p>\"\r\n        }\r\n      }\r\n    }\r\n  }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/v2/email/outbound-emails",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "v2",
+            "email",
+            "outbound-emails"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Success",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "value": "",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"FromEmailAddress\": \"{{sender_email}}\",\r\n  \"Destination\": {\r\n    \"ToAddresses\": [\r\n      \"{{recipient_email}}\"\r\n    ]\r\n  },\r\n  \"Content\": {\r\n    \"Simple\": {\r\n      \"Subject\": {\r\n        \"Data\": \"SES SDK Test\"\r\n      },\r\n      \"Body\": {\r\n        \"Html\": {\r\n          \"Data\": \"<h1>SES Production Test</h1><p>Working successfully.</p>\"\r\n        }\r\n      }\r\n    }\r\n  }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/v2/email/outbound-emails",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v2",
+                "email",
+                "outbound-emails"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": ":status",
+              "value": 200
+            },
+            {
+              "key": "date",
+              "value": "Fri, 15 May 2026 02:52:44 GMT"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json"
+            },
+            {
+              "key": "content-length",
+              "value": "88"
+            },
+            {
+              "key": "x-amzn-requestid",
+              "value": "071aeaef-403c-48e3-a022-378ac9701311"
+            },
+            {
+              "key": "content-encoding",
+              "value": "gzip"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"MessageId\": \"0102019e298cf654-6b075a78-2cdb-4c5c-8e98-34589d0eb460-000000\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Send Text Email",
+      "request": {
+        "auth": {
+          "type": "awsv4",
+          "awsv4": [
+            {
+              "key": "service",
+              "value": "{{service}}",
+              "type": "string"
+            },
+            {
+              "key": "region",
+              "value": "{{aws_region}}",
+              "type": "string"
+            },
+            {
+              "key": "secretKey",
+              "value": "{{secret_key}}",
+              "type": "string"
+            },
+            {
+              "key": "accessKey",
+              "value": "{{access_key}}",
+              "type": "string"
+            },
+            {
+              "key": "addAuthDataToQuery",
+              "value": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "",
+            "value": "",
+            "type": "text",
+            "disabled": true
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"FromEmailAddress\": \"{{sender_email}}\",\r\n  \"Destination\": {\r\n    \"ToAddresses\": [\r\n      \"{{recipient_email}}\"\r\n    ]\r\n  },\r\n  \"Content\": {\r\n    \"Simple\": {\r\n      \"Subject\": {\r\n        \"Data\": \"Plain Text Test\"\r\n      },\r\n      \"Body\": {\r\n        \"Text\": {\r\n          \"Data\": \"SES text email works.\"\r\n        }\r\n      }\r\n    }\r\n  }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/v2/email/outbound-emails",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "v2",
+            "email",
+            "outbound-emails"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Success",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "value": "",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"FromEmailAddress\": \"{{sender_email}}\",\r\n  \"Destination\": {\r\n    \"ToAddresses\": [\r\n      \"{{recipient_email}}\"\r\n    ]\r\n  },\r\n  \"Content\": {\r\n    \"Simple\": {\r\n      \"Subject\": {\r\n        \"Data\": \"Plain Text Test\"\r\n      },\r\n      \"Body\": {\r\n        \"Text\": {\r\n          \"Data\": \"SES text email works.\"\r\n        }\r\n      }\r\n    }\r\n  }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/v2/email/outbound-emails",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v2",
+                "email",
+                "outbound-emails"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": ":status",
+              "value": 200
+            },
+            {
+              "key": "date",
+              "value": "Fri, 15 May 2026 02:54:14 GMT"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json"
+            },
+            {
+              "key": "content-length",
+              "value": "88"
+            },
+            {
+              "key": "x-amzn-requestid",
+              "value": "d4e94a23-6398-49e1-a875-7de08aa560ff"
+            },
+            {
+              "key": "content-encoding",
+              "value": "gzip"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"MessageId\": \"0102019e298e55fa-3d48c71c-a624-4cd2-816e-574a95494573-000000\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Send Email with Configuration Set",
+      "request": {
+        "auth": {
+          "type": "awsv4",
+          "awsv4": [
+            {
+              "key": "service",
+              "value": "{{service}}",
+              "type": "string"
+            },
+            {
+              "key": "region",
+              "value": "{{aws_region}}",
+              "type": "string"
+            },
+            {
+              "key": "secretKey",
+              "value": "{{secret_key}}",
+              "type": "string"
+            },
+            {
+              "key": "accessKey",
+              "value": "{{access_key}}",
+              "type": "string"
+            },
+            {
+              "key": "addAuthDataToQuery",
+              "value": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "",
+            "value": "",
+            "type": "text",
+            "disabled": true
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"FromEmailAddress\": \"{{sender_email}}\",\r\n  \"ConfigurationSetName\": \"{{config_set}}\",\r\n  \"Destination\": {\r\n    \"ToAddresses\": [\r\n      \"{{recipient_email}}\"\r\n    ]\r\n  },\r\n  \"Content\": {\r\n    \"Simple\": {\r\n      \"Subject\": {\r\n        \"Data\": \"Tracked Email\"\r\n      },\r\n      \"Body\": {\r\n        \"Html\": {\r\n          \"Data\": \"<h2>Tracking Enabled</h2>\"\r\n        }\r\n      }\r\n    }\r\n  }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/v2/email/outbound-emails",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "v2",
+            "email",
+            "outbound-emails"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Success",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "value": "",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"FromEmailAddress\": \"{{sender_email}}\",\r\n  \"Destination\": {\r\n    \"ToAddresses\": [\r\n      \"{{recipient_email}}\"\r\n    ]\r\n  },\r\n  \"Content\": {\r\n    \"Simple\": {\r\n      \"Subject\": {\r\n        \"Data\": \"Plain Text Test\"\r\n      },\r\n      \"Body\": {\r\n        \"Text\": {\r\n          \"Data\": \"SES text email works.\"\r\n        }\r\n      }\r\n    }\r\n  }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/v2/email/outbound-emails",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v2",
+                "email",
+                "outbound-emails"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": ":status",
+              "value": 200
+            },
+            {
+              "key": "date",
+              "value": "Fri, 15 May 2026 02:54:14 GMT"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json"
+            },
+            {
+              "key": "content-length",
+              "value": "88"
+            },
+            {
+              "key": "x-amzn-requestid",
+              "value": "d4e94a23-6398-49e1-a875-7de08aa560ff"
+            },
+            {
+              "key": "content-encoding",
+              "value": "gzip"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"MessageId\": \"0102019e298e55fa-3d48c71c-a624-4cd2-816e-574a95494573-000000\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Create Email Template",
+      "request": {
+        "auth": {
+          "type": "awsv4",
+          "awsv4": [
+            {
+              "key": "service",
+              "value": "{{service}}",
+              "type": "string"
+            },
+            {
+              "key": "region",
+              "value": "{{aws_region}}",
+              "type": "string"
+            },
+            {
+              "key": "secretKey",
+              "value": "{{secret_key}}",
+              "type": "string"
+            },
+            {
+              "key": "accessKey",
+              "value": "{{access_key}}",
+              "type": "string"
+            },
+            {
+              "key": "addAuthDataToQuery",
+              "value": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "",
+            "value": "",
+            "type": "text",
+            "disabled": true
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"TemplateName\": \"welcome-template\",\r\n    \"TemplateContent\": {\r\n        \"Subject\": \"Welcome {{name}}\",\r\n        \"Html\": \"<h1>Hello {{name}}</h1>\",\r\n        \"Text\": \"Hello {{name}}\"\r\n    }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/v2/email/templates",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "v2",
+            "email",
+            "templates"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Unauthorized",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "value": "",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"TemplateName\": \"welcome-template\",\r\n    \"TemplateContent\": {\r\n        \"Subject\": \"Welcome {{name}}\",\r\n        \"Html\": \"<h1>Hello {{name}}</h1>\",\r\n        \"Text\": \"Hello {{name}}\"\r\n    }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/v2/email/templates",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v2",
+                "email",
+                "templates"
+              ]
+            }
+          },
+          "status": "Forbidden",
+          "code": 403,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": ":status",
+              "value": 403
+            },
+            {
+              "key": "date",
+              "value": "Fri, 15 May 2026 02:58:09 GMT"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json"
+            },
+            {
+              "key": "content-length",
+              "value": "189"
+            },
+            {
+              "key": "x-amzn-requestid",
+              "value": "53b786a1-b4e5-42fd-a257-a4af9791e9e4"
+            },
+            {
+              "key": "content-encoding",
+              "value": "gzip"
+            },
+            {
+              "key": "x-amzn-errortype",
+              "value": "AccessDeniedException"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"Message\": \"User: arn:aws:iam::116137269484:user/caesar is not authorized to perform: ses:CreateEmailTemplate on resource: arn:aws:ses:eu-west-1:116137269484:template/welcome-template because no identity-based policy allows the ses:CreateEmailTemplate action\"\n}"
+        },
+        {
+          "name": "Success",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "value": "",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"TemplateName\": \"welcome-template\",\r\n    \"TemplateContent\": {\r\n        \"Subject\": \"Welcome {{name}}\",\r\n        \"Html\": \"<h1>Hello {{name}}</h1>\",\r\n        \"Text\": \"Hello {{name}}\"\r\n    }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/v2/email/templates",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v2",
+                "email",
+                "templates"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": ":status",
+              "value": 200
+            },
+            {
+              "key": "date",
+              "value": "Fri, 15 May 2026 02:58:32 GMT"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json"
+            },
+            {
+              "key": "content-length",
+              "value": "22"
+            },
+            {
+              "key": "x-amzn-requestid",
+              "value": "d40fef96-c907-4231-8c9f-05833a44548e"
+            },
+            {
+              "key": "content-encoding",
+              "value": "gzip"
+            }
+          ],
+          "cookie": [],
+          "body": "{}"
+        }
+      ]
+    },
+    {
+      "name": "Send Templated Email",
+      "request": {
+        "auth": {
+          "type": "awsv4",
+          "awsv4": [
+            {
+              "key": "service",
+              "value": "{{service}}",
+              "type": "string"
+            },
+            {
+              "key": "region",
+              "value": "{{aws_region}}",
+              "type": "string"
+            },
+            {
+              "key": "secretKey",
+              "value": "{{secret_key}}",
+              "type": "string"
+            },
+            {
+              "key": "accessKey",
+              "value": "{{access_key}}",
+              "type": "string"
+            },
+            {
+              "key": "addAuthDataToQuery",
+              "value": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"FromEmailAddress\": \"{{sender_email}}\",\r\n  \"Destination\": {\r\n    \"ToAddresses\": [\r\n      \"{{recipient_email}}\"\r\n    ]\r\n  },\r\n  \"Content\": {\r\n    \"Template\": {\r\n      \"TemplateName\": \"welcome-template\",\r\n      \"TemplateData\": \"{\\\"name\\\":\\\"John\\\"}\"\r\n    }\r\n  }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/v2/email/outbound-emails",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "v2",
+            "email",
+            "outbound-emails"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Unauthorized",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"FromEmailAddress\": \"{{sender_email}}\",\r\n  \"Destination\": {\r\n    \"ToAddresses\": [\r\n      \"{{recipient_email}}\"\r\n    ]\r\n  },\r\n  \"Content\": {\r\n    \"Template\": {\r\n      \"TemplateName\": \"welcome-template\",\r\n      \"TemplateData\": \"{\\\"name\\\":\\\"John\\\"}\"\r\n    }\r\n  }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/v2/email/outbound-emails",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v2",
+                "email",
+                "outbound-emails"
+              ]
+            }
+          },
+          "status": "Forbidden",
+          "code": 403,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": ":status",
+              "value": 403
+            },
+            {
+              "key": "date",
+              "value": "Fri, 15 May 2026 03:01:08 GMT"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json"
+            },
+            {
+              "key": "content-length",
+              "value": "161"
+            },
+            {
+              "key": "x-amzn-requestid",
+              "value": "fcbb3f6b-87e5-4d0e-aaeb-52153be00323"
+            },
+            {
+              "key": "content-encoding",
+              "value": "gzip"
+            },
+            {
+              "key": "x-amzn-errortype",
+              "value": "AccessDeniedException"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"Message\": \"User `arn:aws:iam::116137269484:user/caesar' is not authorized to perform `ses:SendTemplatedEmail' on resource `arn:aws:ses:eu-west-1:116137269484:identity/invosync.co.ke'\"\n}"
+        },
+        {
+          "name": "Success",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"FromEmailAddress\": \"{{sender_email}}\",\r\n  \"Destination\": {\r\n    \"ToAddresses\": [\r\n      \"{{recipient_email}}\"\r\n    ]\r\n  },\r\n  \"Content\": {\r\n    \"Template\": {\r\n      \"TemplateName\": \"welcome-template\",\r\n      \"TemplateData\": \"{\\\"name\\\":\\\"John\\\"}\"\r\n    }\r\n  }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/v2/email/outbound-emails",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v2",
+                "email",
+                "outbound-emails"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": ":status",
+              "value": 200
+            },
+            {
+              "key": "date",
+              "value": "Fri, 15 May 2026 03:01:34 GMT"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json"
+            },
+            {
+              "key": "content-length",
+              "value": "87"
+            },
+            {
+              "key": "x-amzn-requestid",
+              "value": "3fa2d700-01b6-4a4b-b0d3-82ff57ee56b1"
+            },
+            {
+              "key": "content-encoding",
+              "value": "gzip"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"MessageId\": \"0102019e29950b9c-9881fb1c-f24d-4985-95fe-ecc2f4a0c29a-000000\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "List Templates",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "awsv4",
+          "awsv4": [
+            {
+              "key": "service",
+              "value": "{{service}}",
+              "type": "string"
+            },
+            {
+              "key": "region",
+              "value": "{{aws_region}}",
+              "type": "string"
+            },
+            {
+              "key": "secretKey",
+              "value": "{{secret_key}}",
+              "type": "string"
+            },
+            {
+              "key": "accessKey",
+              "value": "{{access_key}}",
+              "type": "string"
+            },
+            {
+              "key": "addAuthDataToQuery",
+              "value": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "",
+            "value": "",
+            "type": "text",
+            "disabled": true
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{base_url}}/v2/email/templates",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "v2",
+            "email",
+            "templates"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Success",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "",
+                "value": "",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{base_url}}/v2/email/templates",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v2",
+                "email",
+                "templates"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": ":status",
+              "value": 200
+            },
+            {
+              "key": "date",
+              "value": "Fri, 15 May 2026 03:02:29 GMT"
+            },
+            {
+              "key": "content-type",
+              "value": "application/x-amz-json-1.1"
+            },
+            {
+              "key": "content-length",
+              "value": "118"
+            },
+            {
+              "key": "x-amzn-requestid",
+              "value": "81cf5b36-db4d-412c-8800-d6999d2797a0"
+            },
+            {
+              "key": "content-encoding",
+              "value": "gzip"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"NextToken\": null,\n    \"TemplatesMetadata\": [\n        {\n            \"CreatedTimestamp\": 1778813912.897,\n            \"TemplateName\": \"welcome-template\"\n        }\n    ]\n}"
+        },
+        {
+          "name": "Unauthorized",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "",
+                "value": "",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{base_url}}/v2/email/templates",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v2",
+                "email",
+                "templates"
+              ]
+            }
+          },
+          "status": "Forbidden",
+          "code": 403,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": ":status",
+              "value": 403
+            },
+            {
+              "key": "date",
+              "value": "Fri, 15 May 2026 03:02:45 GMT"
+            },
+            {
+              "key": "content-type",
+              "value": "application/x-amz-json-1.1"
+            },
+            {
+              "key": "content-length",
+              "value": "166"
+            },
+            {
+              "key": "x-amzn-requestid",
+              "value": "e21a451f-b3c3-4315-bd8d-213cf52bbb1a"
+            },
+            {
+              "key": "content-encoding",
+              "value": "gzip"
+            },
+            {
+              "key": "x-amzn-errortype",
+              "value": "AccessDeniedException"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"Message\": \"User: arn:aws:iam::116137269484:user/caesar is not authorized to perform: ses:ListEmailTemplates on resource: * because no identity-based policy allows the ses:ListEmailTemplates action\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Create Configuration Set",
+      "request": {
+        "auth": {
+          "type": "awsv4",
+          "awsv4": [
+            {
+              "key": "service",
+              "value": "{{service}}",
+              "type": "string"
+            },
+            {
+              "key": "region",
+              "value": "{{aws_region}}",
+              "type": "string"
+            },
+            {
+              "key": "secretKey",
+              "value": "{{secret_key}}",
+              "type": "string"
+            },
+            {
+              "key": "accessKey",
+              "value": "{{access_key}}",
+              "type": "string"
+            },
+            {
+              "key": "addAuthDataToQuery",
+              "value": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "",
+            "value": "",
+            "type": "text",
+            "disabled": true
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"ConfigurationSetName\": \"production\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/v2/email/configuration-sets",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "v2",
+            "email",
+            "configuration-sets"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Unauthorized",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "value": "",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"ConfigurationSetName\": \"production\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/v2/email/configuration-sets",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v2",
+                "email",
+                "configuration-sets"
+              ]
+            }
+          },
+          "status": "Forbidden",
+          "code": 403,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": ":status",
+              "value": 403
+            },
+            {
+              "key": "date",
+              "value": "Fri, 15 May 2026 03:04:42 GMT"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json"
+            },
+            {
+              "key": "content-length",
+              "value": "190"
+            },
+            {
+              "key": "x-amzn-requestid",
+              "value": "79a3b2b6-7fdd-4d24-846f-9687a9937680"
+            },
+            {
+              "key": "content-encoding",
+              "value": "gzip"
+            },
+            {
+              "key": "x-amzn-errortype",
+              "value": "AccessDeniedException"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"Message\": \"User: arn:aws:iam::116137269484:user/caesar is not authorized to perform: ses:CreateConfigurationSet on resource: arn:aws:ses:eu-west-1:116137269484:configuration-set/production because no identity-based policy allows the ses:CreateConfigurationSet action\"\n}"
+        },
+        {
+          "name": "Success",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "value": "",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"ConfigurationSetName\": \"production\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/v2/email/configuration-sets",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v2",
+                "email",
+                "configuration-sets"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": ":status",
+              "value": 200
+            },
+            {
+              "key": "date",
+              "value": "Fri, 15 May 2026 03:05:00 GMT"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json"
+            },
+            {
+              "key": "content-length",
+              "value": "22"
+            },
+            {
+              "key": "x-amzn-requestid",
+              "value": "8e48c23f-76f9-4e3f-8db0-54f1907e3ba2"
+            },
+            {
+              "key": "content-encoding",
+              "value": "gzip"
+            }
+          ],
+          "cookie": [],
+          "body": "{}"
+        }
+      ]
+    },
+    {
+      "name": "Domain Deliverability Metrics",
+      "request": {
+        "auth": {
+          "type": "awsv4",
+          "awsv4": [
+            {
+              "key": "service",
+              "value": "{{service}}",
+              "type": "string"
+            },
+            {
+              "key": "region",
+              "value": "{{aws_region}}",
+              "type": "string"
+            },
+            {
+              "key": "secretKey",
+              "value": "{{secret_key}}",
+              "type": "string"
+            },
+            {
+              "key": "accessKey",
+              "value": "{{access_key}}",
+              "type": "string"
+            },
+            {
+              "key": "addAuthDataToQuery",
+              "value": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/v2/email/deliverability-dashboard/statistics-report/{{identity_example}}?StartDate=2026-05-01T00:00:00Z&EndDate=2026-05-14T23:59:59Z",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "v2",
+            "email",
+            "deliverability-dashboard",
+            "statistics-report",
+            "{{identity_example}}"
+          ],
+          "query": [
+            {
+              "key": "StartDate",
+              "value": "2026-05-01T00:00:00Z"
+            },
+            {
+              "key": "EndDate",
+              "value": "2026-05-14T23:59:59Z"
+            },
+            {
+              "key": "PageSize",
+              "value": "10",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Start Date Required",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/v2/email/deliverability-dashboard/statistics-report/{{identity_example}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v2",
+                "email",
+                "deliverability-dashboard",
+                "statistics-report",
+                "{{identity_example}}"
+              ]
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": ":status",
+              "value": 400
+            },
+            {
+              "key": "date",
+              "value": "Fri, 15 May 2026 03:19:30 GMT"
+            },
+            {
+              "key": "content-type",
+              "value": "application/x-amz-json-1.1"
+            },
+            {
+              "key": "content-length",
+              "value": "63"
+            },
+            {
+              "key": "x-amzn-requestid",
+              "value": "366a844d-8332-445e-98fd-7bd9fd3a84e9"
+            },
+            {
+              "key": "content-encoding",
+              "value": "gzip"
+            },
+            {
+              "key": "x-amzn-errortype",
+              "value": "BadRequestException"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"message\": \"Start date must be specified.\"\n}"
+        },
+        {
+          "name": "Unable to find",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/v2/email/deliverability-dashboard/statistics-report/{{identity_example}}?StartDate=2026-05-01T00:00:00Z&EndDate=2026-05-15T23:59:59Z&PageSize=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v2",
+                "email",
+                "deliverability-dashboard",
+                "statistics-report",
+                "{{identity_example}}"
+              ],
+              "query": [
+                {
+                  "key": "StartDate",
+                  "value": "2026-05-01T00:00:00Z",
+                  "type": "text"
+                },
+                {
+                  "key": "EndDate",
+                  "value": "2026-05-15T23:59:59Z",
+                  "type": "text"
+                },
+                {
+                  "key": "PageSize",
+                  "value": "10",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": ":status",
+              "value": 404
+            },
+            {
+              "key": "date",
+              "value": "Fri, 15 May 2026 03:20:46 GMT"
+            },
+            {
+              "key": "content-type",
+              "value": "application/x-amz-json-1.1"
+            },
+            {
+              "key": "content-length",
+              "value": "88"
+            },
+            {
+              "key": "x-amzn-requestid",
+              "value": "59394da8-6534-4f7c-8447-c0c63a44fc2b"
+            },
+            {
+              "key": "content-encoding",
+              "value": "gzip"
+            },
+            {
+              "key": "x-amzn-errortype",
+              "value": "NotFoundException"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"message\": \"Unable to find a dashboard account for <116137269484>.\"\n}"
+        },
+        {
+          "name": "End Date Required",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/v2/email/deliverability-dashboard/statistics-report/{{identity_example}}?StartDate=2026-05-01T00:00:00Z",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v2",
+                "email",
+                "deliverability-dashboard",
+                "statistics-report",
+                "{{identity_example}}"
+              ],
+              "query": [
+                {
+                  "key": "StartDate",
+                  "value": "2026-05-01T00:00:00Z"
+                },
+                {
+                  "key": "EndDate",
+                  "value": "2026-05-15T23:59:59Z",
+                  "disabled": true
+                },
+                {
+                  "key": "PageSize",
+                  "value": "10",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": ":status",
+              "value": 400
+            },
+            {
+              "key": "date",
+              "value": "Fri, 15 May 2026 03:21:26 GMT"
+            },
+            {
+              "key": "content-type",
+              "value": "application/x-amz-json-1.1"
+            },
+            {
+              "key": "content-length",
+              "value": "61"
+            },
+            {
+              "key": "x-amzn-requestid",
+              "value": "375c7de2-43a9-422e-bfa5-d1aa5a5c8913"
+            },
+            {
+              "key": "content-encoding",
+              "value": "gzip"
+            },
+            {
+              "key": "x-amzn-errortype",
+              "value": "BadRequestException"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"message\": \"End date must be specified.\"\n}"
+        }
+      ]
+    }
+  ]
+}

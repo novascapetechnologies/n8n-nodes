@@ -1,0 +1,4266 @@
+{
+  "info": {
+    "_postman_id": "553416a4-8450-4e81-a6ac-b0e48ca5c195",
+    "name": "Amazon Simple Email Service",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "31008811",
+    "_collection_link": "https://go.postman.co/collection/35240-553416a4-8450-4e81-a6ac-b0e48ca5c195?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Account Sending Enabled",
+      "item": [
+        {
+          "name": "Get Account Sending Enabled",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?Action=GetAccountSendingEnabled&Enabled=",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "Action",
+                  "value": "GetAccountSendingEnabled"
+                },
+                {
+                  "key": "Enabled",
+                  "value": "",
+                  "description": "Describes whether email sending is enabled or disabled for your Amazon SES account                                 in the                                 current AWS Region."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Get Account Sending Enabled",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{aws_simple_email_service_base_url}}/?Action=GetAccountSendingEnabled&Enabled=",
+                  "host": [
+                    "{{aws_simple_email_service_base_url}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "key": "Action",
+                      "value": "GetAccountSendingEnabled"
+                    },
+                    {
+                      "key": "Enabled",
+                      "value": "",
+                      "description": "Describes whether email sending is enabled or disabled for your Amazon SES account                                 in the                                 current AWS Region."
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "xml",
+              "header": [
+                {
+                  "key": "x-amzn-RequestId",
+                  "value": "d2e6e71b-6982-4a42-87fe-c484656696c0"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/xml"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "326"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 30 Nov 2019 21:38:31 GMT"
+                }
+              ],
+              "cookie": [],
+              "body": "<GetAccountSendingEnabledResponse xmlns=\"http://ses.amazonaws.com/doc/2010-12-01/\">\n    <GetAccountSendingEnabledResult>\n        <Enabled>true</Enabled>\n    </GetAccountSendingEnabledResult>\n    <ResponseMetadata>\n        <RequestId>d2e6e71b-6982-4a42-87fe-c484656696c0</RequestId>\n    </ResponseMetadata>\n</GetAccountSendingEnabledResponse>"
+            }
+          ]
+        },
+        {
+          "name": "Update Account Sending Enabled",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?Enabled",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "Enabled",
+                  "value": null,
+                  "description": "Describes whether email sending is enabled or disabled for your Amazon SES account                                 in the                                 current AWS Region."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Active Receipt Rule Set",
+      "item": [
+        {
+          "name": "Describe Active Receipt Rule Set",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?Metadata&Rules.member.N",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "Metadata",
+                  "value": null,
+                  "description": "The metadata for the currently active receipt rule set. The metadata consists of the                                 rule set name and a timestamp of when the rule set was created."
+                },
+                {
+                  "key": "Rules.member.N",
+                  "value": null,
+                  "description": "The receipt rules that belong to the active rule set."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Describe Active Receipt Rule Set",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{aws_simple_email_service_base_url}}/?Action=DescribeActiveReceiptRuleSet&Metadata=&Rules.member.N=",
+                  "host": [
+                    "{{aws_simple_email_service_base_url}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "key": "Action",
+                      "value": "DescribeActiveReceiptRuleSet"
+                    },
+                    {
+                      "key": "Metadata",
+                      "value": "",
+                      "description": "The metadata for the currently active receipt rule set. The metadata consists of the                                 rule set name and a timestamp of when the rule set was created."
+                    },
+                    {
+                      "key": "Rules.member.N",
+                      "value": "",
+                      "description": "The receipt rules that belong to the active rule set."
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "xml",
+              "header": [
+                {
+                  "key": "x-amzn-RequestId",
+                  "value": "647b0b69-d209-45df-b699-8a009d1ad912"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/xml"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "275"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 30 Nov 2019 21:38:48 GMT"
+                }
+              ],
+              "cookie": [],
+              "body": "<DescribeActiveReceiptRuleSetResponse xmlns=\"http://ses.amazonaws.com/doc/2010-12-01/\">\n    <DescribeActiveReceiptRuleSetResult/>\n    <ResponseMetadata>\n        <RequestId>647b0b69-d209-45df-b699-8a009d1ad912</RequestId>\n    </ResponseMetadata>\n</DescribeActiveReceiptRuleSetResponse>"
+            }
+          ]
+        },
+        {
+          "name": "Set Active Receipt Rule Set",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?RuleSetName",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "RuleSetName",
+                  "value": null,
+                  "description": "The name of the receipt rule set to make active. Setting this value to null disables                                 all email receiving."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Bounce",
+      "item": [
+        {
+          "name": "Send Bounce",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?BouncedRecipientInfoList.member.N&BounceSender&BounceSenderArn&Explanation&MessageDsn&OriginalMessageId",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "BouncedRecipientInfoList.member.N",
+                  "value": null,
+                  "description": "A list of recipients of the bounced message, including the information required to                                 create the Delivery Status Notifications (DSNs) for the recipients. You must specify                                 at                                 least one BouncedRecipientInfo in the list."
+                },
+                {
+                  "key": "BounceSender",
+                  "value": null,
+                  "description": "The address to use in the From header of the bounce message. This must be an                                 identity that you have verified with Amazon SES."
+                },
+                {
+                  "key": "BounceSenderArn",
+                  "value": null,
+                  "description": "This parameter is used only for sending authorization. It is the ARN of the identity                                 that is associated with the sending authorization policy that permits you to use the                                 address in the From header of the bounce. For more information about sending                                 authorization, see the Amazon SES Developer                                    Guide."
+                },
+                {
+                  "key": "Explanation",
+                  "value": null,
+                  "description": "Human-readable text for the bounce message to explain the failure. If not specified,                                 the text will be auto-generated based on the bounced recipient information."
+                },
+                {
+                  "key": "MessageDsn",
+                  "value": null,
+                  "description": "Message-related DSN fields. If not specified, Amazon SES will choose the values."
+                },
+                {
+                  "key": "OriginalMessageId",
+                  "value": null,
+                  "description": "The message ID of the message to be bounced."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Bulk Templated Email",
+      "item": [
+        {
+          "name": "Send Bulk Templated Email",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?ConfigurationSetName&DefaultTags.member.N&DefaultTemplateData&Destinations.member.N&ReplyToAddresses.member.N&ReturnPath&ReturnPathArn&Source&SourceArn&Template&TemplateArn",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "ConfigurationSetName",
+                  "value": null,
+                  "description": "The name of the configuration set to use when you send an email using                                 SendBulkTemplatedEmail."
+                },
+                {
+                  "key": "DefaultTags.member.N",
+                  "value": null,
+                  "description": "A list of tags, in the form of name/value pairs, to apply to an email that you send                                 to                                 a destination using SendBulkTemplatedEmail."
+                },
+                {
+                  "key": "DefaultTemplateData",
+                  "value": null,
+                  "description": "A list of replacement values to apply to the template when replacement data is not                                 specified in a Destination object. These values act as a default or fallback option                                 when                                 no other data is available."
+                },
+                {
+                  "key": "Destinations.member.N",
+                  "value": null,
+                  "description": "One or more Destination objects. All of the recipients in a                                 Destination will receive the same version of the email. You can specify                                 up to 50 Destination objects within a Destinations                                 array."
+                },
+                {
+                  "key": "ReplyToAddresses.member.N",
+                  "value": null,
+                  "description": "The reply-to email address(es) for the message. If the recipient replies to the                                 message, each reply-to address will receive the reply."
+                },
+                {
+                  "key": "ReturnPath",
+                  "value": null,
+                  "description": "The email address that bounces and complaints will be forwarded to when feedback                                 forwarding is enabled. If the message cannot be delivered to the recipient, then an                                 error message will be returned from the recipient's ISP; this message will then be                                 forwarded to the email address specified by the ReturnPath parameter. The                                 ReturnPath parameter is never overwritten. This email address must be                                 either individually verified with Amazon SES, or from a domain that has been verified                                 with                                 Amazon SES."
+                },
+                {
+                  "key": "ReturnPathArn",
+                  "value": null,
+                  "description": "This parameter is used only for sending authorization. It is the ARN of the identity                                 that is associated with the sending authorization policy that permits you to use the                                 email address specified in the ReturnPath parameter."
+                },
+                {
+                  "key": "Source",
+                  "value": null,
+                  "description": "The email address that is sending the email. This email address must be either                                 individually verified with Amazon SES, or from a domain that has been verified with                                 Amazon SES.                                 For information about verifying identities, see the Amazon SES Developer                                    Guide."
+                },
+                {
+                  "key": "SourceArn",
+                  "value": null,
+                  "description": "This parameter is used only for sending authorization. It is the ARN of the identity                                 that is associated with the sending authorization policy that permits you to send                                 for                                 the email address specified in the Source parameter."
+                },
+                {
+                  "key": "Template",
+                  "value": null,
+                  "description": "The template to use when sending this email."
+                },
+                {
+                  "key": "TemplateArn",
+                  "value": null,
+                  "description": "The ARN of the template to use when sending this email."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Configuration Set",
+      "item": [
+        {
+          "name": "Create Configuration Set",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?ConfigurationSet",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "ConfigurationSet",
+                  "value": null,
+                  "description": "A data structure that contains the name of the configuration set."
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Configuration Set",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?ConfigurationSetName",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "ConfigurationSetName",
+                  "value": null,
+                  "description": "The name of the configuration set to delete."
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Describe Configuration Set",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?ConfigurationSetAttributeNames.member.N&ConfigurationSetName",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "ConfigurationSetAttributeNames.member.N",
+                  "value": null,
+                  "description": "A list of configuration set attributes to return."
+                },
+                {
+                  "key": "ConfigurationSetName",
+                  "value": null,
+                  "description": "The name of the configuration set to describe."
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List Configuration Sets",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?MaxItems&NextToken",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "MaxItems",
+                  "value": null,
+                  "description": "The number of configuration sets to return."
+                },
+                {
+                  "key": "NextToken",
+                  "value": null,
+                  "description": "A token returned from a previous call to ListConfigurationSets to                                 indicate the position of the configuration set in the configuration set list."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Configuration Set Delivery Options",
+      "item": [
+        {
+          "name": "Put Configuration Set Delivery Options",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?ConfigurationSetName&DeliveryOptions",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "ConfigurationSetName",
+                  "value": null,
+                  "description": "The name of the configuration set that you want to specify the delivery options                                 for."
+                },
+                {
+                  "key": "DeliveryOptions",
+                  "value": null,
+                  "description": "Specifies whether messages that use the configuration set are required to use                                 Transport Layer Security (TLS)."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Configuration Set Event Destination",
+      "item": [
+        {
+          "name": "Create Configuration Set Event Destination",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?ConfigurationSetName&EventDestination",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "ConfigurationSetName",
+                  "value": null,
+                  "description": "The name of the configuration set that the event destination should be associated                                 with."
+                },
+                {
+                  "key": "EventDestination",
+                  "value": null,
+                  "description": "An object that describes the AWS service that email sending event information will                                 be published to."
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Configuration Set Event Destination",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?ConfigurationSetName&EventDestinationName",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "ConfigurationSetName",
+                  "value": null,
+                  "description": "The name of the configuration set from which to delete the event destination."
+                },
+                {
+                  "key": "EventDestinationName",
+                  "value": null,
+                  "description": "The name of the event destination to delete."
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Configuration Set Event Destination",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?ConfigurationSetName&EventDestination",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "ConfigurationSetName",
+                  "value": null,
+                  "description": "The name of the configuration set that contains the event destination that you want                                 to                                 update."
+                },
+                {
+                  "key": "EventDestination",
+                  "value": null,
+                  "description": "The event destination object that you want to apply to the specified configuration                                 set."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Configuration Set Reputation Metrics Enabled",
+      "item": [
+        {
+          "name": "Update Configuration Set Reputation Metrics Enabled",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?ConfigurationSetName&Enabled",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "ConfigurationSetName",
+                  "value": null,
+                  "description": "The name of the configuration set that you want to update."
+                },
+                {
+                  "key": "Enabled",
+                  "value": null,
+                  "description": "Describes whether or not Amazon SES will publish reputation metrics for the configuration                                 set, such as bounce and complaint rates, to Amazon CloudWatch."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Configuration Set Sending Enabled",
+      "item": [
+        {
+          "name": "Update Configuration Set Sending Enabled",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?ConfigurationSetName&Enabled",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "ConfigurationSetName",
+                  "value": null,
+                  "description": "The name of the configuration set that you want to update."
+                },
+                {
+                  "key": "Enabled",
+                  "value": null,
+                  "description": "Describes whether email sending is enabled or disabled for the configuration set."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Configuration Set Tracking Options",
+      "item": [
+        {
+          "name": "Create Configuration Set Tracking Options",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?ConfigurationSetName&TrackingOptions",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "ConfigurationSetName",
+                  "value": null,
+                  "description": "The name of the configuration set that the tracking options should be associated                                 with."
+                },
+                {
+                  "key": "TrackingOptions",
+                  "value": null,
+                  "description": "A domain that is used to redirect email recipients to an Amazon SES-operated domain.                                 This                                 domain captures open and click events generated by Amazon SES emails."
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Configuration Set Tracking Options",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?ConfigurationSetName",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "ConfigurationSetName",
+                  "value": null,
+                  "description": "The name of the configuration set from which you want to delete the tracking                                 options."
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Configuration Set Tracking Options",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?ConfigurationSetName&TrackingOptions",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "ConfigurationSetName",
+                  "value": null,
+                  "description": "The name of the configuration set for which you want to update the custom tracking                                 domain."
+                },
+                {
+                  "key": "TrackingOptions",
+                  "value": null,
+                  "description": "A domain that is used to redirect email recipients to an Amazon SES-operated domain.                                 This                                 domain captures open and click events generated by Amazon SES emails."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Custom Verification Email",
+      "item": [
+        {
+          "name": "Send Custom Verification Email",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?ConfigurationSetName&EmailAddress&TemplateName",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "ConfigurationSetName",
+                  "value": null,
+                  "description": "Name of a configuration set to use when sending the verification email."
+                },
+                {
+                  "key": "EmailAddress",
+                  "value": null,
+                  "description": "The email address to verify."
+                },
+                {
+                  "key": "TemplateName",
+                  "value": null,
+                  "description": "The name of the custom verification email template to use when sending the                                 verification email."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Custom Verification Email Template",
+      "item": [
+        {
+          "name": "Create Custom Verification Email Template",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?FailureRedirectionURL&FromEmailAddress&SuccessRedirectionURL&TemplateContent&TemplateName&TemplateSubject",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "FailureRedirectionURL",
+                  "value": null,
+                  "description": "The URL that the recipient of the verification email is sent to if his or her address                                 is not successfully verified."
+                },
+                {
+                  "key": "FromEmailAddress",
+                  "value": null,
+                  "description": "The email address that the custom verification email is sent from."
+                },
+                {
+                  "key": "SuccessRedirectionURL",
+                  "value": null,
+                  "description": "The URL that the recipient of the verification email is sent to if his or her address                                 is successfully verified."
+                },
+                {
+                  "key": "TemplateContent",
+                  "value": null,
+                  "description": "The content of the custom verification email. The total size of the email must be                                 less                                 than 10 MB. The message body may contain HTML, with some limitations. For more                                 information, see Custom Verification Email Frequently Asked Questions in the Amazon SES                                    Developer Guide."
+                },
+                {
+                  "key": "TemplateName",
+                  "value": null,
+                  "description": "The name of the custom verification email template."
+                },
+                {
+                  "key": "TemplateSubject",
+                  "value": null,
+                  "description": "The subject line of the custom verification email."
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Custom Verification Email Template",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?TemplateName",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "TemplateName",
+                  "value": null,
+                  "description": "The name of the custom verification email template that you want to delete."
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Custom Verification Email Template",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?TemplateName",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "TemplateName",
+                  "value": null,
+                  "description": "The name of the custom verification email template that you want to retrieve."
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List Custom Verification Email Templates",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?MaxResults&NextToken",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "MaxResults",
+                  "value": null,
+                  "description": "The maximum number of custom verification email templates to return. This value must                                 be at least 1 and less than or equal to 50. If you do not specify a value, or if you                                 specify a value less than 1 or greater than 50, the operation will return up to 50                                 results."
+                },
+                {
+                  "key": "NextToken",
+                  "value": null,
+                  "description": "An array the contains the name and creation time stamp for each template in your Amazon                                 SES                                 account."
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Custom Verification Email Template",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?FailureRedirectionURL&FromEmailAddress&SuccessRedirectionURL&TemplateContent&TemplateName&TemplateSubject",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "FailureRedirectionURL",
+                  "value": null,
+                  "description": "The URL that the recipient of the verification email is sent to if his or her address                                 is not successfully verified."
+                },
+                {
+                  "key": "FromEmailAddress",
+                  "value": null,
+                  "description": "The email address that the custom verification email is sent from."
+                },
+                {
+                  "key": "SuccessRedirectionURL",
+                  "value": null,
+                  "description": "The URL that the recipient of the verification email is sent to if his or her address                                 is successfully verified."
+                },
+                {
+                  "key": "TemplateContent",
+                  "value": null,
+                  "description": "The content of the custom verification email. The total size of the email must be                                 less                                 than 10 MB. The message body may contain HTML, with some limitations. For more                                 information, see Custom Verification Email Frequently Asked Questions in the Amazon SES                                    Developer Guide."
+                },
+                {
+                  "key": "TemplateName",
+                  "value": null,
+                  "description": "The name of the custom verification email template that you want to update."
+                },
+                {
+                  "key": "TemplateSubject",
+                  "value": null,
+                  "description": "The subject line of the custom verification email."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Domain Dkim",
+      "item": [
+        {
+          "name": "Verify Domain Dkim",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?Domain",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "Domain",
+                  "value": null,
+                  "description": "The name of the domain to be verified for Easy DKIM signing."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Domain Identity",
+      "item": [
+        {
+          "name": "Verify Domain Identity",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?Domain",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "Domain",
+                  "value": null,
+                  "description": "The domain to be verified."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Email",
+      "item": [
+        {
+          "name": "Send Email",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?ConfigurationSetName&Destination&Message&ReplyToAddresses.member.N&ReturnPath&ReturnPathArn&Source&SourceArn&Tags.member.N",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "ConfigurationSetName",
+                  "value": null,
+                  "description": "The name of the configuration set to use when you send an email using                                 SendEmail."
+                },
+                {
+                  "key": "Destination",
+                  "value": null,
+                  "description": "The destination for this email, composed of To:, CC:, and BCC: fields."
+                },
+                {
+                  "key": "Message",
+                  "value": null,
+                  "description": "The message to be sent."
+                },
+                {
+                  "key": "ReplyToAddresses.member.N",
+                  "value": null,
+                  "description": "The reply-to email address(es) for the message. If the recipient replies to the                                 message, each reply-to address will receive the reply."
+                },
+                {
+                  "key": "ReturnPath",
+                  "value": null,
+                  "description": "The email address that bounces and complaints will be forwarded to when feedback                                 forwarding is enabled. If the message cannot be delivered to the recipient, then an                                 error message will be returned from the recipient's ISP; this message will then be                                 forwarded to the email address specified by the ReturnPath parameter. The                                 ReturnPath parameter is never overwritten. This email address must be                                 either individually verified with Amazon SES, or from a domain that has been verified                                 with                                 Amazon SES."
+                },
+                {
+                  "key": "ReturnPathArn",
+                  "value": null,
+                  "description": "This parameter is used only for sending authorization. It is the ARN of the identity                                 that is associated with the sending authorization policy that permits you to use the                                 email address specified in the ReturnPath parameter."
+                },
+                {
+                  "key": "Source",
+                  "value": null,
+                  "description": "The email address that is sending the email. This email address must be either                                 individually verified with Amazon SES, or from a domain that has been verified with                                 Amazon SES.                                 For information about verifying identities, see the Amazon SES Developer                                    Guide."
+                },
+                {
+                  "key": "SourceArn",
+                  "value": null,
+                  "description": "This parameter is used only for sending authorization. It is the ARN of the identity                                 that is associated with the sending authorization policy that permits you to send                                 for                                 the email address specified in the Source parameter."
+                },
+                {
+                  "key": "Tags.member.N",
+                  "value": null,
+                  "description": "A list of tags, in the form of name/value pairs, to apply to an email that you send                                 using SendEmail. Tags correspond to characteristics of the email that you                                 define, so that you can publish email sending events."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Email Address",
+      "item": [
+        {
+          "name": "Verify Email Address",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?EmailAddress",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "EmailAddress",
+                  "value": null,
+                  "description": "The email address to be verified."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Email Identity",
+      "item": [
+        {
+          "name": "Verify Email Identity",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?EmailAddress",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "EmailAddress",
+                  "value": null,
+                  "description": "The email address to be verified."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Identities",
+      "item": [
+        {
+          "name": "List Identities",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?IdentityType&MaxItems&NextToken",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "IdentityType",
+                  "value": null,
+                  "description": "The type of the identities to list. Possible values are EmailAddress and Domain.                                 If this parameter is omitted, then all identities will be listed."
+                },
+                {
+                  "key": "MaxItems",
+                  "value": null,
+                  "description": "The maximum number of identities per page. Possible values are 1-1000                                 inclusive."
+                },
+                {
+                  "key": "NextToken",
+                  "value": null,
+                  "description": "The token to use for pagination."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Identity",
+      "item": [
+        {
+          "name": "Delete Identity",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?Identity",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "Identity",
+                  "value": null,
+                  "description": "The identity to be removed from the list of identities for the AWS Account."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Identity Dkim Attributes",
+      "item": [
+        {
+          "name": "Get Identity Dkim Attributes",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?Identities.member.N",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "Identities.member.N",
+                  "value": null,
+                  "description": "A list of one or more verified identities - email addresses, domains, or both."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Identity Dkim Enabled",
+      "item": [
+        {
+          "name": "Set Identity Dkim Enabled",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?DkimEnabled&Identity",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "DkimEnabled",
+                  "value": null,
+                  "description": "Sets whether DKIM signing is enabled for an identity. Set to true to                                 enable DKIM signing for this identity; false to disable it."
+                },
+                {
+                  "key": "Identity",
+                  "value": null,
+                  "description": "The identity for which DKIM signing should be enabled or disabled."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Identity Feedback Forwarding Enabled",
+      "item": [
+        {
+          "name": "Set Identity Feedback Forwarding Enabled",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?ForwardingEnabled&Identity",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "ForwardingEnabled",
+                  "value": null,
+                  "description": "Sets whether Amazon SES will forward bounce and complaint notifications as email.                                 true specifies that Amazon SES will forward bounce and complaint                                 notifications as email, in addition to any Amazon SNS topic publishing otherwise specified.                                 false specifies that Amazon SES will publish bounce and complaint                                 notifications only through Amazon SNS. This value can only be set to false when                                 Amazon SNS topics are set for both Bounce and Complaint                                 notification types."
+                },
+                {
+                  "key": "Identity",
+                  "value": null,
+                  "description": "The identity for which to set bounce and complaint notification forwarding. Examples:                                 user@example.com, example.com."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Identity Headers In Notifications Enabled",
+      "item": [
+        {
+          "name": "Set Identity Headers In Notifications Enabled",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?Enabled&Identity&NotificationType",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "Enabled",
+                  "value": null,
+                  "description": "Sets whether Amazon SES includes the original email headers in Amazon SNS notifications                                 of the                                 specified notification type. A value of true specifies that Amazon SES will                                 include headers in notifications, and a value of false specifies that Amazon SES                                 will not include headers in notifications."
+                },
+                {
+                  "key": "Identity",
+                  "value": null,
+                  "description": "The identity for which to enable or disable headers in notifications. Examples:                                 user@example.com, example.com."
+                },
+                {
+                  "key": "NotificationType",
+                  "value": null,
+                  "description": "The notification type for which to enable or disable headers in notifications."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Identity Mail From Domain",
+      "item": [
+        {
+          "name": "Set Identity Mail From Domain",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?BehaviorOnMXFailure&Identity&MailFromDomain",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "BehaviorOnMXFailure",
+                  "value": null,
+                  "description": "The action that you want Amazon SES to take if it cannot successfully read the required                                 MX                                 record when you send an email. If you choose UseDefaultValue, Amazon SES will                                 use amazonses.com (or a subdomain of that) as the MAIL FROM domain. If you choose                                 RejectMessage, Amazon SES will return a                                 MailFromDomainNotVerified error and not send the email."
+                },
+                {
+                  "key": "Identity",
+                  "value": null,
+                  "description": "The verified identity for which you want to enable or disable the specified custom                                 MAIL FROM domain."
+                },
+                {
+                  "key": "MailFromDomain",
+                  "value": null,
+                  "description": "The custom MAIL FROM domain that you want the verified identity to use. The MAIL FROM                                 domain must 1) be a subdomain of the verified identity, 2) not be used in a From                                 address if the MAIL FROM domain is the destination of email feedback forwarding (for                                 more information, see the Amazon SES Developer Guide), and                                 3) not be used to receive emails. A value of null disables the custom MAIL                                 FROM setting for the identity."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Identity Mail From Domain Attributes",
+      "item": [
+        {
+          "name": "Get Identity Mail From Domain Attributes",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?Identities.member.N",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "Identities.member.N",
+                  "value": null,
+                  "description": "A list of one or more identities."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Identity Notification Attributes",
+      "item": [
+        {
+          "name": "Get Identity Notification Attributes",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?Identities.member.N",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "Identities.member.N",
+                  "value": null,
+                  "description": "A list of one or more identities. You can specify an identity by using its name or                                 by                                 using its Amazon Resource Name (ARN). Examples: user@example.com,                                 example.com,                                 arn:aws:ses:us-east-1:123456789012:identity/example.com."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Identity Notification Topic",
+      "item": [
+        {
+          "name": "Set Identity Notification Topic",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?Identity&NotificationType&SnsTopic",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "Identity",
+                  "value": null,
+                  "description": "The identity (email address or domain) that you want to set the Amazon SNS topic                                 for."
+                },
+                {
+                  "key": "NotificationType",
+                  "value": null,
+                  "description": "The type of notifications that will be published to the specified Amazon SNS topic."
+                },
+                {
+                  "key": "SnsTopic",
+                  "value": null,
+                  "description": "The Amazon Resource Name (ARN) of the Amazon SNS topic. If the parameter is omitted                                 from                                 the request or a null value is passed, SnsTopic is cleared and publishing                                 is disabled."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Identity Policies",
+      "item": [
+        {
+          "name": "Get Identity Policies",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?Identity&PolicyNames.member.N",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "Identity",
+                  "value": null,
+                  "description": "The identity for which the policies will be retrieved. You can specify an identity                                 by                                 using its name or by using its Amazon Resource Name (ARN). Examples:                                 user@example.com, example.com,                                 arn:aws:ses:us-east-1:123456789012:identity/example.com."
+                },
+                {
+                  "key": "PolicyNames.member.N",
+                  "value": null,
+                  "description": "A list of the names of policies to be retrieved. You can retrieve a maximum of 20                                 policies at a time. If you do not know the names of the policies that are attached                                 to                                 the identity, you can use ListIdentityPolicies."
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List Identity Policies",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?Identity",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "Identity",
+                  "value": null,
+                  "description": "The identity that is associated with the policy for which the policies will be listed.                                 You can specify an identity by using its name or by using its Amazon Resource Name                                 (ARN). Examples: user@example.com, example.com,                                 arn:aws:ses:us-east-1:123456789012:identity/example.com."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Identity Policy",
+      "item": [
+        {
+          "name": "Delete Identity Policy",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?Identity&PolicyName",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "Identity",
+                  "value": null,
+                  "description": "The identity that is associated with the policy that you want to delete. You can                                 specify the identity by using its name or by using its Amazon Resource Name (ARN).                                 Examples: user@example.com, example.com,                                 arn:aws:ses:us-east-1:123456789012:identity/example.com."
+                },
+                {
+                  "key": "PolicyName",
+                  "value": null,
+                  "description": "The name of the policy to be deleted."
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Put Identity Policy",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?Identity&Policy&PolicyName",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "Identity",
+                  "value": null,
+                  "description": "The identity that the policy will apply to. You can specify an identity by using its                                 name or by using its Amazon Resource Name (ARN). Examples:                                 user@example.com, example.com,                                 arn:aws:ses:us-east-1:123456789012:identity/example.com."
+                },
+                {
+                  "key": "Policy",
+                  "value": null,
+                  "description": "The text of the policy in JSON format. The policy cannot exceed 4 KB."
+                },
+                {
+                  "key": "PolicyName",
+                  "value": null,
+                  "description": "The name of the policy."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Identity Verification Attributes",
+      "item": [
+        {
+          "name": "Get Identity Verification Attributes",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?Identities.member.N",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "Identities.member.N",
+                  "value": null,
+                  "description": "A list of identities."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Raw Email",
+      "item": [
+        {
+          "name": "Send Raw Email",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?ConfigurationSetName&Destinations.member.N&FromArn&RawMessage&ReturnPathArn&Source&SourceArn&Tags.member.N",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "ConfigurationSetName",
+                  "value": null,
+                  "description": "The name of the configuration set to use when you send an email using                                 SendRawEmail."
+                },
+                {
+                  "key": "Destinations.member.N",
+                  "value": null,
+                  "description": "A list of destinations for the message, consisting of To:, CC:, and BCC:                                 addresses."
+                },
+                {
+                  "key": "FromArn",
+                  "value": null,
+                  "description": "This parameter is used only for sending authorization. It is the ARN of the identity                                 that is associated with the sending authorization policy that permits you to specify                                 a                                 particular From address in the header of the raw email."
+                },
+                {
+                  "key": "RawMessage",
+                  "value": null,
+                  "description": "The raw email message itself. The message has to meet the following criteria:"
+                },
+                {
+                  "key": "ReturnPathArn",
+                  "value": null,
+                  "description": "This parameter is used only for sending authorization. It is the ARN of the identity                                 that is associated with the sending authorization policy that permits you to use the                                 email address specified in the ReturnPath parameter."
+                },
+                {
+                  "key": "Source",
+                  "value": null,
+                  "description": "The identity's email address. If you do not provide a value for this parameter, you                                 must specify a From address in the raw text of the message. (You can also specify                                 both.)"
+                },
+                {
+                  "key": "SourceArn",
+                  "value": null,
+                  "description": "This parameter is used only for sending authorization. It is the ARN of the identity                                 that is associated with the sending authorization policy that permits you to send                                 for                                 the email address specified in the Source parameter."
+                },
+                {
+                  "key": "Tags.member.N",
+                  "value": null,
+                  "description": "A list of tags, in the form of name/value pairs, to apply to an email that you send                                 using SendRawEmail. Tags correspond to characteristics of the email that                                 you define, so that you can publish email sending events."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Receipt Filter",
+      "item": [
+        {
+          "name": "Create Receipt Filter",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?Filter",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "Filter",
+                  "value": null,
+                  "description": "A data structure that describes the IP address filter to create, which consists of                                 a                                 name, an IP address range, and whether to allow or block mail from it."
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Receipt Filter",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?FilterName",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "FilterName",
+                  "value": null,
+                  "description": "The name of the IP address filter to delete."
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List Receipt Filters",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?Filters.member.N",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "Filters.member.N",
+                  "value": null,
+                  "description": "A list of IP address filter data structures, which each consist of a name, an IP                                 address range, and whether to allow or block mail from it."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Receipt Rule",
+      "item": [
+        {
+          "name": "Create Receipt Rule",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?After&Rule&RuleSetName",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "After",
+                  "value": null,
+                  "description": "The name of an existing rule after which the new rule will be placed. If this                                 parameter is null, the new rule will be inserted at the beginning of the rule                                 list."
+                },
+                {
+                  "key": "Rule",
+                  "value": null,
+                  "description": "A data structure that contains the specified rule's name, actions, recipients,                                 domains, enabled status, scan status, and TLS policy."
+                },
+                {
+                  "key": "RuleSetName",
+                  "value": null,
+                  "description": "The name of the rule set that the receipt rule will be added to."
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Receipt Rule",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?RuleName&RuleSetName",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "RuleName",
+                  "value": null,
+                  "description": "The name of the receipt rule to delete."
+                },
+                {
+                  "key": "RuleSetName",
+                  "value": null,
+                  "description": "The name of the receipt rule set that contains the receipt rule to delete."
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Describe Receipt Rule",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?RuleName&RuleSetName",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "RuleName",
+                  "value": null,
+                  "description": "The name of the receipt rule."
+                },
+                {
+                  "key": "RuleSetName",
+                  "value": null,
+                  "description": "The name of the receipt rule set that the receipt rule belongs to."
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Receipt Rule",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?Rule&RuleSetName",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "Rule",
+                  "value": null,
+                  "description": "A data structure that contains the updated receipt rule information."
+                },
+                {
+                  "key": "RuleSetName",
+                  "value": null,
+                  "description": "The name of the receipt rule set that the receipt rule belongs to."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Receipt Rule Position",
+      "item": [
+        {
+          "name": "Set Receipt Rule Position",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?After&RuleName&RuleSetName",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "After",
+                  "value": null,
+                  "description": "The name of the receipt rule after which to place the specified receipt rule."
+                },
+                {
+                  "key": "RuleName",
+                  "value": null,
+                  "description": "The name of the receipt rule to reposition."
+                },
+                {
+                  "key": "RuleSetName",
+                  "value": null,
+                  "description": "The name of the receipt rule set that contains the receipt rule to reposition."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Receipt Rule Set",
+      "item": [
+        {
+          "name": "Clone Receipt Rule Set",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?OriginalRuleSetName&RuleSetName",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "OriginalRuleSetName",
+                  "value": null,
+                  "description": "The name of the rule set to clone."
+                },
+                {
+                  "key": "RuleSetName",
+                  "value": null,
+                  "description": "The name of the rule set to create. The name must:"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Receipt Rule Set",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?RuleSetName",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "RuleSetName",
+                  "value": null,
+                  "description": "The name of the rule set to create. The name must:"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Receipt Rule Set",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?RuleSetName",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "RuleSetName",
+                  "value": null,
+                  "description": "The name of the receipt rule set to delete."
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Describe Receipt Rule Set",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?RuleSetName",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "RuleSetName",
+                  "value": null,
+                  "description": "The name of the receipt rule set to describe."
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List Receipt Rule Sets",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?NextToken",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "NextToken",
+                  "value": null,
+                  "description": "A token returned from a previous call to ListReceiptRuleSets to indicate                                 the position in the receipt rule set list."
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reorder Receipt Rule Set",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?RuleNames.member.N&RuleSetName",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "RuleNames.member.N",
+                  "value": null,
+                  "description": "A list of the specified receipt rule set's receipt rules in the order that you want                                 to                                 put them."
+                },
+                {
+                  "key": "RuleSetName",
+                  "value": null,
+                  "description": "The name of the receipt rule set to reorder."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Render Template",
+      "item": [
+        {
+          "name": "Test Render Template",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?TemplateData&TemplateName",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "TemplateData",
+                  "value": null,
+                  "description": "A list of replacement values to apply to the template. This parameter is a JSON                                 object, typically consisting of key-value pairs in which the keys correspond to                                 replacement tags in the email template."
+                },
+                {
+                  "key": "TemplateName",
+                  "value": null,
+                  "description": "The name of the template that you want to render."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Send Quota",
+      "item": [
+        {
+          "name": "Get Send Quota",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?Max24HourSend&MaxSendRate&SentLast24Hours",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "Max24HourSend",
+                  "value": null,
+                  "description": "The maximum number of emails the user is allowed to send in a 24-hour interval. A                                 value of -1 signifies an unlimited quota."
+                },
+                {
+                  "key": "MaxSendRate",
+                  "value": null,
+                  "description": "The maximum number of emails that Amazon SES can accept from the user's account per                                 second."
+                },
+                {
+                  "key": "SentLast24Hours",
+                  "value": null,
+                  "description": "The number of emails sent during the previous 24 hours."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Send Statistics",
+      "item": [
+        {
+          "name": "Get Send Statistics",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?SendDataPoints.member.N",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "SendDataPoints.member.N",
+                  "value": null,
+                  "description": "A list of data points, each of which represents 15 minutes of activity."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Template",
+      "item": [
+        {
+          "name": "Create Template",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?Template",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "Template",
+                  "value": null,
+                  "description": "The content of the email, composed of a subject line, an HTML part, and a text-only                                 part."
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Template",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?TemplateName",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "TemplateName",
+                  "value": null,
+                  "description": "The name of the template to be deleted."
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Template",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?TemplateName",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "TemplateName",
+                  "value": null,
+                  "description": "The name of the template you want to retrieve."
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List Templates",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?MaxItems&NextToken",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "MaxItems",
+                  "value": null,
+                  "description": "The maximum number of templates to return. This value must be at least 1 and less                                 than                                 or equal to 10. If you do not specify a value, or if you specify a value less than                                 1 or                                 greater than 10, the operation will return up to 10 results."
+                },
+                {
+                  "key": "NextToken",
+                  "value": null,
+                  "description": "A token returned from a previous call to ListTemplates to indicate the                                 position in the list of email templates."
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Template",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?Template",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "Template",
+                  "value": null,
+                  "description": "The content of the email, composed of a subject line, an HTML part, and a text-only                                 part."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Templated Email",
+      "item": [
+        {
+          "name": "Send Templated Email",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?ConfigurationSetName&Destination&ReplyToAddresses.member.N&ReturnPath&ReturnPathArn&Source&SourceArn&Tags.member.N&Template&TemplateArn&TemplateData",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "ConfigurationSetName",
+                  "value": null,
+                  "description": "The name of the configuration set to use when you send an email using                                 SendTemplatedEmail."
+                },
+                {
+                  "key": "Destination",
+                  "value": null,
+                  "description": "The destination for this email, composed of To:, CC:, and BCC: fields. A Destination                                 can include up to 50 recipients across these three fields."
+                },
+                {
+                  "key": "ReplyToAddresses.member.N",
+                  "value": null,
+                  "description": "The reply-to email address(es) for the message. If the recipient replies to the                                 message, each reply-to address will receive the reply."
+                },
+                {
+                  "key": "ReturnPath",
+                  "value": null,
+                  "description": "The email address that bounces and complaints will be forwarded to when feedback                                 forwarding is enabled. If the message cannot be delivered to the recipient, then an                                 error message will be returned from the recipient's ISP; this message will then be                                 forwarded to the email address specified by the ReturnPath parameter. The                                 ReturnPath parameter is never overwritten. This email address must be                                 either individually verified with Amazon SES, or from a domain that has been verified                                 with                                 Amazon SES."
+                },
+                {
+                  "key": "ReturnPathArn",
+                  "value": null,
+                  "description": "This parameter is used only for sending authorization. It is the ARN of the identity                                 that is associated with the sending authorization policy that permits you to use the                                 email address specified in the ReturnPath parameter."
+                },
+                {
+                  "key": "Source",
+                  "value": null,
+                  "description": "The email address that is sending the email. This email address must be either                                 individually verified with Amazon SES, or from a domain that has been verified with                                 Amazon SES.                                 For information about verifying identities, see the Amazon SES Developer                                    Guide."
+                },
+                {
+                  "key": "SourceArn",
+                  "value": null,
+                  "description": "This parameter is used only for sending authorization. It is the ARN of the identity                                 that is associated with the sending authorization policy that permits you to send                                 for                                 the email address specified in the Source parameter."
+                },
+                {
+                  "key": "Tags.member.N",
+                  "value": null,
+                  "description": "A list of tags, in the form of name/value pairs, to apply to an email that you send                                 using SendTemplatedEmail. Tags correspond to characteristics of the email                                 that you define, so that you can publish email sending events."
+                },
+                {
+                  "key": "Template",
+                  "value": null,
+                  "description": "The template to use when sending this email."
+                },
+                {
+                  "key": "TemplateArn",
+                  "value": null,
+                  "description": "The ARN of the template to use when sending this email."
+                },
+                {
+                  "key": "TemplateData",
+                  "value": null,
+                  "description": "A list of replacement values to apply to the template. This parameter is a JSON                                 object, typically consisting of key-value pairs in which the keys correspond to                                 replacement tags in the email template."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Verified Email Address",
+      "item": [
+        {
+          "name": "Delete Verified Email Address",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?EmailAddress",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "EmailAddress",
+                  "value": null,
+                  "description": "An email address to be removed from the list of verified addresses."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Verified Email Addresses",
+      "item": [
+        {
+          "name": "List Verified Email Addresses",
+          "request": {
+            "auth": {
+              "type": "awsv4",
+              "awsv4": [
+                {
+                  "key": "service",
+                  "value": "{{aws_simple_email_service_service}}",
+                  "type": "string"
+                },
+                {
+                  "key": "secretKey",
+                  "value": "{{secretKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "accessKey",
+                  "value": "{{accessKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "region",
+                  "value": "{{aws_simple_email_service_region}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{aws_simple_email_service_base_url}}/?VerifiedEmailAddresses.member.N",
+              "host": [
+                "{{aws_simple_email_service_base_url}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "VerifiedEmailAddresses.member.N",
+                  "value": null,
+                  "description": "A list of email addresses that have been verified."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

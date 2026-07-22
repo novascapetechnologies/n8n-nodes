@@ -1,0 +1,10 @@
+{
+	"node": "n8n-nodes-pharmasync",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Communication", "Data & Storage"],
+	"resources": {
+		"credentialDocumentation": [{ "url": "https://pharmasync.co.ke/docs/api" }],
+		"primaryDocumentation": [{ "url": "https://pharmasync.co.ke/docs/api" }]
+	}
+}
