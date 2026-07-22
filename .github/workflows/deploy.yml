@@ -3,7 +3,7 @@ name: Deploy Custom Nodes to VPS
 on:
   push:
     branches:
-      - main   # triggers on every push to main
+      - master   # triggers on every push to master
 
 jobs:
   deploy:
@@ -33,7 +33,7 @@ jobs:
           port: ${{ secrets.VPS_PORT }}
           script: |
             cd ~/nodes
-            git pull origin main
+            git pull origin master
             npm install
             npm run build
             docker compose restart n8n

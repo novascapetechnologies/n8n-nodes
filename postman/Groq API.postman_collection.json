@@ -1,0 +1,1274 @@
+{
+  "info": {
+    "_postman_id": "fe641243-f901-456d-88b9-a213a6ef4bba",
+    "name": "Groq API",
+    "description": "The Groq API is designed to optimize the orchestration of multiple AI agents, enabling them to work as a cohesive team to accomplish complex tasks and create sophisticated workflows. With Groq's fast inference speeds, developers can achieve rapid autonomous decision-making and collaboration among agent teams. The API supports scalable multi-agent systems, allowing multiple agents to run in parallel without performance degradation. Integration is straightforward, requiring just a few lines of code to get started. For more detailed information, you can refer to the [Official Documentation: CrewAI](https://docs.crewai.com/concepts/llms) and the [Groq API Cookbook: CrewAI Mixture of Agents Tutorial](https://github.com/groq/groq-api-cookbook/tree/main/tutorials/crewai-mixture-of-agents). The Groq API is mostly compatible with OpenAI's client libraries, making it easy to configure your existing applications to run on Groq and try our inference speed.\n\n# Security\n\nThe Groq API is secured using an API key mechanism. This means that each request to the API must include a valid API key for authentication purposes. This approach ensures that only authorized users can access the API resources.\n\nBefore you can make any API calls, you need to obtain an API key from the Groq developer portal. Once you have your API key, you should set it as an environment variable named `GROQ_API_KEY`. This setup is crucial for authenticating your requests. More details can be found in the [API Reference](https://docs.groq.com/docs/api-reference).\n\n# How to use this collection\n\nTo use this Postman collection, you need to set up an environment variable for the API key. This will allow you to authenticate your requests seamlessly. Below is a table describing the necessary environment variable:\n\n| Name          | Description                                      |\n|---------------|--------------------------------------------------|\n| GROQ_API_KEY  | Your Groq API key used for authenticating requests. |\n\nEnsure that you replace the placeholder with your actual API key value. It's recommended to use the Postman vault for storing sensitive information like API keys. You can learn more about the vault [here](https://learning.postman.com/docs/sending-requests/postman-vault/postman-vault-secrets/).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "31008811",
+    "_collection_link": "https://go.postman.co/collection/42654973-fe641243-f901-456d-88b9-a213a6ef4bba?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Chat",
+      "item": [
+        {
+          "name": "Retrieve chat completions",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"model\": \"{{model}}\",\n    \"messages\": [\n        {\"role\": \"user\", \"content\": \"Explain the importance of fast language models\"}\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://api.groq.com/openai/v1/chat/completions",
+              "protocol": "https",
+              "host": [
+                "api",
+                "groq",
+                "com"
+              ],
+              "path": [
+                "openai",
+                "v1",
+                "chat",
+                "completions"
+              ]
+            },
+            "description": "Groq only supports POST for /chat/completions — there is no GET variant of this endpoint. Requires `model` and `messages` in the body."
+          },
+          "response": [
+            {
+              "name": "Example usage of POST /chat/completions",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"model\": \"{{model}}\",\n    \"messages\": [\n        {\"role\": \"user\", \"content\": \"Explain the importance of fast language models\"}\n    ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://api.groq.com/openai/v1/chat/completions",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "groq",
+                    "com"
+                  ],
+                  "path": [
+                    "openai",
+                    "v1",
+                    "chat",
+                    "completions"
+                  ]
+                }
+              },
+              "status": "200 OK",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"completions\": [\n    {\n      \"text\": \"Fast language models are important because they enable real-time applications...\"\n    }\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Create a model response for a chat conversation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"model\": \"{{model}}\",\n    \"messages\": [\n        {\"role\": \"user\", \"content\": \"Hello, how are you?\"}\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://api.groq.com/openai/v1/chat/completions",
+              "protocol": "https",
+              "host": [
+                "api",
+                "groq",
+                "com"
+              ],
+              "path": [
+                "openai",
+                "v1",
+                "chat",
+                "completions"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Basic Chat Completion",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"model\": \"{{model}}\",\n    \"messages\": [\n        {\"role\": \"user\", \"content\": \"Hello, how are you?\"}\n    ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://api.groq.com/openai/v1/chat/completions",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "groq",
+                    "com"
+                  ],
+                  "path": [
+                    "openai",
+                    "v1",
+                    "chat",
+                    "completions"
+                  ]
+                }
+              },
+              "status": "200 OK",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"id\": \"abc123\",\n    \"object\": \"chat.completion\",\n    \"created\": 1616161616,\n    \"choices\": [\n        {\n            \"index\": 0,\n            \"message\": {\n                \"role\": \"assistant\",\n                \"content\": \"I'm good, thank you! How can I assist you today?\"\n            }\n        }\n    ]\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Audio",
+      "item": [
+        {
+          "name": "Convert audio to text",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "description": "The audio file to be transcribed.",
+                  "value": null
+                },
+                {
+                  "key": "model",
+                  "value": "{{model}}",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "https://api.groq.com/openai/v1/audio/transcriptions",
+              "protocol": "https",
+              "host": [
+                "api",
+                "groq",
+                "com"
+              ],
+              "path": [
+                "openai",
+                "v1",
+                "audio",
+                "transcriptions"
+              ]
+            },
+            "description": "Groq only supports POST for /audio/transcriptions — there is no GET variant. Requires a `file` and `model` (whisper-large-v3 or whisper-large-v3-turbo)."
+          },
+          "response": [
+            {
+              "name": "Transcription Request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "https://api.groq.com/openai/v1/audio/transcriptions",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "groq",
+                    "com"
+                  ],
+                  "path": [
+                    "openai",
+                    "v1",
+                    "audio",
+                    "transcriptions"
+                  ]
+                }
+              },
+              "status": "200 OK",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"text\": \"Transcribed text from the audio file.\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Translate audio to English text",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "description": "The audio file to be translated.",
+                  "value": null
+                },
+                {
+                  "key": "model",
+                  "value": "{{model}}",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "https://api.groq.com/openai/v1/audio/translations",
+              "protocol": "https",
+              "host": [
+                "api",
+                "groq",
+                "com"
+              ],
+              "path": [
+                "openai",
+                "v1",
+                "audio",
+                "translations"
+              ]
+            },
+            "description": "Groq only supports POST for /audio/translations — there is no GET variant. Requires a `file` and `model` (whisper-large-v3 or whisper-large-v3-turbo). Response is always to English."
+          },
+          "response": [
+            {
+              "name": "Untitled Response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "https://api.groq.com/openai/v1/audio/translations",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "groq",
+                    "com"
+                  ],
+                  "path": [
+                    "openai",
+                    "v1",
+                    "audio",
+                    "translations"
+                  ]
+                }
+              },
+              "status": "200 OK",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\"translation\": \"This is the translated text.\"}"
+            }
+          ]
+        },
+        {
+          "name": "Transcribe Audio",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "audio_file",
+                  "type": "file",
+                  "description": "The audio file to be transcribed.",
+                  "value": null
+                },
+                {
+                  "key": "language",
+                  "value": "en",
+                  "type": "text",
+                  "description": "The language code of the audio content."
+                }
+              ]
+            },
+            "url": {
+              "raw": "https://api.groq.com/openai/v1/audio/transcriptions",
+              "protocol": "https",
+              "host": [
+                "api",
+                "groq",
+                "com"
+              ],
+              "path": [
+                "openai",
+                "v1",
+                "audio",
+                "transcriptions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Translate audio to English",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "audio/mpeg"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "description": "The audio file to be translated.",
+                  "value": null
+                },
+                {
+                  "key": "model",
+                  "value": "{{model}}",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "https://api.groq.com/openai/v1/audio/translations",
+              "protocol": "https",
+              "host": [
+                "api",
+                "groq",
+                "com"
+              ],
+              "path": [
+                "openai",
+                "v1",
+                "audio",
+                "translations"
+              ]
+            },
+            "description": "The `POST /audio/translations` operation is part of the Groq API's Audio group. This operation translates audio content into English. It is designed to process audio input and return a translated text output in English, facilitating users who need to convert spoken language into written English.\n\n## Request Body\n\n| Name  | Type   | Required | Description                      |\n|-------|--------|----------|----------------------------------|\n| file  | Binary | Yes      | The audio file to be translated. |\n| model | String | Yes      | whisper-large-v3 or whisper-large-v3-turbo |\n\n## Response Body\n\n| Name        | Type   | Description                          |\n|-------------|--------|--------------------------------------|\n| translation | String | The translated text in English.      |"
+          },
+          "response": [
+            {
+              "name": "Basic Translation Request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "description": "The audio file to be translated.",
+                      "src": []
+                    },
+                    {
+                      "key": "model",
+                      "value": "{{model}}",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "https://api.groq.com/openai/v1/audio/translations",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "groq",
+                    "com"
+                  ],
+                  "path": [
+                    "openai",
+                    "v1",
+                    "audio",
+                    "translations"
+                  ]
+                }
+              },
+              "status": "200 OK",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"translation\": \"This is the translated text in English.\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Models",
+      "item": [
+        {
+          "name": "Retrieve all active models",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.groq.com/openai/v1/models",
+              "protocol": "https",
+              "host": [
+                "api",
+                "groq",
+                "com"
+              ],
+              "path": [
+                "openai",
+                "v1",
+                "models"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Retrieve Active Models",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer YOUR_API_KEY"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "https://api.groq.com/openai/v1/models",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "groq",
+                    "com"
+                  ],
+                  "path": [
+                    "openai",
+                    "v1",
+                    "models"
+                  ]
+                }
+              },
+              "status": "200 OK",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"model_id\": \"distil-whisper-large-v3-en\",\n    \"developer\": \"HuggingFace\",\n    \"context_window\": null,\n    \"max_completion_tokens\": null,\n    \"max_file_size\": 25,\n    \"model_card_link\": \"https://huggingface.co/distil-whisper/distil-large-v3\"\n  },\n  {\n    \"model_id\": \"gemma2-9b-it\",\n    \"developer\": \"Google\",\n    \"context_window\": 8192,\n    \"max_completion_tokens\": null,\n    \"max_file_size\": null,\n    \"model_card_link\": \"https://huggingface.co/google/gemma-2-9b-it\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Retrieve a specific model",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.groq.com/openai/v1/models/:model",
+              "protocol": "https",
+              "host": [
+                "api",
+                "groq",
+                "com"
+              ],
+              "path": [
+                "openai",
+                "v1",
+                "models",
+                ":model"
+              ],
+              "variable": [
+                {
+                  "key": "model",
+                  "value": "{{model}}",
+                  "description": "The identifier of the model to retrieve."
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Batches",
+      "item": [
+        {
+          "name": "Create and Execute a Batch",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"input_file_id\": \"file_01jh6x76wtemjr74t1fh0faj5t\",\n  \"endpoint\": \"/v1/chat/completions\",\n  \"completion_window\": \"24h\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://api.groq.com/openai/v1/batches",
+              "protocol": "https",
+              "host": [
+                "api",
+                "groq",
+                "com"
+              ],
+              "path": [
+                "openai",
+                "v1",
+                "batches"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Creating and Executing a Batch",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input_file_id\": \"file_01jh6x76wtemjr74t1fh0faj5t\",\n  \"endpoint\": \"/v1/chat/completions\",\n  \"completion_window\": \"24h\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://api.groq.com/openai/v1/batches",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "groq",
+                    "com"
+                  ],
+                  "path": [
+                    "openai",
+                    "v1",
+                    "batches"
+                  ]
+                }
+              },
+              "status": "200 OK",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"id\": \"batch_01jh6xa7reempvjyh6n3yst2zw\",\n  \"object\": \"batch\",\n  \"endpoint\": \"/v1/chat/completions\",\n  \"errors\": null,\n  \"input_file_id\": \"file_01jh6x76wtemjr74t1fh0faj5t\",\n  \"completion_window\": \"24h\",\n  \"status\": \"validating\",\n  \"output_file_id\": null,\n  \"error_file_id\": null,\n  \"finalizing_at\": null,\n  \"failed_at\": null,\n  \"expired_at\": null,\n  \"cancelled_at\": null,\n  \"request_counts\": {\n    \"total\": 0,\n    \"completed\": 0,\n    \"failed\": 0\n  },\n  \"metadata\": null,\n  \"created_at\": 1736472600,\n  \"expires_at\": 1736559000,\n  \"cancelling_at\": null,\n  \"completed_at\": null,\n  \"in_progress_at\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "Retrieve a batch by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.groq.com/openai/v1/batches/:batch_id",
+              "protocol": "https",
+              "host": [
+                "api",
+                "groq",
+                "com"
+              ],
+              "path": [
+                "openai",
+                "v1",
+                "batches",
+                ":batch_id"
+              ],
+              "variable": [
+                {
+                  "key": "batch_id",
+                  "value": "{{batch_id}}",
+                  "description": "The unique identifier of the batch to retrieve."
+                }
+              ]
+            },
+            "description": "The `GET /batches/{batch_id}` operation retrieves a specific batch identified by the `batch_id` parameter. This operation is part of the Groq API and belongs to the Batches group. It allows you to access detailed information about a particular batch, which can be useful for monitoring and managing batch processes.\n\n## Response Body\n\n| Name       | Type   | Description                              |\n|------------|--------|------------------------------------------|\n| id         | string | The unique identifier of the batch.      |\n| status     | string | The current status of the batch.         |\n| created_at | string | The timestamp when the batch was created.|\n| updated_at | string | The timestamp when the batch was last updated.|"
+          },
+          "response": [
+            {
+              "name": "Retrieve Batch Details",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer YOUR_API_KEY",
+                    "description": "Bearer token for authenticating the request."
+                  }
+                ],
+                "url": {
+                  "raw": "api.groq.com/batches/:batch_id",
+                  "host": [
+                    "api",
+                    "groq",
+                    "com"
+                  ],
+                  "path": [
+                    "batches",
+                    ":batch_id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "batch_id",
+                      "value": "{{batch_id}}",
+                      "description": "The unique identifier of the batch to retrieve."
+                    }
+                  ]
+                }
+              },
+              "status": "200 OK",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"id\": \"12345\",\n    \"status\": \"completed\",\n    \"created_at\": \"2023-10-01T12:00:00Z\",\n    \"updated_at\": \"2023-10-02T15:30:00Z\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "List Organization's Batches",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.groq.com/openai/v1/batches",
+              "protocol": "https",
+              "host": [
+                "api",
+                "groq",
+                "com"
+              ],
+              "path": [
+                "openai",
+                "v1",
+                "batches"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "List Organization's Batches",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "https://api.groq.com/openai/v1/batches",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "groq",
+                    "com"
+                  ],
+                  "path": [
+                    "openai",
+                    "v1",
+                    "batches"
+                  ]
+                }
+              },
+              "status": "200 OK",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n\"object\": \"list\",\n\"data\": [\n{\n\"id\": \"batch_01jh6xa7reempvjyh6n3yst2zw\",\n\"object\": \"batch\",\n\"endpoint\": \"/v1/chat/completions\",\n\"errors\": null,\n\"input_file_id\": \"file_01jh6x76wtemjr74t1fh0faj5t\",\n\"completion_window\": \"24h\",\n\"status\": \"validating\",\n\"output_file_id\": null,\n\"error_file_id\": null,\n\"finalizing_at\": null,\n\"failed_at\": null,\n\"expired_at\": null,\n\"cancelled_at\": null,\n\"request_counts\": {\n\"total\": 0,\n\"completed\": 0,\n\"failed\": 0\n},\n\"metadata\": null,\n\"created_at\": 1736472600,\n\"expires_at\": 1736559000,\n\"cancelling_at\": null,\n\"completed_at\": null,\n\"in_progress_at\": null\n}\n]\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Files",
+      "item": [
+        {
+          "name": "Upload a file",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "description": "The file to be uploaded.",
+                  "value": null
+                }
+              ]
+            },
+            "url": {
+              "raw": "https://api.groq.com/openai/v1/files",
+              "protocol": "https",
+              "host": [
+                "api",
+                "groq",
+                "com"
+              ],
+              "path": [
+                "openai",
+                "v1",
+                "files"
+              ]
+            },
+            "description": "The `POST /files` operation uploads a file that can be used across various endpoints. This operation is essential for you who need to store files within the Groq system, enabling you to leverage these files in different contexts and operations provided by the API.\n\n## Request Body\n\n| Name | Type | Required | Description |\n|------|------|----------|-------------|\n| file | Binary | Yes | The file to be uploaded. |\n\n## Response Body\n\n| Name | Type | Required | Description |\n|------|------|----------|-------------|\n| id | String |  | The unique identifier of the uploaded file. |\n| object | String |  | The type of the object, which is 'file'. |\n| bytes | Integer |  | The size of the file in bytes. |\n| created_at | Integer |  | The timestamp when the file was created. |\n| filename | String |  | The name of the uploaded file. |\n| purpose | String |  | The purpose of the uploaded file. "
+          },
+          "response": [
+            {
+              "name": "Uploading a File",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "description": "The file to be uploaded.",
+                      "src": []
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "https://api.groq.com/openai/v1/files",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "groq",
+                    "com"
+                  ],
+                  "path": [
+                    "openai",
+                    "v1",
+                    "files"
+                  ]
+                }
+              },
+              "status": "200 OK",
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": "{\n\"id\": \"file_01jh6x76wtemjr74t1fh0faj5t\",\n\"object\": \"file\",\n\"bytes\": 966,\n\"created_at\": 1736472501,\n\"filename\": \"batch_file.jsonl\",\n\"purpose\": \"batch\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Retrieve a list of files",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.groq.com/openai/v1/files",
+              "protocol": "https",
+              "host": [
+                "api",
+                "groq",
+                "com"
+              ],
+              "path": [
+                "openai",
+                "v1",
+                "files"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Retrieve List of Files",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer $GROQ_API_KEY",
+                    "description": "Bearer token for authentication (Groq API key)."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": "Typically application/json, but not explicitly required."
+                  }
+                ],
+                "url": {
+                  "raw": "https://api.groq.com/openai/v1/files",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "groq",
+                    "com"
+                  ],
+                  "path": [
+                    "openai",
+                    "v1",
+                    "files"
+                  ]
+                }
+              },
+              "status": "200 OK",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"id\": \"file_01jh6x76wtemjr74t1fh0faj5t\",\n      \"object\": \"file\",\n      \"bytes\": 966,\n      \"created_at\": 1736472501,\n      \"filename\": \"batch_file.jsonl\",\n      \"purpose\": \"batch\"\n    }\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Delete a file by ID",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.groq.com/openai/v1/files/:file_id",
+              "protocol": "https",
+              "host": [
+                "api",
+                "groq",
+                "com"
+              ],
+              "path": [
+                "openai",
+                "v1",
+                "files",
+                ":file_id"
+              ],
+              "variable": [
+                {
+                  "key": "file_id",
+                  "description": "The unique identifier of the file to be deleted."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Deleting a File",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "https://api.groq.com/openai/v1/files/:file_id",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "groq",
+                    "com"
+                  ],
+                  "path": [
+                    "openai",
+                    "v1",
+                    "files",
+                    ":file_id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "file_id",
+                      "description": "The unique identifier of the file to be deleted."
+                    }
+                  ]
+                }
+              },
+              "status": "200 OK",
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": "{\n    \"id\": \"file_01jh6x76wtemjr74t1fh0faj5t\",\n    \"object\": \"file\",\n    \"deleted\": true\n}"
+            }
+          ]
+        },
+        {
+          "name": "Retrieve File Information",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.groq.com/openai/v1/files/:file_id",
+              "protocol": "https",
+              "host": [
+                "api",
+                "groq",
+                "com"
+              ],
+              "path": [
+                "openai",
+                "v1",
+                "files",
+                ":file_id"
+              ],
+              "variable": [
+                {
+                  "key": "file_id",
+                  "value": "{{file_id}}"
+                }
+              ]
+            },
+            "description": "The `GET /files/{file_id}` operation retrieves information about a file in the Groq API. This operation is used to access metadata and details of a specific file identified by its unique `file_id`.\n\n## Response Body\n\n| Name       | Type   | Description                              |\n|------------|--------|------------------------------------------|\n| id         | string | The unique identifier of the file        |\n| name       | string | The name of the file                     |\n| size       | number | The size of the file in bytes            |\n| created_at | string | The timestamp when the file was created  |"
+          },
+          "response": [
+            {
+              "name": "Retrieve File Information",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "api.groq.com/files/:file_id",
+                  "host": [
+                    "api",
+                    "groq",
+                    "com"
+                  ],
+                  "path": [
+                    "files",
+                    ":file_id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "file_id",
+                      "value": "{{file_id}}"
+                    }
+                  ]
+                }
+              },
+              "status": "200 OK",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"id\": \"12345\",\n    \"name\": \"example_file.txt\",\n    \"size\": 1024,\n    \"created_at\": \"2023-10-01T12:00:00Z\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Retrieve File Content",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.groq.com/openai/v1/files/:file_id/content",
+              "protocol": "https",
+              "host": [
+                "api",
+                "groq",
+                "com"
+              ],
+              "path": [
+                "openai",
+                "v1",
+                "files",
+                ":file_id",
+                "content"
+              ],
+              "variable": [
+                {
+                  "key": "file_id",
+                  "value": "{{file_id}}",
+                  "description": "The unique identifier of the file."
+                }
+              ]
+            },
+            "description": "The `GET /files/{file_id}/content` operation returns the contents of the specified file in the Groq API. This operation is used to access and retrieve the data stored within a particular file identified by its unique `file_id`. \n\n## Response Body\n\n| Name | Type | Description |\n|------|------|-------------|\n| Content-Type | string | The MIME type of the file content. |\n| Content-Length | string | The size of the file content in bytes. |\n\nThe response body contains the raw content of the file. The format and structure depend on the file type."
+          },
+          "response": [
+            {
+              "name": "Retrieve File Content",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer YOUR_API_KEY",
+                    "description": "Bearer token for authenticating the API request."
+                  }
+                ],
+                "url": {
+                  "raw": "https://api.groq.com/files/:file_id/content",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "groq",
+                    "com"
+                  ],
+                  "path": [
+                    "files",
+                    ":file_id",
+                    "content"
+                  ],
+                  "variable": [
+                    {
+                      "key": "file_id",
+                      "value": "{{file_id}}",
+                      "description": "The unique identifier of the file."
+                    }
+                  ]
+                }
+              },
+              "status": "200 OK",
+              "_postman_previewlanguage": "text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "1024"
+                }
+              ],
+              "cookie": [],
+              "body": ""
+            }
+          ]
+        },
+        {
+          "name": "Retrieve File Content by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.groq.com/openai/v1/files/:output_file_id/content",
+              "protocol": "https",
+              "host": [
+                "api",
+                "groq",
+                "com"
+              ],
+              "path": [
+                "openai",
+                "v1",
+                "files",
+                ":output_file_id",
+                "content"
+              ],
+              "variable": [
+                {
+                  "key": "output_file_id",
+                  "value": "{{output_file_id}}",
+                  "description": "The unique identifier of the file whose content is to be retrieved."
+                }
+              ]
+            },
+            "description": "The API operation `GET /files/{output_file_id}/content` retrieves the content of a file using the `output_file_id` from a completed batch job. This operation is part of the Groq API and belongs to the Files group, allowing you to access the contents of files processed in batch jobs."
+          },
+          "response": [
+            {
+              "name": "Retrieve File Content",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "https://api.groq.com/files/:output_file_id/content",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "groq",
+                    "com"
+                  ],
+                  "path": [
+                    "files",
+                    ":output_file_id",
+                    "content"
+                  ],
+                  "variable": [
+                    {
+                      "key": "output_file_id",
+                      "value": "{{output_file_id}}",
+                      "description": "The unique identifier of the file whose content is to be retrieved."
+                    }
+                  ]
+                }
+              },
+              "status": "200 OK",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\"file_content\": \"Sample content of the file.\"}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{GROQ_API_KEY}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ]
+}

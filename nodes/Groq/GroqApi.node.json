@@ -1,0 +1,10 @@
+{
+	"node": "n8n-nodes-groq",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["AI", "Development"],
+	"resources": {
+		"credentialDocumentation": [{ "url": "https://docs.groq.com/docs/api-reference" }],
+		"primaryDocumentation": [{ "url": "https://docs.groq.com/docs/api-reference" }]
+	}
+}

@@ -34,13 +34,15 @@
       "dist/credentials/KraEtims/KraEtimsApi.credentials.js",
       "dist/credentials/HostPinnacle/HostPinnacleSmsApi.credentials.js",
       "dist/credentials/AWSSES/AwsSesApi.credentials.js",
-      "dist/credentials/PharmaSync/PharmaSyncApi.credentials.js"
+      "dist/credentials/PharmaSync/PharmaSyncApi.credentials.js",
+      "dist/credentials/Groq/GroqApi.credentials.js"
     ],
     "nodes": [
       "dist/nodes/KraEtims/KraEtims.node.js",
       "dist/nodes/HostPinnacle/HostPinnacle.node.js",
       "dist/nodes/AWSSES/AwsSes.node.js",
-      "dist/nodes/PharmaSync/PharmaSync.node.js"
+      "dist/nodes/PharmaSync/PharmaSync.node.js",
+      "dist/nodes/Groq/GroqApi.node.js"
     ]
   },
   "devDependencies": {
