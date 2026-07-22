@@ -13,11 +13,9 @@ import { groqApiBinaryRequest, groqApiFormRequest, groqApiRequest } from './Gene
 
 /**
  * Groq API node — covers every route in the "Groq API" Postman collection:
- * Chat, Audio, Models, Batches and Files. For using Groq as an AI Agent's
- * language model instead of calling routes directly, use the separate
- * "Groq Chat Model" node (GroqChatModel.node.ts).
+ * Chat, Audio, Models, Batches and Files.
  */
-export class Groq implements INodeType {
+export class GroqApi implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Groq API (Novascape)',
 		name: 'groqApi',

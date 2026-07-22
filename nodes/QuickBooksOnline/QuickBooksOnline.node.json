@@ -1,0 +1,12 @@
+{
+	"node": "n8n-nodes-quickbooks-online",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Finance", "Development"],
+	"resources": {
+		"credentialDocumentation": [
+			{ "url": "https://developer.intuit.com/app/developer/qbo/docs/develop/authentication-and-authorization" }
+		],
+		"primaryDocumentation": [{ "url": "https://developer.intuit.com/app/developer/qbo/docs/api/accounting" }]
+	}
+}
