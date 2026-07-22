@@ -5,7 +5,7 @@ import type {
 	ILoadOptionsFunctions,
 	JsonObject,
 } from 'n8n-workflow';
-import { NodeApiError } from 'n8n-workflow';
+import { NodeApiError, NodeOperationError } from 'n8n-workflow';
 
 /**
  * Shared request helper for the PharmaSync bridge API.
@@ -25,13 +25,10 @@ export async function pharmaSyncRequest(
 	const baseUrl = String(credentials.baseUrl ?? '').replace(/\/+$/, '');
 
 	try {
-		const response = (await this.helpers.httpRequest({
+		const response = (await this.helpers.httpRequestWithAuthentication.call(this, 'pharmaSyncApi', {
 			method,
 			url: `${baseUrl}/api/v1/n8n${endpoint}`,
-			headers: {
-				'x-pharmasync-service-token': String(credentials.serviceToken ?? ''),
-				'Content-Type': 'application/json',
-			},
+			headers: { 'Content-Type': 'application/json' },
 			body,
 			qs,
 			json: true,
@@ -49,10 +46,9 @@ export async function pharmaSyncRequest(
 
 		return response;
 	} catch (error) {
-		if (error instanceof NodeApiError) throw error;
-		throw new NodeApiError(this.getNode(), error as JsonObject, {
-			message: describeError(error),
-		});
+		throw error instanceof NodeApiError || error instanceof NodeOperationError
+			? error
+			: new NodeApiError(this.getNode(), error as JsonObject, { message: describeError(error) });
 	}
 }
 

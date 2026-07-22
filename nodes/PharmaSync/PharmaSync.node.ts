@@ -30,6 +30,7 @@ export class PharmaSync implements INodeType {
 		defaults: { name: 'PharmaSync' },
 		inputs: [NodeConnectionTypes.Main],
 		outputs: [NodeConnectionTypes.Main],
+		usableAsTool: true,
 		credentials: [{ name: 'pharmaSyncApi', required: true }],
 		properties: [
 			{
@@ -94,8 +95,9 @@ export class PharmaSync implements INodeType {
 				typeOptions: { loadOptionsMethod: 'getTenants' },
 				default: '',
 				required: true,
+				placeholder: 'Accepts a tenant UUID or subdomain slug',
 				description:
-					'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>. Accepts a tenant UUID or subdomain slug.',
+					'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
 				displayOptions: { show: { resource: ['integration', 'report', 'message'] } },
 			},
 			{
@@ -105,8 +107,9 @@ export class PharmaSync implements INodeType {
 				typeOptions: { loadOptionsMethod: 'getTenants' },
 				default: '',
 				required: true,
+				placeholder: 'Accepts a tenant UUID or subdomain slug',
 				description:
-					'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>. Accepts a tenant UUID or subdomain slug.',
+					'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
 				displayOptions: { show: { resource: ['tenant'], operation: ['getContext'] } },
 			},
 
@@ -392,21 +395,21 @@ export class PharmaSync implements INodeType {
 				displayOptions: { show: { resource: ['reportSchedule'], operation: ['complete'] } },
 				options: [
 					{
-						displayName: 'Recipient Emails',
-						name: 'recipientEmails',
-						type: 'string',
-						default: '',
-						description: 'Comma-separated addresses actually delivered to',
-					},
-					{ displayName: 'File Size (Bytes)', name: 'fileSizeBytes', type: 'number', default: 0 },
-					{ displayName: 'Duration (Ms)', name: 'durationMs', type: 'number', default: 0 },
-					{ displayName: 'Error Message', name: 'errorMessage', type: 'string', default: '' },
-					{
 						displayName: 'Advance Schedule',
 						name: 'advance',
 						type: 'boolean',
 						default: true,
 						description: 'Whether to roll nextRunAt forward. Turn off to leave the run due.',
+					},
+					{ displayName: 'Duration (Ms)', name: 'durationMs', type: 'number', default: 0 },
+					{ displayName: 'Error Message', name: 'errorMessage', type: 'string', default: '' },
+					{ displayName: 'File Size (Bytes)', name: 'fileSizeBytes', type: 'number', default: 0 },
+					{
+						displayName: 'Recipient Emails',
+						name: 'recipientEmails',
+						type: 'string',
+						default: '',
+						description: 'Comma-separated addresses actually delivered to',
 					},
 				],
 			},
@@ -443,6 +446,8 @@ export class PharmaSync implements INodeType {
 						default: '',
 						description: 'Opens a new execution row. Use when n8n initiated the run.',
 					},
+					{ displayName: 'Dispatch ID', name: 'dispatchId', type: 'string', default: '' },
+					{ displayName: 'Error', name: 'error', type: 'string', default: '' },
 					{
 						displayName: 'Execution ID',
 						name: 'executionId',
@@ -450,7 +455,9 @@ export class PharmaSync implements INodeType {
 						default: '',
 						description: 'Updates the row PharmaSync opened when it dispatched',
 					},
-					{ displayName: 'Dispatch ID', name: 'dispatchId', type: 'string', default: '' },
+					{ displayName: 'Failed Count', name: 'failedCount', type: 'number', default: 0 },
+					{ displayName: 'Sent Count', name: 'sentCount', type: 'number', default: 0 },
+					{ displayName: 'Skipped Count', name: 'skippedCount', type: 'number', default: 0 },
 					{
 						displayName: 'Status',
 						name: 'status',
@@ -463,10 +470,6 @@ export class PharmaSync implements INodeType {
 						],
 						default: 'COMPLETED',
 					},
-					{ displayName: 'Sent Count', name: 'sentCount', type: 'number', default: 0 },
-					{ displayName: 'Failed Count', name: 'failedCount', type: 'number', default: 0 },
-					{ displayName: 'Skipped Count', name: 'skippedCount', type: 'number', default: 0 },
-					{ displayName: 'Error', name: 'error', type: 'string', default: '' },
 				],
 			},
 		],
@@ -694,7 +697,7 @@ export class PharmaSync implements INodeType {
 					});
 					continue;
 				}
-				throw error;
+				throw new NodeOperationError(this.getNode(), error as Error, { itemIndex: i });
 			}
 		}
 

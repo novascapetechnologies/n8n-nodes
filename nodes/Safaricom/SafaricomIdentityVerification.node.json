@@ -1,0 +1,18 @@
+{
+	"node": "n8n-nodes-safaricom-identity-verification",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Communication"],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://developer.safaricom.co.ke/Documentation"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://developer.safaricom.co.ke/Documentation"
+			}
+		]
+	}
+}

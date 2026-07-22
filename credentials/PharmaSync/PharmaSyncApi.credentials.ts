@@ -1,4 +1,10 @@
-import type { ICredentialTestRequest, ICredentialType, INodeProperties } from 'n8n-workflow';
+import type {
+	IAuthenticateGeneric,
+	ICredentialTestRequest,
+	ICredentialType,
+	Icon,
+	INodeProperties,
+} from 'n8n-workflow';
 
 /**
  * Credential for the PharmaSync bridge API (/api/v1/n8n/*).
@@ -18,6 +24,8 @@ export class PharmaSyncApi implements ICredentialType {
 	name = 'pharmaSyncApi';
 
 	displayName = 'PharmaSync API';
+
+	icon: Icon = 'file:../../nodes/PharmaSync/pharmasync.svg';
 
 	documentationUrl = 'https://pharmasync.co.ke/docs/api';
 
@@ -41,6 +49,15 @@ export class PharmaSyncApi implements ICredentialType {
 			description: 'Value of N8N_SERVICE_TOKEN from the PharmaSync environment',
 		},
 	];
+
+	authenticate: IAuthenticateGeneric = {
+		type: 'generic',
+		properties: {
+			headers: {
+				'x-pharmasync-service-token': '={{$credentials.serviceToken}}',
+			},
+		},
+	};
 
 	test: ICredentialTestRequest = {
 		request: {

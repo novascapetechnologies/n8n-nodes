@@ -38,4 +38,4 @@ jobs:
             npm run build
             cd ~/n8n
             docker compose down
-            docker compose up -d
+            docker compose up -d --build

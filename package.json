@@ -36,7 +36,10 @@
       "dist/credentials/AWSSES/AwsSesApi.credentials.js",
       "dist/credentials/PharmaSync/PharmaSyncApi.credentials.js",
       "dist/credentials/Groq/GroqApi.credentials.js",
-      "dist/credentials/QuickBooksOnline/QuickBooksOnlineOAuth2Api.credentials.js"
+      "dist/credentials/QuickBooksOnline/QuickBooksOnlineOAuth2Api.credentials.js",
+      "dist/credentials/MPESA/MPesaApi.credentials.js",
+      "dist/credentials/Safaricom/SafaricomSimPortalApi.credentials.js",
+      "dist/credentials/Safaricom/SafaricomIdentityApi.credentials.js"
     ],
     "nodes": [
       "dist/nodes/KraEtims/KraEtims.node.js",
@@ -44,7 +47,10 @@
       "dist/nodes/AWSSES/AwsSes.node.js",
       "dist/nodes/PharmaSync/PharmaSync.node.js",
       "dist/nodes/Groq/GroqApi.node.js",
-      "dist/nodes/QuickBooksOnline/QuickBooksOnline.node.js"
+      "dist/nodes/QuickBooksOnline/QuickBooksOnline.node.js",
+      "dist/nodes/MPESA/MPesa.node.js",
+      "dist/nodes/Safaricom/SafaricomSimPortal.node.js",
+      "dist/nodes/Safaricom/SafaricomIdentityVerification.node.js"
     ]
   },
   "devDependencies": {
