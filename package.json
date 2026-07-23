@@ -32,6 +32,7 @@
     "strict": true,
     "credentials": [
       "dist/credentials/KraEtims/KraEtimsApi.credentials.js",
+      "dist/credentials/KRAPINCheck/KraPinCheckerApi.credentials.js",
       "dist/credentials/HostPinnacle/HostPinnacleSmsApi.credentials.js",
       "dist/credentials/AWSSES/AwsSesApi.credentials.js",
       "dist/credentials/PharmaSync/PharmaSyncApi.credentials.js",
@@ -40,10 +41,12 @@
       "dist/credentials/MPESA/MPesaApi.credentials.js",
       "dist/credentials/Safaricom/SafaricomSimPortalApi.credentials.js",
       "dist/credentials/Safaricom/SafaricomIdentityApi.credentials.js",
-      "dist/credentials/WhatsApp/WhatsAppCloudNovascapeApi.credentials.js"
+      "dist/credentials/WhatsApp/WhatsAppCloudNovascapeApi.credentials.js",
+      "dist/credentials/InvoSync/InvoSyncApi.credentials.js"
     ],
     "nodes": [
       "dist/nodes/KraEtims/KraEtims.node.js",
+      "dist/nodes/KRAPINCheck/KraPinChecker.node.js",
       "dist/nodes/HostPinnacle/HostPinnacle.node.js",
       "dist/nodes/AWSSES/AwsSes.node.js",
       "dist/nodes/PharmaSync/PharmaSync.node.js",
@@ -52,7 +55,8 @@
       "dist/nodes/MPESA/MPesa.node.js",
       "dist/nodes/Safaricom/SafaricomSimPortal.node.js",
       "dist/nodes/Safaricom/SafaricomIdentityVerification.node.js",
-      "dist/nodes/WhatsApp/WhatsAppCloudNovascape.node.js"
+      "dist/nodes/WhatsApp/WhatsAppCloudNovascape.node.js",
+      "dist/nodes/InvoSync/InvoSync.node.js"
     ]
   },
   "devDependencies": {

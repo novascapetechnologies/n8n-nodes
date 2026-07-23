@@ -1,0 +1,231 @@
+{
+  "info": {
+    "name": "InvoSync API — Customers, Invoices & Automations",
+    "_postman_id": "f3a7c1e2-8b4d-4e6a-9c2f-5d1b7e8a3c9f",
+    "description": "Curated Postman collection for InvoSync's `/api/v1` — scoped to the routes used by the n8n Customer Onboarding and Invoice Creation automations, for building n8n custom nodes around them.\n\n## Setup\n1. Duplicate the collection into your workspace.\n2. Open **Variables** (collection-level) and fill in:\n   - `base_url` — InvoSync API base: `http://localhost:3000/api/v1` in dev, `https://invosync.co.ke/api/v1` in production.\n   - `n8n_base_url` — your n8n instance base: `http://localhost:5678` in dev, `https://n8n.zyncapi.com` in production. Used to build the example webhook URLs below.\n   - `api_key` — a platform-admin InvoSync API key (`isk_admin_...`), generated from Admin → Settings → API Keys (app/admin/settings/api-keys). n8n workflows run cross-tenant (one registered automation can fire for any workspace), so they authenticate with a single admin key rather than a separate tenant key per workspace. Grant it the `admin:tenant-data` scope — that alone is sufficient to exercise any tenant scope (`customers:read`, `customers:write`, `invoices:read`, `invoices:write`, ...) for whichever workspace is named in `X-Workspace-Id`, per lib/api-context.ts requireScope().\n   - `workspace_id` — the workspace to act on for this request. InvoSync automation webhook payloads always include `customer.id`'s owning workspace as `workspaceId` in `lib/automations.ts` triggerAutomation() — an n8n workflow should set this per-execution from that value rather than hardcoding it.\n   - `customer_id`, `invoice_id` — fill in from earlier responses as you go.\n3. Every request below sends two headers for security: `Authorization: Bearer {{api_key}}` (collection-level, applies automatically) and `X-Workspace-Id: {{workspace_id}}` (per-request — required by admin keys to scope which tenant's data is being read/written; see lib/api-context.ts resolveWorkspaceId()). If you use a tenant key (`isk_test_`/`isk_live_`) instead, the workspace is already bound to the key and `X-Workspace-Id` is simply ignored.\n4. In n8n, the same `base_url`/`api_key` pair becomes a \"Header Auth\" credential (`Authorization: Bearer <api_key>`) attached to HTTP Request nodes that call back into InvoSync, with `X-Workspace-Id` set per-execution from the webhook payload's `customer`/`invoice` workspace — see notes/n8n-workflows/*.json.\n\n## Full API surface\nThis collection is a curated subset. The full OpenAPI 3.1 spec (every `/api/v1` route) is always available at `{{base_url}}/openapi.json` and can be imported wholesale into Postman or n8n.\n\n## Webhook payloads (InvoSync → n8n)\nThe \"Automation Webhook Payloads\" folder below isn't live requests — it's saved example bodies of what InvoSync POSTs to a registered n8n webhook for `customer.created` and `invoice.created`, for reference when defining a custom node's expected input. Their URLs use `{{n8n_base_url}}` so the same collection works against your local n8n and n8n.zyncapi.com without editing each request.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      { "key": "token", "value": "{{api_key}}", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:3000/api/v1", "type": "string" },
+    { "key": "n8n_base_url", "value": "http://localhost:5678", "type": "string" },
+    { "key": "api_key", "value": "isk_admin_REPLACE_ME", "type": "string" },
+    { "key": "workspace_id", "value": "REPLACE_WITH_WORKSPACE_ID", "type": "string" },
+    { "key": "customer_id", "value": "REPLACE_WITH_CUSTOMER_ID", "type": "string" },
+    { "key": "invoice_id", "value": "REPLACE_WITH_INVOICE_ID", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Customers",
+      "description": "Backed by services/customers.ts via lib/api-context.ts requireWorkspace — same logic path as the dashboard.",
+      "item": [
+        {
+          "name": "List Customers",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "X-Workspace-Id", "value": "{{workspace_id}}", "description": "Which workspace's customers to read — required for admin keys, ignored for tenant keys." }
+            ],
+            "url": {
+              "raw": "{{base_url}}/customers",
+              "host": ["{{base_url}}"],
+              "path": ["customers"]
+            },
+            "description": "Requires scope customers:read (or admin:tenant-data + X-Workspace-Id)."
+          }
+        },
+        {
+          "name": "Get Customer",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "X-Workspace-Id", "value": "{{workspace_id}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/customers/{{customer_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["customers", "{{customer_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Create Customer",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Workspace-Id", "value": "{{workspace_id}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Jane Wanjiru\",\n  \"email\": \"jane@example.com\",\n  \"phone\": \"+254700000000\",\n  \"address\": \"Nairobi, Kenya\",\n  \"kraPin\": \"A123456789Z\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/customers",
+              "host": ["{{base_url}}"],
+              "path": ["customers"]
+            },
+            "description": "Requires scope customers:write (or admin:tenant-data + X-Workspace-Id). Triggers the customer.created automation (if one is registered in Admin → Automations) and the customer welcome email."
+          }
+        },
+        {
+          "name": "Update Customer",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Workspace-Id", "value": "{{workspace_id}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Jane Wanjiru\",\n  \"phone\": \"+254700000001\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/customers/{{customer_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["customers", "{{customer_id}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Invoices",
+      "description": "Backed by services/invoices.ts. Creating a type=INVOICE document triggers the invoice.created automation (if registered).",
+      "item": [
+        {
+          "name": "List Invoices",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "X-Workspace-Id", "value": "{{workspace_id}}", "description": "Which workspace's invoices to read — required for admin keys, ignored for tenant keys." }
+            ],
+            "url": {
+              "raw": "{{base_url}}/invoices",
+              "host": ["{{base_url}}"],
+              "path": ["invoices"]
+            },
+            "description": "Requires scope invoices:read (or admin:tenant-data + X-Workspace-Id)."
+          }
+        },
+        {
+          "name": "Get Invoice",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "X-Workspace-Id", "value": "{{workspace_id}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/invoices/{{invoice_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["invoices", "{{invoice_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Create Invoice",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Workspace-Id", "value": "{{workspace_id}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"INVOICE\",\n  \"customerId\": \"{{customer_id}}\",\n  \"customerName\": \"Jane Wanjiru\",\n  \"customerEmail\": \"jane@example.com\",\n  \"lineItems\": [\n    { \"description\": \"Consulting services\", \"quantity\": 1, \"unitPrice\": 5000, \"vatRate\": 0.16, \"vatType\": \"A\" }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/invoices",
+              "host": ["{{base_url}}"],
+              "path": ["invoices"]
+            },
+            "description": "Requires scope invoices:write (or admin:tenant-data + X-Workspace-Id)."
+          }
+        },
+        {
+          "name": "Send Invoice",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "X-Workspace-Id", "value": "{{workspace_id}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/invoices/{{invoice_id}}/send",
+              "host": ["{{base_url}}"],
+              "path": ["invoices", "{{invoice_id}}", "send"]
+            },
+            "description": "Emails the branded invoice document to the customer (lib/workspace-email.ts)."
+          }
+        },
+        {
+          "name": "Record Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Workspace-Id", "value": "{{workspace_id}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 5800,\n  \"method\": \"MPESA\",\n  \"reference\": \"QGH7XXXX\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/invoices/{{invoice_id}}/payments",
+              "host": ["{{base_url}}"],
+              "path": ["invoices", "{{invoice_id}}", "payments"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Automation Webhook Payloads (reference only)",
+      "description": "Not live requests. Saved example bodies of what InvoSync POSTs to a registered n8n webhook, for defining an n8n custom node's expected input. See lib/automations.ts.",
+      "item": [
+        {
+          "name": "Example: customer.created payload",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event\": \"customer.created\",\n  \"apiBaseUrl\": \"{{base_url}}\",\n  \"workspaceId\": \"{{workspace_id}}\",\n  \"customer\": {\n    \"id\": \"clx_customer_id\",\n    \"name\": \"Jane Wanjiru\",\n    \"email\": \"jane@example.com\",\n    \"phone\": \"+254700000000\",\n    \"address\": \"Nairobi, Kenya\",\n    \"kraPin\": \"A123456789Z\"\n  },\n  \"integrations\": {\n    \"quickbooks\": { \"clientId\": \"...\", \"clientSecret\": \"...\", \"refreshToken\": \"...\", \"realmId\": \"...\", \"environment\": \"sandbox\" },\n    \"zoho\": { \"clientId\": \"...\", \"clientSecret\": \"...\", \"refreshToken\": \"...\", \"apiDomain\": \"www.zohoapis.com\" }\n  }\n}"
+            },
+            "url": {
+              "raw": "{{n8n_base_url}}/webhook/customer-onboarding",
+              "host": ["{{n8n_base_url}}"],
+              "path": ["webhook", "customer-onboarding"]
+            },
+            "description": "`workspaceId` is what an n8n HTTP Request node reads to set `X-Workspace-Id` on any callback into InvoSync's API (see the InvoSync API credential note above) — it's the workspace the customer/invoice belongs to, always included by lib/automations.ts triggerAutomation(). The `integrations` block only appears when the automation has Linked Integrations configured (QuickBooks/Zoho CRM here) and that workspace has an approved+active connection with saved credentials — see the \"Linked Integrations\" section of AdminAutomationsClient. `{{n8n_base_url}}` resolves to your local instance in dev and n8n.zyncapi.com in production without editing this request."
+          }
+        },
+        {
+          "name": "Example: invoice.created payload",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event\": \"invoice.created\",\n  \"apiBaseUrl\": \"{{base_url}}\",\n  \"workspaceId\": \"{{workspace_id}}\",\n  \"invoice\": {\n    \"id\": \"clx_invoice_id\",\n    \"invoiceNo\": \"INV-000123\",\n    \"total\": 580000,\n    \"customerName\": \"Jane Wanjiru\",\n    \"customerEmail\": \"jane@example.com\",\n    \"dueDate\": \"2026-08-15T00:00:00.000Z\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{n8n_base_url}}/webhook/invoice-created",
+              "host": ["{{n8n_base_url}}"],
+              "path": ["webhook", "invoice-created"]
+            },
+            "description": "total is in cents (KES 5,800.00 = 580000), matching Invoice.total's storage convention. `workspaceId` sets X-Workspace-Id on any InvoSync API callback; `{{n8n_base_url}}` resolves per environment without editing this request."
+          }
+        }
+      ]
+    }
+  ]
+}

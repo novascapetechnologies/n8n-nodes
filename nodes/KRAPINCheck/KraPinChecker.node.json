@@ -1,0 +1,18 @@
+{
+	"node": "n8n-nodes-kra-pin-checker",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Finance", "Government"],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://developer.go.ke/apis/PIN-Checker-By-Pin-Sbx"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://developer.go.ke/apis/PIN-Checker-By-Pin-Sbx"
+			}
+		]
+	}
+}
