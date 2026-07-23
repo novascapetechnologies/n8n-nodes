@@ -1,0 +1,18 @@
+{
+	"node": "n8n-nodes-whatsapp-cloud-novascape",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Communication"],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://developers.facebook.com/docs/whatsapp/cloud-api"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://developers.facebook.com/docs/whatsapp/cloud-api"
+			}
+		]
+	}
+}

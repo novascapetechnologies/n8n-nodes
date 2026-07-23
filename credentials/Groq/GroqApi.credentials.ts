@@ -3,15 +3,18 @@ import type { ICredentialTestRequest, ICredentialType, Icon, INodeProperties } f
 /**
  * Credential for the Groq API (https://api.groq.com/openai/v1).
  *
- * Groq's API is OpenAI-compatible and authenticates with a single bearer
- * token, so both the action node (GenericFunctions.ts) and the Groq Chat
- * Model connector (used as an AI Agent's language model) share this
- * credential.
+ * Named `groqNovascapeApi` (not `groqApi`) because n8n's built-in "Groq Chat
+ * Model" node (@n8n/n8n-nodes-langchain) already registers a credential type
+ * named `groqApi`. Credential type names are global across all installed
+ * packages (unlike node names, which are namespaced per-package), so reusing
+ * that name silently broke this custom node in production once the core
+ * package shipped its own Groq credential - only one of the two `groqApi`
+ * registrations could win.
  */
 export class GroqApi implements ICredentialType {
-	name = 'groqApi';
+	name = 'groqNovascapeApi';
 
-	displayName = 'Groq API';
+	displayName = 'Groq (Novascape) API';
 
 	icon: Icon = 'file:../../nodes/Groq/groq-logo.svg';
 

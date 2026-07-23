@@ -39,18 +39,20 @@
       "dist/credentials/QuickBooksOnline/QuickBooksOnlineOAuth2Api.credentials.js",
       "dist/credentials/MPESA/MPesaApi.credentials.js",
       "dist/credentials/Safaricom/SafaricomSimPortalApi.credentials.js",
-      "dist/credentials/Safaricom/SafaricomIdentityApi.credentials.js"
+      "dist/credentials/Safaricom/SafaricomIdentityApi.credentials.js",
+      "dist/credentials/WhatsApp/WhatsAppCloudNovascapeApi.credentials.js"
     ],
     "nodes": [
       "dist/nodes/KraEtims/KraEtims.node.js",
       "dist/nodes/HostPinnacle/HostPinnacle.node.js",
       "dist/nodes/AWSSES/AwsSes.node.js",
       "dist/nodes/PharmaSync/PharmaSync.node.js",
-      "dist/nodes/Groq/GroqApi.node.js",
+      "dist/nodes/Groq/GroqNovascape.node.js",
       "dist/nodes/QuickBooksOnline/QuickBooksOnline.node.js",
       "dist/nodes/MPESA/MPesa.node.js",
       "dist/nodes/Safaricom/SafaricomSimPortal.node.js",
-      "dist/nodes/Safaricom/SafaricomIdentityVerification.node.js"
+      "dist/nodes/Safaricom/SafaricomIdentityVerification.node.js",
+      "dist/nodes/WhatsApp/WhatsAppCloudNovascape.node.js"
     ]
   },
   "devDependencies": {

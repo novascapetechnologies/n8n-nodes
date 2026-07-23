@@ -15,20 +15,20 @@ import { groqApiBinaryRequest, groqApiFormRequest, groqApiRequest } from './Gene
  * Groq API node — covers every route in the "Groq API" Postman collection:
  * Chat, Audio, Models, Batches and Files.
  */
-export class GroqApi implements INodeType {
+export class GroqNovascape implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Groq API (Novascape)',
-		name: 'groqApi',
+		name: 'groqNovascape',
 		icon: 'file:groq-logo.svg',
 		group: ['transform'],
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description: 'Consume the Groq API (chat, audio, models, batches, files)',
-		defaults: { name: 'Groq API' },
+		defaults: { name: 'Groq API (Novascape)' },
 		inputs: [NodeConnectionTypes.Main],
 		outputs: [NodeConnectionTypes.Main],
 		usableAsTool: true,
-		credentials: [{ name: 'groqApi', required: true }],
+		credentials: [{ name: 'groqNovascapeApi', required: true }],
 		properties: [
 			{
 				displayName: 'Resource',

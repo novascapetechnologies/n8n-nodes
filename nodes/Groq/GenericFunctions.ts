@@ -11,7 +11,7 @@ import { NodeApiError } from 'n8n-workflow';
 /**
  * Shared request helper for the Groq API (Chat, Audio, Models, Batches, Files).
  *
- * Auth is handled by the `groqApi` credential's generic authentication, so
+ * Auth is handled by the `groqNovascapeApi` credential's generic authentication, so
  * this only needs to build the URL and unwrap Groq's error envelope
  * (`{ error: { message, type, code } }`) into a readable NodeApiError.
  */
@@ -22,11 +22,11 @@ export async function groqApiRequest(
 	body?: IDataObject,
 	qs?: IDataObject,
 ): Promise<IDataObject> {
-	const credentials = await this.getCredentials('groqApi');
+	const credentials = await this.getCredentials('groqNovascapeApi');
 	const baseUrl = String(credentials.baseUrl ?? '').replace(/\/+$/, '');
 
 	try {
-		return (await this.helpers.httpRequestWithAuthentication.call(this, 'groqApi', {
+		return (await this.helpers.httpRequestWithAuthentication.call(this, 'groqNovascapeApi', {
 			method,
 			url: `${baseUrl}${endpoint}`,
 			body,
@@ -55,7 +55,7 @@ export async function groqApiFormRequest(
 	file: GroqFormFile,
 	fileFieldName = 'file',
 ): Promise<IDataObject> {
-	const credentials = await this.getCredentials('groqApi');
+	const credentials = await this.getCredentials('groqNovascapeApi');
 	const baseUrl = String(credentials.baseUrl ?? '').replace(/\/+$/, '');
 
 	const form = new FormData();
@@ -69,7 +69,7 @@ export async function groqApiFormRequest(
 	}
 
 	try {
-		return (await this.helpers.httpRequestWithAuthentication.call(this, 'groqApi', {
+		return (await this.helpers.httpRequestWithAuthentication.call(this, 'groqNovascapeApi', {
 			method: 'POST',
 			url: `${baseUrl}${endpoint}`,
 			body: form,
@@ -87,11 +87,11 @@ export async function groqApiBinaryRequest(
 	this: IExecuteFunctions,
 	endpoint: string,
 ): Promise<IN8nHttpFullResponse> {
-	const credentials = await this.getCredentials('groqApi');
+	const credentials = await this.getCredentials('groqNovascapeApi');
 	const baseUrl = String(credentials.baseUrl ?? '').replace(/\/+$/, '');
 
 	try {
-		return await this.helpers.httpRequestWithAuthentication.call(this, 'groqApi', {
+		return await this.helpers.httpRequestWithAuthentication.call(this, 'groqNovascapeApi', {
 			method: 'GET',
 			url: `${baseUrl}${endpoint}`,
 			encoding: 'arraybuffer',
